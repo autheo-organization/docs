@@ -221,7 +221,6 @@
                 "pages": [
                   "nodes/testnet/node-setup",
                   "nodes/testnet/installation",
-                  "nodes/testnet/key-management",
                   "nodes/testnet/license-setup",
                   "nodes/testnet/configuration",
                   "nodes/testnet/upgrades",
@@ -291,15 +290,6 @@
           }
         ]
       },
-      {
-        "group": "Changelog",
-        "hidden": true,
-        "expanded": false,
-        "pages": [
-          "changelog/document-history",
-          "changelog/redirects-map"
-        ]
-      }
     ]
   },
   "logo": {
