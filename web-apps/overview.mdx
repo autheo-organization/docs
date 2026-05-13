@@ -1,0 +1,45 @@
+---
+title: "Web apps"
+description: "Overview of the three Autheo web applications: Node Sale Platform, Bridge, and Validator Portal."
+keywords: ["web apps", "node sale", "bridge", "validator portal", "autheo platform"]
+---
+
+The Autheo platform includes three interconnected web applications that cover the full participant journey — from purchasing a node license to bridging tokens and managing a validator.
+
+<Warning>
+The URLs linked throughout this section are currently pre-production environments. Production URLs will be updated here before mainnet launch.
+</Warning>
+
+## Applications
+
+<CardGroup cols={3}>
+  <Card title="Node Sale Platform" href="/web-apps/node-sale/overview" icon="cart-shopping">
+    Purchase Core, Prime, or Sovereign node licenses as ERC-721 NFTs on Arbitrum
+  </Card>
+  <Card title="Autheo Bridge" href="/web-apps/bridge/overview" icon="bridge">
+    Transfer tokens and NFTs cross-chain using Hyperlane Warp Routes
+  </Card>
+  <Card title="Validator Portal" href="/web-apps/validator-portal/overview" icon="server">
+    Deploy validator nodes, delegate THEO, manage licenses, and claim rewards
+  </Card>
+</CardGroup>
+
+## Recommended user journey
+
+Complete these steps in order to go from first-time participant to active validator:
+
+<Steps>
+  <Step title="Purchase a node license">
+    Visit the [Node Sale Platform](/web-apps/node-sale/overview) to buy a Core, Prime, or Sovereign license NFT on Arbitrum. Your license is an ERC-721 token that grants you the right to participate in the Autheo network.
+  </Step>
+  <Step title="Bridge your license to Autheo Chain">
+    Use the [Autheo Bridge](/web-apps/bridge/overview) to transfer your NFT from Arbitrum to your Autheo Chain EVM address. This automatically creates a `LicenseRecord` on-chain.
+  </Step>
+  <Step title="Deploy and activate your node">
+    Open the [Validator Portal](/web-apps/validator-portal/overview) to deploy a Sovereign validator node, bind your license, stake THEO, and begin earning rewards.
+  </Step>
+</Steps>
+
+<Note>
+Prime and Core license holders can skip Step 3 and instead delegate their THEO to an existing validator via the Validator Portal to earn rewards without running their own node.
+</Note>

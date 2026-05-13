@@ -20,7 +20,7 @@ Only one Sovereign license can bind to a given validator at any time. This enfor
 
 ## Step 1: Acquire the NFT on Arbitrum
 
-Purchase the appropriate ERC-721 NFT from an authorized distributor on Arbitrum. View contract addresses:
+Purchase the appropriate ERC-721 NFT on the [Node Sale Platform](/web-apps/node-sale/purchasing-a-license). View contract addresses:
 
 ```bash
 autheod query license params
@@ -28,7 +28,7 @@ autheod query license params
 
 ## Step 2: Transfer to your Autheo Chain EVM address
 
-Send the NFT to your EVM address (`0x...` format). This triggers an automatic on-chain hook that mints a `LicenseRecord` in `ISSUED` status — no separate transaction needed.
+Use the [Autheo Bridge](/web-apps/bridge/making-a-transfer) to send the NFT from Arbitrum to your EVM address (`0x...` format). This triggers an automatic on-chain hook that mints a `LicenseRecord` in `ISSUED` status — no separate transaction needed.
 
 ```bash
 autheod keys show <key-name> --bech eth --keyring-backend file

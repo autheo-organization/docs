@@ -1,0 +1,48 @@
+---
+title: "Autheo Bridge"
+description: "Overview of the Autheo Bridge: cross-chain token transfers using Hyperlane Warp Routes, supported chains, and system requirements."
+keywords: ["bridge", "hyperlane", "warp routes", "cross-chain", "arbitrum", "autheo alpha", "token transfer"]
+---
+
+The Autheo Bridge is a decentralized application (DApp) built on [Hyperlane Warp Routes](https://docs.hyperlane.xyz) that enables permissionless, cross-chain token transfers between supported blockchains. It is the primary way to move your node license NFT from Arbitrum to the Autheo network, and to transfer THEO tokens between chains.
+
+<Warning>
+The Autheo Bridge is currently running in a pre-production environment. The production URL will be published here before mainnet launch.
+</Warning>
+
+<Note>
+The Bridge enforces geographic compliance restrictions. Users in certain jurisdictions may be unable to access the service.
+</Note>
+
+## Key capabilities
+
+| Capability | Description |
+|---|---|
+| Cross-chain token bridging | Transfer tokens between any supported pair of blockchains |
+| Multi-protocol wallet support | Connect wallets for EVM, Solana, Cosmos, Starknet, and Radix ecosystems |
+| Real-time balance display | View token balances on both source and destination chains |
+| Transfer history tracking | Review all past transfers in the application |
+| Token approval management | Automatic handling of ERC-20 token approvals |
+| Fee estimation | See estimated interchain gas fees before confirming |
+
+## Supported chains
+
+| Chain | Type | Native token | Network |
+|---|---|---|---|
+| Arbitrum Sepolia | EVM (Arbitrum Nitro) | ETH | Testnet |
+| Autheo Alpha | EVM | THEO | Testnet |
+
+## System requirements
+
+| Requirement | Details |
+|---|---|
+| Browser | Chrome, Firefox, Edge, Brave, or any modern browser with wallet extension support |
+| Wallet | MetaMask, WalletConnect-compatible wallet, Phantom (Solana), or Keplr (Cosmos) |
+| Network | Stable internet connection |
+| Funds | Native tokens on the source chain to pay for gas fees (e.g., ETH on Arbitrum Sepolia, THEO on Autheo Alpha) |
+
+## How the Bridge relates to Autheo
+
+The Bridge uses Hyperlane as the interoperability layer — Autheo's Layer 0 cross-chain messaging protocol. For architectural context, see [Autheo OS model](/start-here/autheo-os-model).
+
+The most common use case is bridging your node license NFT from Arbitrum to your Autheo Chain EVM address. This transfer automatically triggers an on-chain hook that mints a corresponding `LicenseRecord` on the Cosmos side, making your license usable for staking and validation. See the [license setup guide](/nodes/testnet/license-setup) for the full flow.

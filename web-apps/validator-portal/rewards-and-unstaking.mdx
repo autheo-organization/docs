@@ -1,0 +1,66 @@
+---
+title: "Rewards and unstaking"
+description: "How to claim delegation rewards, unbind licenses, and unstake THEO tokens in the Autheo Validator Portal."
+keywords: ["rewards", "claim rewards", "unstake", "unbond", "unbonding period", "license unbind", "cooldown", "keplr"]
+---
+
+This page covers claiming your earned rewards, unbinding licenses, and unstaking THEO tokens from the Autheo Validator Portal.
+
+For staking mechanics and reward calculations, see [Staking and rewards](/token/staking-and-rewards).
+
+## Claiming rewards
+
+<Steps>
+  <Step title="Go to the Delegation page">
+    Navigate to the **Delegation** page from the main menu.
+  </Step>
+  <Step title="Claim from the delegation row">
+    Find the delegation you want to claim from and click **Claim Rewards** in the Actions column.
+  </Step>
+  <Step title="Sign in Keplr">
+    Sign the transaction in Keplr. Rewards transfer to your wallet upon confirmation.
+  </Step>
+</Steps>
+
+## Unbinding a license
+
+Unbinding releases a Prime or Core license from a delegation. The license enters a cooldown period before it can be rebound to another validator.
+
+<Steps>
+  <Step title="Find the delegation">
+    On the **Delegation** page, locate the delegation with the license you want to unbind.
+  </Step>
+  <Step title="Open the unbind modal">
+    Click the **Unbind License** button (shown in red) in the Actions column.
+  </Step>
+  <Step title="Select the license and review cooldown">
+    In the modal, select the license to unbind and review the cooldown period displayed.
+  </Step>
+  <Step title="Confirm and sign">
+    Click **Unbind License** and sign the transaction in Keplr.
+  </Step>
+</Steps>
+
+<Warning>
+Unbinding a license moves it from `ACTIVE` back to `BOUND` or `ISSUED` status and may affect reward eligibility during the cooldown period. The license cannot be rebound until the cooldown expires.
+</Warning>
+
+## Unstaking tokens
+
+Unstaking (undelegating) removes your THEO from a validator. Tokens enter an **unbonding period** during which they are locked and do not earn rewards. They become available in your wallet after the unbonding period completes.
+
+<Steps>
+  <Step title="Open the unstake flow">
+    On the **Delegation** page, click the **Unstake** button in the Actions column for the delegation you want to exit.
+  </Step>
+  <Step title="Enter the amount">
+    Enter the THEO amount to unstake, or click **MAX** to unstake your full delegated amount.
+  </Step>
+  <Step title="Confirm and sign">
+    Click **Confirm** and sign the transaction in Keplr.
+  </Step>
+</Steps>
+
+<Note>
+The unbonding period is an on-chain parameter (~21 days). During this period, your tokens are neither earning rewards nor available for transfer. Plan accordingly before initiating a large unstake.
+</Note>

@@ -47,6 +47,44 @@
         ]
       },
       {
+        "group": "Web Apps",
+        "pages": [
+          "web-apps/overview",
+          {
+            "group": "Node Sale",
+            "expanded": false,
+            "pages": [
+              "web-apps/node-sale/overview",
+              "web-apps/node-sale/purchasing-a-license",
+              "web-apps/node-sale/referral-program",
+              "web-apps/node-sale/order-history"
+            ]
+          },
+          {
+            "group": "Bridge",
+            "expanded": false,
+            "pages": [
+              "web-apps/bridge/overview",
+              "web-apps/bridge/connecting-wallets",
+              "web-apps/bridge/making-a-transfer",
+              "web-apps/bridge/transfer-history"
+            ]
+          },
+          {
+            "group": "Validator Portal",
+            "expanded": false,
+            "pages": [
+              "web-apps/validator-portal/overview",
+              "web-apps/validator-portal/dashboard",
+              "web-apps/validator-portal/deploying-a-node",
+              "web-apps/validator-portal/delegation",
+              "web-apps/validator-portal/rewards-and-unstaking",
+              "web-apps/validator-portal/activity-history"
+            ]
+          }
+        ]
+      },
+      {
         "group": "Developers",
         "pages": [
           "developers/overview",

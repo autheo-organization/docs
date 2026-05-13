@@ -1,0 +1,43 @@
+---
+title: "Activity history"
+description: "Reference for the Activity page in the Autheo Validator Portal: transaction log columns, filtering, and linking to the Autheo Explorer."
+keywords: ["activity history", "transaction log", "validator activity", "autheo explorer", "tx hash", "delegation history"]
+---
+
+The **Activity** page provides a complete, chronological log of all validator-related transactions for your connected wallet. Use it to audit your delegation history, track reward claims, and verify on-chain actions.
+
+## Transaction history table
+
+| Column | Description |
+|---|---|
+| Date | Timestamp of the transaction |
+| Action | Type of transaction (colour-coded) |
+| Validator | Validator name or address involved |
+| Wallet | Your shortened wallet address |
+| Amount / License | Transaction amount in THEO or the license ID involved |
+| Tx Hash | Click to view the transaction on the Autheo Explorer |
+
+## Action types
+
+Actions are colour-coded in the table. Common action types include:
+
+- Delegate
+- Undelegate
+- Bind License
+- Unbind License
+- Claim Rewards
+- Create Validator
+
+## Refreshing your balance
+
+After any transaction, click the refresh icon (↻) on the **THEO Wallet Balance** card on the Dashboard to update your displayed balance. The balance also updates automatically after wallet connection and after certain transactions complete.
+
+## License types reference
+
+| License | Purpose | How it is used |
+|---|---|---|
+| Sovereign | Deploy and operate your own validator node | Used when deploying a node via the Deployment page |
+| Core | Participate in delegation pools through other validators | Bound to a validator delegation on the Nodes page |
+| Prime | Premium delegation pool participation | Bound to a validator delegation on the Nodes page |
+
+For on-chain license mechanics and state transitions, see [License lifecycle](/nodes/architecture/license-lifecycle).

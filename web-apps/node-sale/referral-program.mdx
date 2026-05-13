@@ -1,0 +1,47 @@
+---
+title: "Referral program"
+description: "Generate a referral code on the Autheo Node Sale Platform, earn commissions on referred purchases, and track your earnings."
+keywords: ["referral", "referral code", "commission", "discount", "autheo", "node sale"]
+---
+
+The Referrals tab (`/referrals`) allows you to generate a personal referral code and earn commissions whenever someone uses your code to purchase a node license.
+
+## How it works
+
+- Buyers who use your code receive a **discount** on their purchase
+- You (the referrer) earn a **commission** on that transaction
+- Both percentages are set transparently by the Autheo smart contract (`AutheoCentralStore`)
+
+## Generating your referral code
+
+<Steps>
+  <Step title="Navigate to the Referrals tab">
+    Click the **Referrals Code** tab in the top navigation bar.
+  </Step>
+  <Step title="Generate your code">
+    Click **Generate Referral Code**.
+  </Step>
+  <Step title="Confirm the transaction">
+    Approve the on-chain transaction in your wallet. Gas fees apply. This registers your unique referral code on the `AutheoCentralStore` contract.
+  </Step>
+  <Step title="Copy and share your code">
+    Once the transaction confirms, your unique code is displayed. Click **Copy** to copy it to your clipboard and share it with others.
+  </Step>
+</Steps>
+
+## Referral card
+
+The Referrals card displays:
+- Your unique referral code
+- The **commission percentage** you earn on referred purchases
+- The **discount percentage** buyers receive when using your code
+
+## Viewing your earnings
+
+For a per-currency breakdown of commissions earned, go to the **Orders** tab and select the **All Orders With My Referral** sub-tab. Commission summary tiles at the top show your total earnings in each currency (ETH, USDT, USDC, and via payment gateway).
+
+See [Order history](/web-apps/node-sale/order-history) for full details on the Orders tab.
+
+## Using a referral code when purchasing
+
+When configuring a purchase, enter a referral code in the **Promo Code** field on the Purchase page and click **Apply**. The discount is applied to your order immediately, and the referrer receives their commission on-chain when the transaction confirms.
