@@ -17,7 +17,7 @@ None
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":83}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":83}'
 // Result
 {"jsonrpc":"2.0","id":83,"result":"0xa638a"}
 ```
@@ -38,7 +38,7 @@ Returns the number of transactions in a block from a block matching the given bl
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByHash","params":["0x613aca96ec73b0c4395130088dd21c3813d923c7fe6a4650ae3ef30dbcd350e4"],"id":1}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByHash","params":["0x613aca96ec73b0c4395130088dd21c3813d923c7fe6a4650ae3ef30dbcd350e4"],"id":1}'
 // Response
 {"jsonrpc":"2.0","id":1,"result":"0x1"}
 ```
@@ -59,7 +59,7 @@ Returns the number of transactions in a block matching the given block number.
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByNumber","params":["0xa8f35"],"id":1}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByNumber","params":["0xa8f35"],"id":1}'
 // Response
 {"jsonrpc":"2.0","id":1,"result":"0x1"}
 ```
@@ -100,7 +100,7 @@ Returns information about a block by hash.
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json"  --data '{"jsonrpc":"2.0","method":"eth_getBlockByHash","params":["0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421", false],"id":1}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json"  --data '{"jsonrpc":"2.0","method":"eth_getBlockByHash","params":["0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421", false],"id":1}'
 // Response
 {"jsonrpc":"2.0","id":1,"result":
 {"baseFeePerGas":"0x7","difficulty":"0x0","extraData":"0x","gasLimit":"0x1c9c380","gasUsed":"0x0","hash":"0x03daacfe2396e87aeda0bc854f2917fc59b79a88274a6dfee625f8fef0667703","logsBloom":"0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","miner":"0x0000000000000000000000000000000000000000","mixHash":"0x0000000000000000000000000000000000000000000000000000000000000000","nonce":"0x0000000000000000","number":"0x1b4","parentHash":"0x88f44eeffcf00a761fdfd739428d925be152eb7c13799985c1d81a7f68f508a5","receiptsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421","sha3Uncles":"0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347","size":"0x38d","stateRoot":"0x3466bd727e1986f9a612df6b891b26bf9bc6087e49cc8733f0648bb629b0a3c","timestamp":"0x679cebb2","totalDifficulty":"0x0","transactions":[],"transactionsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421","uncles":[]}}
@@ -123,7 +123,7 @@ See `eth_getBlockByHash`.
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["0x1b4", true],"id":1}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["0x1b4", true],"id":1}'
 // Response
 {"jsonrpc":"2.0","id":1,"result":
 {"baseFeePerGas":"0x7","difficulty":"0x0","extraData":"0x","gasLimit":"0x1c9c380","gasUsed":"0x0","hash":"0x03daacfe2396e87aeda0bc854f2917fc59b79a88274a6dfee625f8fef0667703","logsBloom":"0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","miner":"0x0000000000000000000000000000000000000000","mixHash":"0x0000000000000000000000000000000000000000000000000000000000000000","nonce":"0x0000000000000000","number":"0x1b4","parentHash":"0x88f44eeffcf00a761fdfd739428d925be152eb7c13799985c1d81a7f68f508a5","receiptsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421","sha3Uncles":"0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347","size":"0x38d","stateRoot":"0x3466bd727e1986f9a612df6b891b26bf9bc6087e49cc8733f0648bb629b0a3c","timestamp":"0x679cebb2","totalDifficulty":"0x0","transactions":[],"transactionsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421","uncles":[]}}

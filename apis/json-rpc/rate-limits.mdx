@@ -42,7 +42,7 @@ async function rpcWithRetry(provider, method, params, maxRetries = 5) {
 Instead of calling `eth_getBlockNumber` every few seconds, subscribe to new blocks:
 
 ```javascript
-const wsProvider = new ethers.WebSocketProvider("wss://testnet-rpc1.autheo.com:8546");
+const wsProvider = new ethers.WebSocketProvider("wss://rpc1.autheo.com:8546");
 wsProvider.on("block", (blockNumber) => {
   console.log("New block:", blockNumber);
 });
@@ -71,7 +71,7 @@ Distribute requests between the two public endpoints:
 
 ```javascript
 const endpoints = [
-  "https://testnet-rpc1.autheo.com",
+  "https://rpc1.autheo.com",
   "https://testnet-rpc2.autheo.com"
 ];
 

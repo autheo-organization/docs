@@ -32,7 +32,7 @@ autheod tx bank send mykey <recipient> 1000000000000000000aauth \
 For EVM transactions, use `eth_estimateGas`:
 
 ```bash
-curl -X POST https://testnet-rpc1.autheo.com \
+curl -X POST https://rpc1.autheo.com \
   -H "Content-Type: application/json" \
   -d '{
     "jsonrpc": "2.0",
@@ -47,7 +47,7 @@ curl -X POST https://testnet-rpc1.autheo.com \
 Query the current suggested gas price:
 
 ```bash
-curl -X POST https://testnet-rpc1.autheo.com \
+curl -X POST https://rpc1.autheo.com \
   -H "Content-Type: application/json" \
   -d '{"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":1}'
 ```
@@ -79,7 +79,7 @@ autheod query tx <txhash> --chain-id autheo_785-1
 
 **JSON-RPC:**
 ```bash
-curl -X POST https://testnet-rpc1.autheo.com \
+curl -X POST https://rpc1.autheo.com \
   -H "Content-Type: application/json" \
   -d '{"jsonrpc":"2.0","method":"eth_getTransactionReceipt","params":["0x<txhash>"],"id":1}'
 ```

@@ -30,16 +30,16 @@ Because Autheo Chain is EVM-compatible (Chain ID `785`), any Ethereum-compatible
 ```javascript
 // ethers.js
 import { ethers } from "ethers";
-const provider = new ethers.JsonRpcProvider("https://testnet-rpc1.autheo.com");
+const provider = new ethers.JsonRpcProvider("https://rpc1.autheo.com");
 
 // viem
 import { createPublicClient, http } from "viem";
 const client = createPublicClient({
-  transport: http("https://testnet-rpc1.autheo.com")
+  transport: http("https://rpc1.autheo.com")
 });
 
 // web3.js
-const web3 = new Web3("https://testnet-rpc1.autheo.com");
+const web3 = new Web3("https://rpc1.autheo.com");
 ```
 
 ## Next steps

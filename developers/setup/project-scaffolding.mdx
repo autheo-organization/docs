@@ -35,7 +35,7 @@ Autheo Chain is EVM-compatible with Chain ID `785`, which means any Hardhat, Fou
       },
       networks: {
         autheoTestnet: {
-          url: "https://testnet-rpc1.autheo.com",
+          url: "https://rpc1.autheo.com",
           chainId: 785,
           accounts: [process.env.PRIVATE_KEY]
         }
@@ -79,7 +79,7 @@ Autheo Chain is EVM-compatible with Chain ID `785`, which means any Hardhat, Fou
     evm_version = "paris"
 
     [rpc_endpoints]
-    autheo_testnet = "https://testnet-rpc1.autheo.com"
+    autheo_testnet = "https://rpc1.autheo.com"
     ```
   </Step>
   <Step title="Deploy">
@@ -101,7 +101,7 @@ import { ethers } from "ethers";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-const provider = new ethers.JsonRpcProvider("https://testnet-rpc1.autheo.com");
+const provider = new ethers.JsonRpcProvider("https://rpc1.autheo.com");
 const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
 
 // Deploy a contract

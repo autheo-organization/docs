@@ -17,7 +17,7 @@ None
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"net_version","params":[],"id":67}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"net_version","params":[],"id":67}'
 // Result
 {"jsonrpc":"2.0","id":67,"result":"785"}
 ```
@@ -37,7 +37,7 @@ None
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"net_listening","params":[],"id":67}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"net_listening","params":[],"id":67}'
  
 // Result
 {"jsonrpc":"2.0","id":67,"result":true}
@@ -58,7 +58,7 @@ QUANTITY - integer of the number of connected peers.
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"net_peerCount","params":[],"id":74}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"net_peerCount","params":[],"id":74}'
 // Result
 {"jsonrpc":"2.0","id":74,"result":3}
 ```

@@ -19,7 +19,7 @@ Returns the number of transactions sent from an address.
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_getTransactionCount","params":["0xC08bA0F9E8a976d2DF3eC899E2F5dff6336549C8","latest"],"id":1}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_getTransactionCount","params":["0xC08bA0F9E8a976d2DF3eC899E2F5dff6336549C8","latest"],"id":1}'
 // Response
 {"jsonrpc":"2.0","id":1,"result":"0xd83"}
 ```
@@ -48,7 +48,7 @@ Signs a transaction that can be submitted to the network at a later time using w
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"id": 1,"jsonrpc":"2.0","method": "eth_signTransaction","params":[{"data":"0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675","from":"0xb60e8dd61c5d32be8058bb8eb970870f07233155","gas": "0x76c0","gasPrice": "0x9184e72a000","to":"0xd46e8dd67c5d32be8058bb8eb970870f07244567","value": "0x9184e72a"}]}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"id": 1,"jsonrpc":"2.0","method": "eth_signTransaction","params":[{"data":"0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675","from":"0xb60e8dd61c5d32be8058bb8eb970870f07233155","gas": "0x76c0","gasPrice": "0x9184e72a000","to":"0xd46e8dd67c5d32be8058bb8eb970870f07244567","value": "0x9184e72a"}]}'
 // Result
 {"id": 1, "jsonrpc": "2.0", "result":"0xa3f20717a250c2b0b729b7e5becbff67fdaef7e0699da4de7ca5895b02a170a12d887fd3b17bfdce3481f10bea41f45ba9f709d39ce8325427b57afcfc994cee1b"}
 ```
@@ -101,7 +101,7 @@ Use `eth_getTransactionReceipt` to get the contract address, after the transacti
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc": "2.0", "method": "eth_sendRawTransaction", "params": [{"to": "0x89A7EF2F08B1c018D5Cc88836249b84Dd5392905", "data": "0x18160ddd"}, "latest"], "id": 1}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc": "2.0", "method": "eth_sendRawTransaction", "params": [{"to": "0x89A7EF2F08B1c018D5Cc88836249b84Dd5392905", "data": "0x18160ddd"}, "latest"], "id": 1}'
 // Result
 {
   "id":1,
@@ -128,7 +128,7 @@ Use `eth_getTransactionReceipt` to get the contract address, after the transacti
 
 ```
 // Request
- curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc": "2.0", "method": "eth_sendRawTransaction", "params": [{"to": "0x89A7EF2F08B1c018D5Cc88836249b84Dd5392905", "data": "0x18160ddd"}, "latest"], "id": 1}'
+ curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc": "2.0", "method": "eth_sendRawTransaction", "params": [{"to": "0x89A7EF2F08B1c018D5Cc88836249b84Dd5392905", "data": "0x18160ddd"}, "latest"], "id": 1}'
 // Result
 {
   "id":1,
@@ -167,7 +167,7 @@ Returns the information about a transaction requested by transaction hash.
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_getTransactionByHash","params":["0x150dfcd895b2856f2418564aae294c1e37346734e29617b3a29b15f7facb50d6"],"id":1}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_getTransactionByHash","params":["0x150dfcd895b2856f2418564aae294c1e37346734e29617b3a29b15f7facb50d6"],"id":1}'
 // Response
 {"jsonrpc":"2.0","id":1,"result":{"blockHash":"0x6f9ccc098b4f2f56154d3ad12df650a253d9c8bb5e6e28c5d92ae51a935af5bd","blockNumber":"0xaa19b","from":"0xeecc2fa50180e7c929c814a8bd65e45f81994327","gas":"0x5208","gasPrice":"0x7","hash":"0x150dfcd895b2856f2418564aae294c1e37346734e29617b3a29b15f7facb50d6","input":"0x","nonce":"0x1a5b","to":"0x65925ceb2e33bb7fde5f1c7488bbe8cca6c4e177","transactionIndex":"0x0","value":"0x5497acb9bd0b","type":"0x0","chainId":"0x311","v":"0x646","r":"0xa8c2b5d2d2c95eb58274e1a1c90626964e6ea3ae9ee8103769f34f2d83f83e26","s":"0x5ebebaf19ade625611bf30575e4503e9611ff561d0d88bb5872eb1cf457e411d"}}
 ```
@@ -189,7 +189,7 @@ See `eth_getTransactionByHash`.
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_getTransactionByBlockHashAndIndex","params":["0x1d59ff54b1eb26b013ce3cb5fc9dab3705b415a67127a003c3e61eb445bb8df2", "0x0"],"id":1}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_getTransactionByBlockHashAndIndex","params":["0x1d59ff54b1eb26b013ce3cb5fc9dab3705b415a67127a003c3e61eb445bb8df2", "0x0"],"id":1}'
 // Response
 {"jsonrpc":"2.0","id":1,"result":{"blockHash":"0x6f9ccc098b4f2f56154d3ad12df650a253d9c8bb5e6e28c5d92ae51a935af5bd","blockNumber":"0xaa19b","from":"0xeecc2fa50180e7c929c814a8bd65e45f81994327","gas":"0x5208","gasPrice":"0x7","hash":"0x150dfcd895b2856f2418564aae294c1e37346734e29617b3a29b15f7facb50d6","input":"0x","nonce":"0x1a5b","to":"0x65925ceb2e33bb7fde5f1c7488bbe8cca6c4e177","transactionIndex":"0x0","value":"0x5497acb9bd0b","type":"0x0","chainId":"0x311","v":"0x646","r":"0xa8c2b5d2d2c95eb58274e1a1c90626964e6ea3ae9ee8103769f34f2d83f83e26","s":"0x5ebebaf19ade625611bf30575e4503e9611ff561d0d88bb5872eb1cf457e411d"}}
 ```
@@ -211,7 +211,7 @@ See `eth_getTransactionByHash`.
 
 ```
 // Request
- curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_getTransactionByBlockNumberAndIndex","params":["0x1d59ff54b1eb26b013ce3cb5fc9dab3705b415a67127a003c3e61eb445bb8df2", "0x0"],"id":1}'
+ curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_getTransactionByBlockNumberAndIndex","params":["0x1d59ff54b1eb26b013ce3cb5fc9dab3705b415a67127a003c3e61eb445bb8df2", "0x0"],"id":1}'
 // Response
 {"jsonrpc":"2.0","id":1,"result":{"blockHash":"0x6f9ccc098b4f2f56154d3ad12df650a253d9c8bb5e6e28c5d92ae51a935af5bd","blockNumber":"0xaa19b","from":"0xeecc2fa50180e7c929c814a8bd65e45f81994327","gas":"0x5208","gasPrice":"0x7","hash":"0x150dfcd895b2856f2418564aae294c1e37346734e29617b3a29b15f7facb50d6","input":"0x","nonce":"0x1a5b","to":"0x65925ceb2e33bb7fde5f1c7488bbe8cca6c4e177","transactionIndex":"0x0","value":"0x5497acb9bd0b","type":"0x0","chainId":"0x311","v":"0x646","r":"0xa8c2b5d2d2c95eb58274e1a1c90626964e6ea3ae9ee8103769f34f2d83f83e26","s":"0x5ebebaf19ade625611bf30575e4503e9611ff561d0d88bb5872eb1cf457e411d"}}
 ```
@@ -252,7 +252,7 @@ It also returns either:
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_getTransactionReceipt","params":["0xe83e89c6fac48fc02fea39ded109236ef1b5991dd6924248a5e05bce6ee3f756"],"id":1}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_getTransactionReceipt","params":["0xe83e89c6fac48fc02fea39ded109236ef1b5991dd6924248a5e05bce6ee3f756"],"id":1}'
 // Response
 {"jsonrpc":"2.0","id":1,"result":{"blockHash":"0x97a7578df5a69f09417328638c428389b92283427ff62febee6888eb1c11a1dc","blockNumber":"0xa63d8","contractAddress":null,"cumulativeGasUsed":"0xf618","from":"0xeecc2fa50180e7c929c814a8bd65e45f81994327","gasUsed":"0x5208","logs":[],"logsBloom":"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","status":"0x1","to":"0xfb937e6e8aec33e64672d83b58e0e7ff8feaf74b","transactionHash":"0xe83e89c6fac48fc02fea39ded109236ef1b5991dd6924248a5e05bce6ee3f756","transactionIndex":"0x2","type":"0x0"}}
 ```

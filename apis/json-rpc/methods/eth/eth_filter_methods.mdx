@@ -61,7 +61,7 @@ A note on specifying topic filters: Topics are order-dependent. A transaction wi
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_newFilter","params":[{"topics":["0xe83e89c6fac48fc02fea39ded109236ef1b5991dd6924248a5e05bce6ee3f756"]}],"id":73}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_newFilter","params":[{"topics":["0xe83e89c6fac48fc02fea39ded109236ef1b5991dd6924248a5e05bce6ee3f756"]}],"id":73}'
 // Response
 {"jsonrpc":"2.0","id":73,"result":"0xcbf874231dca43f89bced1ab2d7e326e"}
 ```
@@ -81,7 +81,7 @@ None
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_newBlockFilter","params":[],"id":73}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_newBlockFilter","params":[],"id":73}'
 // Response
 {"jsonrpc":"2.0","id":73,"result":"0x9d88bf098c4a6346e868966502e7e110"}
 ```
@@ -101,7 +101,7 @@ None
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_newPendingTransactionFilter","params":[],"id":73}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_newPendingTransactionFilter","params":[],"id":73}'
 // Response
 {"jsonrpc":"2.0","id":73,"result":"0xe623e6bc2cd77083bdf2b45f95500f31"}
 ```
@@ -122,7 +122,7 @@ Uninstalls a filter with given id. Should always be called when watch is no long
 
 ```
 // Request
- curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_uninstallFilter","params":["0xb"],"id":73}'
+ curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_uninstallFilter","params":["0xb"],"id":73}'
 // Response
 {"jsonrpc":"2.0","id":73,"result":false}
 ```
@@ -156,7 +156,7 @@ Polling method for a filter, which returns an array of logs which occurred since
 
 ```
 // Request
- curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc": "2.0", "method": "eth_getFilterChanges", "params": ["0x44ff3a54d0a2c4c06c4684d596b285e7"], "id": 2}'
+ curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc": "2.0", "method": "eth_getFilterChanges", "params": ["0x44ff3a54d0a2c4c06c4684d596b285e7"], "id": 2}'
 // Response
 {"jsonrpc":"2.0","id":2,"result":["0x4b6e9ec012547409ef92cac06dcdb8b1411f6da3b20562b1826b3d2536c4670b","0xb261150727058ac5cc5e2533c89b0365a39f953b409259e74744e36abe4b48a9","0xe98c58235984f9d783d9388138f2ebea823ffa5b6a936305a7fe880f15b7e264","0x1fc59fd431bbfabfd245158911fcf0ec58a5b0093794d0c11bd940b849600267","0xdc2c9af8dbd23c5a574cb529267b2d1a69c6368ed82f12aba3a1968bb23fed20","0x268125f8c23d29ae80f7aa1d7d6903f54fd555931902159290b06e8f667aadb","0x7201af68b4c027a355679a66e340c0e7b53e6e60be08f18f14054ad577cd80ee"]}
 ```
@@ -177,7 +177,7 @@ See `eth_getFilterChanges`.
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc": "2.0", "method": "eth_getFilterLogs", "params": ["0x44ff3a54d0a2c4c06c4684d596b285e7"], "id": 2}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc": "2.0", "method": "eth_getFilterLogs", "params": ["0x44ff3a54d0a2c4c06c4684d596b285e7"], "id": 2}'
 ```
 
 **Result**
@@ -222,7 +222,7 @@ See `eth_getFilterChanges`.
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc": "2.0", "method": "eth_getLogs", "params": ["0x44ff3a54d0a2c4c06c4684d596b285e7"], "id": 2}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc": "2.0", "method": "eth_getLogs", "params": ["0x44ff3a54d0a2c4c06c4684d596b285e7"], "id": 2}'
 ```
 
 **Result**

@@ -31,10 +31,10 @@ Pass `next_page_params` as query parameters to retrieve the next page:
 
 ```bash
 # Initial request
-curl "https://testnet-explorer.autheo.com/api/v2/addresses/0x<address>/transactions"
+curl "https://evm-explorer.autheo.com/api/v2/addresses/0x<address>/transactions"
 
 # Next page — pass the params from next_page_params
-curl "https://testnet-explorer.autheo.com/api/v2/addresses/0x<address>/transactions?block_number=12345&index=10&items_count=50"
+curl "https://evm-explorer.autheo.com/api/v2/addresses/0x<address>/transactions?block_number=12345&index=10&items_count=50"
 ```
 
 ## JavaScript pagination helper
@@ -60,7 +60,7 @@ async function fetchAllPages(url) {
 }
 
 const transactions = await fetchAllPages(
-  "https://testnet-explorer.autheo.com/api/v2/addresses/0x<address>/transactions"
+  "https://evm-explorer.autheo.com/api/v2/addresses/0x<address>/transactions"
 );
 console.log("Total transactions:", transactions.length);
 ```

@@ -43,7 +43,7 @@ All error responses return a JSON body with a `message` field:
 {"message": "Not found"}
 ```
 
-**Fix**: The address may have no on-chain activity, or the transaction hash may be incorrect. Verify on the [block explorer](https://testnet-explorer.autheo.com/).
+**Fix**: The address may have no on-chain activity, or the transaction hash may be incorrect. Verify on the [block explorer](https://evm-explorer.autheo.com/).
 
 ---
 
@@ -55,7 +55,7 @@ All error responses return a JSON body with a `message` field:
 
 ```javascript
 async function apiRequest(path) {
-  const response = await fetch(`https://testnet-explorer.autheo.com/api/v2${path}`);
+  const response = await fetch(`https://evm-explorer.autheo.com/api/v2${path}`);
 
   if (!response.ok) {
     const error = await response.json().catch(() => ({ message: "Unknown error" }));

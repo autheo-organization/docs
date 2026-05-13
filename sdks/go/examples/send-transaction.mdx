@@ -22,7 +22,7 @@ import (
 
 func main() {
     client, err := autheo.NewClient(autheo.Config{
-        RPCURL:     "https://testnet-rpc1.autheo.com",
+        RPCURL:     "https://rpc1.autheo.com",
         PrivateKey: "<your-private-key-hex>", // without 0x prefix
     })
     if err != nil {

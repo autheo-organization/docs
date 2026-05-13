@@ -37,7 +37,7 @@ contract Vault {
 ```javascript
 import { ethers } from "ethers";
 
-const provider = new ethers.JsonRpcProvider("https://testnet-rpc1.autheo.com");
+const provider = new ethers.JsonRpcProvider("https://rpc1.autheo.com");
 
 const abi = [
   "event Deposited(address indexed depositor, uint256 amount, uint256 timestamp)",
@@ -78,7 +78,7 @@ const allDeposits = contract.filters.Deposited(null);
 For lower-level access or when you don't have the ABI:
 
 ```bash
-curl -X POST https://testnet-rpc1.autheo.com \
+curl -X POST https://rpc1.autheo.com \
   -H "Content-Type: application/json" \
   -d '{
     "jsonrpc": "2.0",
@@ -114,7 +114,7 @@ contract.off("Deposited");
 ```
 
 <Note>
-WebSocket connections are required for real-time subscriptions. Use `wss://testnet-rpc1.autheo.com:8546` instead of the HTTP endpoint.
+WebSocket connections are required for real-time subscriptions. Use `wss://rpc1.autheo.com:8546` instead of the HTTP endpoint.
 </Note>
 
 ## Decoding raw log data

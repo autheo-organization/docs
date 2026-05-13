@@ -13,7 +13,7 @@ Suitable for low-frequency monitoring or one-off analytics.
 ```javascript
 import { ethers } from "ethers";
 
-const provider = new ethers.JsonRpcProvider("https://testnet-rpc1.autheo.com");
+const provider = new ethers.JsonRpcProvider("https://rpc1.autheo.com");
 const CONTRACT_ADDRESS = "0x<your-contract>";
 const POLL_INTERVAL_MS = 10_000; // 10 seconds (2 blocks)
 
@@ -126,10 +126,10 @@ For simple lookups without running your own indexer, use the [REST API](/apis/re
 
 ```bash
 # Get all transactions for an address
-curl https://testnet-explorer.autheo.com/api/v2/addresses/0x<address>/transactions
+curl https://evm-explorer.autheo.com/api/v2/addresses/0x<address>/transactions
 
 # Get token transfers
-curl https://testnet-explorer.autheo.com/api/v2/addresses/0x<address>/token-transfers
+curl https://evm-explorer.autheo.com/api/v2/addresses/0x<address>/token-transfers
 ```
 
 ## Tips for production indexers

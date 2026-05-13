@@ -22,7 +22,7 @@ The precise return data varies between client implementations. All clients retur
 
 ```
 // Request
- curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_syncing","params":[],"id":1}'
+ curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_syncing","params":[],"id":1}'
 // Result
 {"jsonrpc":"2.0","id":1,"result":false}
 ```
@@ -42,7 +42,7 @@ None
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_chainId","params":[],"id":67}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_chainId","params":[],"id":67}'
 // Result
 {"jsonrpc":"2.0","id":67,"result":"0x311"}
 ```
@@ -62,7 +62,7 @@ None
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_accounts","params":[],"id":1}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_accounts","params":[],"id":1}'
 // Result
 {"jsonrpc":"2.0","id":1,"result":[]}
 ```
@@ -84,7 +84,7 @@ Returns the balance of the account of given address.
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0xeeCC2FA50180e7c929C814a8bD65e45f81994327", "latest"],"id":1}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0xeeCC2FA50180e7c929C814a8bD65e45f81994327", "latest"],"id":1}'
 // Response
 {"jsonrpc":"2.0","id":1,"result":"0xc75d5bd30345f400"}
 ```
@@ -106,7 +106,7 @@ Returns the value from a storage position at a given address.
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method": "eth_getStorageAt", "params": ["0x295a70b2de5e39532 354a6a8344e616ed314d7251", "0x0", "latest"], "id": 1}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method": "eth_getStorageAt", "params": ["0x295a70b2de5e39532 354a6a8344e616ed314d7251", "0x0", "latest"], "id": 1}'
 // Response
 {"jsonrpc":"2.0","id":1,"result":"0x0000000000000000000000000000000000000000000000000000000000000000"}
 ```
@@ -128,7 +128,7 @@ Returns code at a given address.
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_getCode","params":["0x412d0675cae6C384629Ad47EA74eA4747375B09b", "0xa8bdd"],"id":1}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_getCode","params":["0x412d0675cae6C384629Ad47EA74eA4747375B09b", "0xa8bdd"],"id":1}'
 // Response
 Either the returns the representation of the smart contract or if no smart contract found:
 {"jsonrpc": "2.0", "id": 1, "result": "0x"}
@@ -154,7 +154,7 @@ Note: the address to sign with must be unlocked.
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_sign","params":["0x9b2055d370f73ec7d8a03e965129118dc8f5bf83", "0xdeadbeaf"],"id":1}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_sign","params":["0x9b2055d370f73ec7d8a03e965129118dc8f5bf83", "0xdeadbeaf"],"id":1}'
 // Result
 {"id":1, "jsonrpc": "2.0", "result": "0xa3f20717a250c2b0b729b7e5becbff67fdaef7e0699da4de7ca5895b02a170a12d887fd3b17bfdce3481f10bea41f45ba9f709d39ce8325427b57afcfc994cee1b"}
 ```
@@ -181,7 +181,7 @@ Executes a new message call immediately without creating a transaction on the bl
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc": "2.0", "method": "eth_call", "params": [{"to": "0x89A7EF2F08B1c018D5Cc88836249b84Dd5392905", "data": "0x18160ddd"}, "latest"], "id": 1}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc": "2.0", "method": "eth_call", "params": [{"to": "0x89A7EF2F08B1c018D5Cc88836249b84Dd5392905", "data": "0x18160ddd"}, "latest"], "id": 1}'
 // Result
 {
   "id":1,

@@ -17,7 +17,7 @@ None
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":73}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":73}'
 // Result
 {"jsonrpc":"2.0","id":73,"result":"0x7"}
 ```
@@ -37,7 +37,7 @@ See `eth_call` parameters, except that all properties are optional. If no gas li
 
 ```
 // Request
-curl -X POST https://testnet-rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc": "2.0", "method": "eth_estimateGas", "params": [{"to": "0x89A7EF2F08B1c018D5Cc88836249b84Dd5392905", "data": "0x18160ddd"}, "latest"], "id": 1}'
+curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc": "2.0", "method": "eth_estimateGas", "params": [{"to": "0x89A7EF2F08B1c018D5Cc88836249b84Dd5392905", "data": "0x18160ddd"}, "latest"], "id": 1}'
 // Result
 {"jsonrpc":"2.0","id":1,"result":"0x5248"}
 ```

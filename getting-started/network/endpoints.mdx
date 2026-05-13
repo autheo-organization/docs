@@ -1,8 +1,17 @@
 ---
 title: "Network endpoints"
-description: "Public RPC, WebSocket, REST, and explorer endpoints for Autheo Testnet."
-keywords: ["endpoints", "rpc", "json-rpc", "websocket", "rest", "testnet", "api"]
+description: "Public RPC, WebSocket, REST, and explorer endpoints for Autheo Mainnet and Testnet."
+keywords: ["endpoints", "rpc", "json-rpc", "websocket", "rest", "mainnet", "testnet", "api"]
 ---
+
+## Mainnet
+
+| Service | URL |
+|---|---|
+| JSON-RPC HTTP | `https://rpc1.autheo.com` |
+| EVM block explorer | `https://evm-explorer.autheo.com/` |
+| EVM block explorer API | `https://evm-explorer.autheo.com/api/v2/` |
+| Cosmos explorer | `https://cosmos.autheo.com` |
 
 ## Testnet
 
@@ -10,9 +19,6 @@ keywords: ["endpoints", "rpc", "json-rpc", "websocket", "rest", "testnet", "api"
 |---|---|
 | JSON-RPC HTTP (primary) | `https://testnet-rpc1.autheo.com` |
 | JSON-RPC HTTP (secondary) | `https://testnet-rpc2.autheo.com` |
-| EVM block explorer | `https://evm-explorer.autheo.com/` |
-| EVM block explorer API | `https://evm-explorer.autheo.com/api/v2/` |
-| Cosmos explorer | `https://cosmos.autheo.com` |
 | Testnet faucet | `https://testnet-faucet.autheo.com/` |
 
 ## Network parameters
@@ -27,15 +33,15 @@ keywords: ["endpoints", "rpc", "json-rpc", "websocket", "rest", "testnet", "api"
 
 ## Connecting with MetaMask
 
-Use the following settings when adding Autheo Testnet as a custom network in MetaMask:
+Use the following settings when adding Autheo as a custom network in MetaMask:
 
 | Field | Value |
 |---|---|
-| Network name | Autheo Testnet |
-| Default RPC URL | `https://testnet-rpc1.autheo.com` |
+| Network name | Autheo |
+| Default RPC URL | `https://rpc1.autheo.com` |
 | Chain ID | `785` |
 | Currency symbol | `THEO` |
-| Block explorer URL | `https://evm-explorer.autheo.com/` (EVM) |
+| Block explorer URL | `https://evm-explorer.autheo.com/` |
 
 See [Connect to testnet](/getting-started/wallets/connect-to-testnet) for step-by-step instructions.
 
@@ -44,7 +50,7 @@ See [Connect to testnet](/getting-started/wallets/connect-to-testnet) for step-b
 ```javascript
 import { ethers } from "ethers";
 
-const provider = new ethers.JsonRpcProvider("https://testnet-rpc1.autheo.com");
+const provider = new ethers.JsonRpcProvider("https://rpc1.autheo.com");
 const network = await provider.getNetwork();
 console.log(network.chainId); // 785n
 ```
@@ -53,12 +59,12 @@ console.log(network.chainId); // 785n
 
 ```bash
 # Query a node's sync status
-autheod status --node https://testnet-rpc1.autheo.com:443
+autheod status --node https://rpc1.autheo.com:443
 
-# Send a transaction against testnet
+# Send a transaction
 autheod tx bank send <from-key> <to-address> 1000000000000000000aauth \
   --chain-id autheo_785-1 \
-  --node https://testnet-rpc1.autheo.com:443 \
+  --node https://rpc1.autheo.com:443 \
   --keyring-backend file
 ```
 
@@ -67,7 +73,7 @@ autheod tx bank send <from-key> <to-address> 1000000000000000000aauth \
 Use the `wss://` scheme on port 8546 when connecting via WebSocket:
 
 ```javascript
-const wsProvider = new ethers.WebSocketProvider("wss://testnet-rpc1.autheo.com:8546");
+const wsProvider = new ethers.WebSocketProvider("wss://rpc1.autheo.com:8546");
 ```
 
 <Note>

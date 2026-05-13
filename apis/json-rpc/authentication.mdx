@@ -9,7 +9,7 @@ keywords: ["authentication", "api key", "json-rpc", "authorization", "rpc"]
 The public Autheo Testnet JSON-RPC endpoints do not require authentication:
 
 ```bash
-curl -X POST https://testnet-rpc1.autheo.com \
+curl -X POST https://rpc1.autheo.com \
   -H "Content-Type: application/json" \
   -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}'
 ```
@@ -38,7 +38,7 @@ Use this URL as the `--node` flag value in CLI commands or as the `JsonRpcProvid
 import { ethers } from "ethers";
 
 // Public endpoint (no auth)
-const provider = new ethers.JsonRpcProvider("https://testnet-rpc1.autheo.com");
+const provider = new ethers.JsonRpcProvider("https://rpc1.autheo.com");
 
 // Managed endpoint (if applicable)
 const managedProvider = new ethers.JsonRpcProvider(

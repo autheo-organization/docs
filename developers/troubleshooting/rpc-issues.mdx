@@ -42,7 +42,7 @@ keywords: ["rpc", "json-rpc", "errors", "troubleshooting", "connection", "rate l
 **Fix**: Ensure the request includes `jsonrpc`, `method`, `params`, and `id` fields:
 
 ```bash
-curl -X POST https://testnet-rpc1.autheo.com \
+curl -X POST https://rpc1.autheo.com \
   -H "Content-Type: application/json" \
   -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}'
 ```
@@ -78,7 +78,7 @@ curl -X POST https://testnet-rpc1.autheo.com \
 
 ```javascript
 function connect() {
-  const ws = new ethers.WebSocketProvider("wss://testnet-rpc1.autheo.com:8546");
+  const ws = new ethers.WebSocketProvider("wss://rpc1.autheo.com:8546");
   
   ws.on("error", (err) => {
     console.error("WebSocket error:", err);
@@ -111,7 +111,7 @@ function connect() {
 
 **Fix**: Verify the endpoint against the [REST API reference](/apis/rest/overview). The base URL is:
 ```
-https://testnet-explorer.autheo.com/api/v2/
+https://evm-explorer.autheo.com/api/v2/
 ```
 
 ---
