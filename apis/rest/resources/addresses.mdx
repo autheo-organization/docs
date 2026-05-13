@@ -14,7 +14,7 @@ Returns a list of native coin holders.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/addresses' \
+  'https://evm-explorer.autheo.com/api/v2/addresses' \
   -H 'accept: application/json'
 ```
 
@@ -115,7 +115,7 @@ Returns info for the given address hash.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/addresses/0x3BCc6a2f85c3D0870D2A14d31bBaC9C3F9839BbF' \
+  'https://evm-explorer.autheo.com/api/v2/addresses/0x3BCc6a2f85c3D0870D2A14d31bBaC9C3F9839BbF' \
   -H 'accept: application/json'
 ```
 
@@ -160,7 +160,7 @@ Returns any counters for the given address.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/addresses/0x3BCc6a2f85c3D0870D2A14d31bBaC9C3F9839BbF/counters' \
+  'https://evm-explorer.autheo.com/api/v2/addresses/0x3BCc6a2f85c3D0870D2A14d31bBaC9C3F9839BbF/counters' \
   -H 'accept: application/json'
 ```
 
@@ -184,7 +184,7 @@ Returns transactions involving this address.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/addresses/0x3BCc6a2f85c3D0870D2A14d31bBaC9C3F9839BbF/transactions' \
+  'https://evm-explorer.autheo.com/api/v2/addresses/0x3BCc6a2f85c3D0870D2A14d31bBaC9C3F9839BbF/transactions' \
   -H 'accept: application/json'
 ```
 
@@ -276,7 +276,7 @@ Returns all token transfers involving this address.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/addresses/0xEb533ee5687044E622C69c58B1B12329F56eD9ad/token-transfers?type=ERC-20%2CERC-721%2CERC-1155&filter=to%20%7C%20from&token=0xEb533ee5687044E622C69c58B1B12329F56eD9ad' \
+  'https://evm-explorer.autheo.com/api/v2/addresses/0xEb533ee5687044E622C69c58B1B12329F56eD9ad/token-transfers?type=ERC-20%2CERC-721%2CERC-1155&filter=to%20%7C%20from&token=0xEb533ee5687044E622C69c58B1B12329F56eD9ad' \
   -H 'accept: application/json'
 ```
 
@@ -381,7 +381,7 @@ Returns the requested address' internal transactions.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/addresses/0x599E364e2f22bDB6135797d864B1bC559719312B/internal-transactions?filter=to%20%7C%20from' \
+  'https://evm-explorer.autheo.com/api/v2/addresses/0x599E364e2f22bDB6135797d864B1bC559719312B/internal-transactions?filter=to%20%7C%20from' \
   -H 'accept: application/json'
 ```
 

@@ -15,6 +15,7 @@
         "icon": "play",
         "pages": [
           "start-here/autheo-os-model",
+          "start-here/your-path",
           "start-here/architecture-at-a-glance",
           "start-here/components-map",
           "start-here/terminology",
@@ -257,6 +258,7 @@
                 "group": "testnet",
                 "expanded": false,
                 "pages": [
+                  "nodes/testnet/validator-checklist",
                   "nodes/testnet/node-setup",
                   "nodes/testnet/installation",
                   "nodes/testnet/license-setup",

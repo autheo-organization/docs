@@ -1,0 +1,92 @@
+---
+title: "Validator setup checklist"
+description: "A complete ordered checklist for setting up an Autheo Chain validator — from license acquisition to first reward claim."
+keywords: ["validator setup", "checklist", "sovereign license", "node setup", "register validator", "rewards"]
+---
+
+Use this page as your navigator. Complete the steps in order — each links to the full guide for that step.
+
+<Warning>
+`MsgBeginRedelegate` is permanently disabled on Autheo Chain. Once you delegate stake, you must unbond and wait the ~21-day unbonding period before moving it to a different validator. Choose your validator configuration carefully from the start.
+</Warning>
+
+## Setup checklist
+
+<Steps>
+  <Step title="Acquire a Sovereign NFT license">
+    Purchase a Sovereign license on the [Node Sale Platform](https://tsp.autheo.com). The license is an ERC-721 token on Arbitrum and is required to create a validator.
+
+    Full guide → [Purchasing a license](/web-apps/node-sale/purchasing-a-license)
+  </Step>
+  <Step title="Bridge the license to Autheo Chain">
+    Use the [Autheo Bridge](https://hyper.autheo.com) to transfer your NFT from Arbitrum to your Autheo Chain EVM address. This automatically mints a `LicenseRecord` on-chain with status `ISSUED`.
+
+    Full guide → [Making a transfer](/web-apps/bridge/making-a-transfer)
+  </Step>
+  <Step title="Verify prerequisites">
+    Confirm your server meets the hardware requirements (minimum 16 vCPU, 32 GB RAM + 8–16 GB for MemIAVL, 2 TB NVMe SSD) and that your OS and firewall are configured correctly.
+
+    Full guide → [Node setup](/nodes/testnet/node-setup)
+  </Step>
+  <Step title="Install autheod">
+    Download the pre-built binary or build from source. Bootstrap with a snapshot to reduce sync time from ~24 hours to ~1 hour.
+
+    Full guide → [Installation](/nodes/testnet/installation)
+  </Step>
+  <Step title="Bind the license on-chain">
+    Submit `MsgBindLicense` to transition your license from `ISSUED` to `BOUND`. This step must be completed before you can create a validator.
+
+    Full guide → [License setup](/nodes/testnet/license-setup)
+  </Step>
+  <Step title="Configure and start the node">
+    Create your operator key and consensus key, configure `config.toml` and `app.toml`, set up the systemd service, and verify the node is syncing.
+
+    Full guide → [Production deployment](/nodes/testnet/configuration)
+
+    Key management reference → [Key management](/developers/guides/key-management)
+  </Step>
+  <Step title="Register the validator">
+    Confirm your license is `BOUND`, your node is fully synced (`catching_up: false`), and your operator account is funded. Then submit `MsgCreateValidator`.
+
+    Full guide → [Register validator](/nodes/validator-lifecycle/register-validator)
+  </Step>
+  <Step title="Claim rewards">
+    Once your validator is `ACTIVE`, two reward streams accrue: staking rewards (via `x/distribution`) and NFT emission rewards (via `x/licensedistribution`). Both must be claimed manually.
+
+    Full guide → [Staking and rewards](/token/staking-and-rewards)
+  </Step>
+</Steps>
+
+## Pre-launch verification
+
+Before submitting `MsgCreateValidator`, confirm all of these:
+
+```bash
+# Node is fully synced (catching_up must be false)
+autheod status | jq '.SyncInfo.catching_up'
+
+# License is BOUND
+autheod query license license <license-id>
+
+# Operator key exists and shows correct address
+autheod keys show <key-name> --keyring-backend file
+
+# Operator account has sufficient funds
+autheod query bank balances <cosmos-address>
+```
+
+<Note>
+Self-delegation amount (the `--amount` flag in `MsgCreateValidator`) affects your position in the active validator set. A higher self-delegation signals commitment and can attract external delegators. See [Validator program economics](/validator-program/economics) for guidance on competitive amounts and commission rates.
+</Note>
+
+## Ongoing operations
+
+After your validator is live:
+
+| Task | Frequency | Command |
+|---|---|---|
+| Check node health | Daily | `autheod status` |
+| Claim staking rewards | As needed | `autheod tx distribution withdraw-all-rewards` |
+| Claim NFT emission rewards | As needed | `autheod tx licensedistribution claim-nft-rewards <license-id>` |
+| Check for binary upgrades | Weekly | `autheod version` vs. [latest release](https://github.com/autheo-blockchain/autheo-chain-lab/releases) |
+| Unjail (if jailed) | When needed | `autheod tx slashing unjail --from <key>` |

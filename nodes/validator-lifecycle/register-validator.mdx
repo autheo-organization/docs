@@ -4,7 +4,7 @@ description: "How to submit MsgCreateValidator on Autheo Chain, from pre-flight 
 keywords: ["create validator", "MsgCreateValidator", "register", "sovereign license", "self-delegation", "bonded", "active"]
 ---
 
-This guide walks through submitting `MsgCreateValidator` on Autheo Chain. Complete [Prerequisites](/nodes/testnet/node-setup), [Installation](/nodes/testnet/installation), [Key management](/nodes/testnet/key-management), [License setup](/nodes/testnet/license-setup), and [Production deployment](/nodes/testnet/configuration) before starting.
+This guide walks through submitting `MsgCreateValidator` on Autheo Chain. Complete [Prerequisites](/nodes/testnet/node-setup), [Installation](/nodes/testnet/installation), [Key management](/developers/guides/key-management), [License setup](/nodes/testnet/license-setup), and [Production deployment](/nodes/testnet/configuration) before starting.
 
 ## Pre-flight checklist
 
@@ -62,6 +62,10 @@ autheod tx staking create-validator \
 ```
 
 `--amount 1000000000000000000aauth` = 1 THEO. Adjust to your desired self-delegation.
+
+<Note>
+THEO uses 18 decimal places. **1 THEO = 10¹⁸ aauth**. See [Token overview](/token/overview) for the full denomination table. Consider your self-delegation amount carefully — validators with higher stake are more competitive for the active set and more attractive to delegators. See [Validator economics](/validator-program/economics) for guidance.
+</Note>
 
 ## Step 4: Verify activation
 

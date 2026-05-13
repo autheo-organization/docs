@@ -66,7 +66,7 @@ Your validator's total staking rewards scale with total bonded stake. Attracting
 
 1. **Emissions are performance-conditional**: Only `ACTIVE` licenses (bound + live delegation) earn emission rewards. Downtime causes your license to return to `BOUND`, pausing emission accrual.
 
-2. **No redelegation**: `MsgBeginRedelegate` is disabled. Delegators must undelegate and wait ~21 days before re-delegating to a different validator.
+2. **No redelegation**: `MsgBeginRedelegate` is permanently disabled. Delegators must fully unbond and wait the ~21-day unbonding period before delegating to a different validator — factor this into your validator selection and commission rate strategy.
 
 3. **No emissions cap restart**: Once the global 7B THEO emissions cap is reached, `x/emissions` stops. Plan for the long-term transition to fee-driven rewards as described in the [Tokenomics paper](/token/tokenomics-paper-v1-2).
 

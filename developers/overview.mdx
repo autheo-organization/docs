@@ -1,43 +1,65 @@
 ---
-title: 'Overview'
+title: "Developers"
+description: "Build smart contracts and dApps on Autheo Chain — an EVM-compatible blockchain built on Cosmos SDK. Start here."
+keywords: ["developers", "smart contracts", "evm", "remix", "hardhat", "foundry", "cosmos sdk", "autheod", "solidity"]
 ---
 
-To work with the Autheo blockchain, developers need a solid understanding of blockchain development, particularly as it pertains to EVM-compatible chains built on Cosmos SDK.
+Autheo Chain is EVM-compatible, so any Solidity contract that runs on Ethereum runs on Autheo with no changes. It is also built on the Cosmos SDK, which means you can interact with native chain modules (staking, governance, IBC) using the `autheod` CLI or the REST/JSON-RPC APIs.
 
-Here are the key prerequisites:
+## What you can build
 
-## Familiarity with blockchain concepts
-**Consensus Mechanisms**: Understanding of Proof-of-Authority(PoA) and how it is used in the Autheo ecosystem.
+- **EVM smart contracts** — ERC-20 tokens, NFTs, DeFi protocols, any Solidity contract
+- **dApps** — Connect MetaMask or WalletConnect; use ethers.js or viem as usual
+- **Indexers and analytics** — Query the block explorer REST API or subscribe via WebSocket
+- **Cosmos-native integrations** — Interact with `x/license`, `x/staking`, `x/bank` via CLI or gRPC
 
-**Smart Contracts**: Knowledge of writing and deploying smart contracts, particularly using Solidity (for EVM compatibility) or CosmWasm (for Cosmos SDK-based smart contracts).
+## Fastest path to first success
 
-**Decentralized Applications (dApps)**: Knowledge of how decentralized apps function on a blockchain.
+<Steps>
+  <Step title="Set up your wallet">
+    Install MetaMask and add the Autheo network. See [MetaMask install](/getting-started/wallets/metamask-install) and [Connect to testnet](/getting-started/wallets/connect-to-testnet).
+  </Step>
+  <Step title="Get testnet tokens">
+    Request test THEO from the [testnet faucet](/getting-started/network/faucet) to cover gas fees.
+  </Step>
+  <Step title="Deploy your first contract">
+    Open [Remix IDE](https://remix.ethereum.org), paste your Solidity contract, compile, and deploy directly to Autheo Testnet from MetaMask. Follow the step-by-step [deploy a smart contract](/developers/tutorials/deploy-smart-contract) guide.
+  </Step>
+</Steps>
 
-## EVM and Ethereum-compatible knowledge
-As Autheo is built to be EVM-compatible, familiarity with Ethereum development tools and principles is essential:
+## Choose your development path
 
-[**Solidity**](https://soliditylang.org/): The primary language for writing smart contracts on Autheo.
+<CardGroup cols={2}>
+  <Card title="EVM / Smart Contracts" href="/developers/tutorials/deploy-smart-contract" icon="file-code">
+    Deploy Solidity contracts using Remix, Hardhat, or Foundry. MetaMask is the only prerequisite.
+  </Card>
+  <Card title="Cosmos SDK / CLI" href="/developers/setup/dev-environment" icon="terminal">
+    Use the `autheod` CLI to interact with native modules. Required for staking operations, key management, and node operation.
+  </Card>
+</CardGroup>
 
-[**OpenZeppelin**](https://www.openzeppelin.com/): For deploying, testing, and managing smart contracts.
+<Note>
+For EVM smart contract development with Remix IDE, the `autheod` CLI is optional. You can compile, deploy, and call contracts entirely through MetaMask. Install the CLI only if you need to interact with Cosmos-native modules or operate a node.
+</Note>
 
-[**MetaMask**](https://metamask.io/): A browser extension that acts as a wallet for interacting with dApps.
+## Prerequisites
 
-## Cosmos ecosystem understanding
-Autheo is built using the Cosmos SDK, and understanding Cosmos-based blockchains is essential for working within our ecosystem:
+Depending on your path, you may need familiarity with:
 
-[**Cosmos SDK**](https://docs.cosmos.network/): A framework for building custom blockchains, allowing developers to build highly customizable blockchains with specific consensus mechanisms.
+| Topic | Why it matters | Learn |
+|---|---|---|
+| Solidity | Primary language for EVM contracts on Autheo | [soliditylang.org](https://soliditylang.org/) |
+| OpenZeppelin | Standard library for audited contract templates | [openzeppelin.com](https://www.openzeppelin.com/) |
+| ethers.js / viem | JavaScript libraries for interacting with EVM chains | [docs.ethers.org](https://docs.ethers.org/) |
+| MetaMask | Browser wallet for EVM transaction signing | [MetaMask install](/getting-started/wallets/metamask-install) |
+| Cosmos SDK | Framework underlying Autheo's native modules | [docs.cosmos.network](https://docs.cosmos.network/) |
+| Go | Required for building `autheod` from source | [go.dev](https://go.dev/dl/) |
 
-[Inter-Blockchain Communication (IBC)](https://www.ibcprotocol.dev/): Cosmos blockchains can communicate with each other via IBC. Understanding how to send assets and messages across different blockchains is important.
+## Network reference
 
-[Tendermint](https://tendermint.com/): The underlying consensus engine for many Cosmos-based chains, including Autheo.
+| Network | JSON-RPC | Chain ID |
+|---|---|---|
+| Mainnet | `https://rpc1.autheo.com` | `785` |
+| Testnet | `https://testnet-rpc1.autheo.com` | `785` |
 
-## Autheo-specific tools and resources
-Autheo provides a set of tools to help developers build and deploy applications:
-
-**Autheo SDK**: An EVM-compatible SDK that extends the Cosmos SDK to support Ethereum-based dApps.
-
-[Autheo Chain Explorer](https://devnet-explorer.autheo.com/): Useful for exploring transactions and blocks on the Autheo network. 
-
-## Update for Testnet and Mainnet
-
-**Autheo Testnet**: Before deploying on the mainnet, developers should deploy their applications on the Autheo Testnet to test their smart contracts and dApps.
+See [Network endpoints](/getting-started/network/endpoints) for the full list including WebSocket, REST, and explorer URLs.

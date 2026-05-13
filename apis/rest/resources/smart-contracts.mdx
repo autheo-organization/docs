@@ -14,7 +14,7 @@ Returns a list of all verified smart contracts that match a given search query a
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/smart-contracts?q=proxy&filter=vyper%20%7C%20solidity%20%7C%20yul' \
+  'https://evm-explorer.autheo.com/api/v2/smart-contracts?q=proxy&filter=vyper%20%7C%20solidity%20%7C%20yul' \
   -H 'accept: application/json'
 ```
 
@@ -78,7 +78,7 @@ Returns a counter describing the number of smart contracts on-chain.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/smart-contracts/counters' \
+  'https://evm-explorer.autheo.com/api/v2/smart-contracts/counters' \
   -H 'accept: application/json'
 ```
 
@@ -103,7 +103,7 @@ Returns the smart contract information for a given address hash.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/smart-contracts/0x394c399dbA25B99Ab7708EdB505d755B3aa29997' \
+  'https://evm-explorer.autheo.com/api/v2/smart-contracts/0x394c399dbA25B99Ab7708EdB505d755B3aa29997' \
   -H 'accept: application/json'
 ```
 
@@ -187,7 +187,7 @@ Returns read methods from the given address hash that match a provided query str
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/smart-contracts/0x394c399dbA25B99Ab7708EdB505d755B3aa29997/methods-read?is_custom_abi=true&from=0xF61f5c4a3664501F499A9289AaEe76a709CE536e' \
+  'https://evm-explorer.autheo.com/api/v2/smart-contracts/0x394c399dbA25B99Ab7708EdB505d755B3aa29997/methods-read?is_custom_abi=true&from=0xF61f5c4a3664501F499A9289AaEe76a709CE536e' \
   -H 'accept: application/json'
 ```
 
@@ -236,7 +236,7 @@ Returns all proxy read methods for a given address hash and query string.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/smart-contracts/0x394c399dbA25B99Ab7708EdB505d755B3aa29997/methods-read-proxy?is_custom_abi=true&from=0xF61f5c4a3664501F499A9289AaEe76a709CE536e' \
+  'https://evm-explorer.autheo.com/api/v2/smart-contracts/0x394c399dbA25B99Ab7708EdB505d755B3aa29997/methods-read-proxy?is_custom_abi=true&from=0xF61f5c4a3664501F499A9289AaEe76a709CE536e' \
   -H 'accept: application/json'
 ```
 
@@ -286,7 +286,7 @@ Returns write methods for the given address hash.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/smart-contracts/0x394c399dbA25B99Ab7708EdB505d755B3aa29997/methods-write?is_custom_abi=true' \
+  'https://evm-explorer.autheo.com/api/v2/smart-contracts/0x394c399dbA25B99Ab7708EdB505d755B3aa29997/methods-write?is_custom_abi=true' \
   -H 'accept: application/json'
 ```
 
@@ -320,7 +320,7 @@ Returns proxy write methods for the given address hash.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/smart-contracts/0x394c399dbA25B99Ab7708EdB505d755B3aa29997/methods-write-proxy?is_custom_abi=true' \
+  'https://evm-explorer.autheo.com/api/v2/smart-contracts/0x394c399dbA25B99Ab7708EdB505d755B3aa29997/methods-write-proxy?is_custom_abi=true' \
   -H 'accept: application/json'
 ```
 
@@ -354,7 +354,7 @@ Queries a read method at the given address hash.
 
 ```
 curl -X 'POST' \
-  'https://devnet-explorer.autheo.com/api/v2/smart-contracts/0x394c399dbA25B99Ab7708EdB505d755B3aa29997/query-read-method' \
+  'https://evm-explorer.autheo.com/api/v2/smart-contracts/0x394c399dbA25B99Ab7708EdB505d755B3aa29997/query-read-method' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{

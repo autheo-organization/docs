@@ -2,7 +2,7 @@
 title: 'Overview'
 ---
 
-This document outlines the various endpoints available through the Autheo REST API. More information can be found at the [API Documentation Page](https://devnet-explorer.autheo.com/api-docs) on the Autheo block explorer.
+This document outlines the various endpoints available through the Autheo REST API. More information can be found at the [API Documentation Page](https://evm-explorer.autheo.com/api-docs) on the Autheo block explorer.
 
 ## Address methods
 Details for `address` methods can be found on the [address methods](resources/addresses) page.
@@ -22,7 +22,7 @@ Returns any entities that correspond with the provided query string.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/search?q=tst' \
+  'https://evm-explorer.autheo.com/api/v2/search?q=tst' \
   -H 'accept: application/json'
 ```
 
@@ -61,7 +61,7 @@ Returns a boolean indicating whether the queried address is redirected or not.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/search/check-redirect?q=USDT' \
+  'https://evm-explorer.autheo.com/api/v2/search/check-redirect?q=USDT' \
   -H 'accept: application/json'
 ```
 
@@ -88,7 +88,7 @@ Returns statistic counters
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/stats' \
+  'https://evm-explorer.autheo.com/api/v2/stats' \
   -H 'accept: application/json'
 ```
 
@@ -130,7 +130,7 @@ Returns a chart of transactions by date.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/stats/charts/transactions' \
+  'https://evm-explorer.autheo.com/api/v2/stats/charts/transactions' \
   -H 'accept: application/json'
 ```
 
@@ -195,7 +195,7 @@ Returns a chart of market data.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/stats/charts/market' \
+  'https://evm-explorer.autheo.com/api/v2/stats/charts/market' \
   -H 'accept: application/json'
 ```
 
@@ -230,7 +230,7 @@ Returns the url for the JSON-RPC endpoint
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/config/json-rpc-url' \
+  'https://evm-explorer.autheo.com/api/v2/config/json-rpc-url' \
   -H 'accept: application/json'
 ```
 
@@ -250,7 +250,7 @@ Returns withdrawals.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/withdrawals' \
+  'https://evm-explorer.autheo.com/api/v2/withdrawals' \
   -H 'accept: application/json'
 ```
 

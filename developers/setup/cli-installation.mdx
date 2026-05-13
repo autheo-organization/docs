@@ -54,10 +54,10 @@ We can make changes to the default settings upon our choices, so it allows users
 For example, the chain-id can be changed to `auth_ChainID-1` from a blank name by:
 
 ```
-$ autheod config "chain-id" auth_ChainID-1
+$ autheod config "chain-id" autheo_785-1
 $ autheod config
 {
-     "chain-id": "auth_ChainID-1",
+     "chain-id": "autheo_785-1",
      "keyring-backend": "os",
      "output": "text",
      "node": "tcp://localhost:26657",
@@ -67,7 +67,7 @@ $ autheod config
 
 Other values can be changed in the same way.
 
-Alternatively, we can directly make the changes to the config values in one place at client.toml. It is under the path of `.ethermint/config/client.toml` in the folder where we installed ethermint:
+Alternatively, we can directly make the changes to the config values in one place at client.toml. It is under the path of `.autheo/config/client.toml`:
 
 ```
 ############################################################################
@@ -75,7 +75,7 @@ Alternatively, we can directly make the changes to the config values in one plac
 ############################################################################
 
 # The network chain ID
-chain-id = "auth_ChainID-1"
+chain-id = "autheo_785-1"
 # The keyring's backend, where the keys are stored (os|file|kwallet|pass|test|memory)
 keyring-backend = "os"
 # CLI output format (text|json)
@@ -86,12 +86,12 @@ node = "tcp://localhost:26657"
 broadcast-mode = "sync"
 ```
 
-After the necessary changes are made in the `client.toml`, then save. For example, if we directly change the `chain-id` from `ethermint0` to `ethermint-test1`, and output to number, it would change instantly as shown below.
+After the necessary changes are made in the `client.toml`, then save. For example, if we directly change the `chain-id` to `autheo_785-1` and output to number, it would change instantly as shown below.
 
 ```
 $ autheod config
 {
-     "chain-id": "ethermint-test1",
+     "chain-id": "autheo_785-1",
      "keyring-backend": "os",
      "output": "number",
      "node": "tcp://localhost:26657",
@@ -141,6 +141,13 @@ Available Commands:
   edit-validator   edit an existing validator account
   redelegate       Redelegate illiquid tokens from one validator to another
   unbond           Unbond shares from a validator
+```
+
+<Warning>
+`MsgBeginRedelegate` is permanently disabled on Autheo Chain. The `redelegate` command will be rejected. To move stake, unbond from the current validator (subject to the ~21-day unbonding period) and re-delegate after.
+</Warning>
+
+```
 
 Flags:
   -h, --help   help for staking
@@ -179,11 +186,9 @@ farm surround surround hunt shop glory fringe bag mountain clerk arch ankle anno
 
 The key comes with a "mnemonic phrase", which is serialized into a human-readable 24-word mnemonic. User can recover their associated addresses with the mnemonic phrase.
 
-<Important>
-
-It is important that you keep the mnemonic for address secure, as there is no way to recover it. You would not be able to recover and access the funds in the wallet if you forget the mnemonic phrase.
-
-</Important>
+<Warning>
+Keep your mnemonic phrase secure and offline. There is no way to recover it — losing it means permanent loss of access to those funds.
+</Warning>
 
 ### `keys add <key_name> --recover`: Restore existing key by seed phrase
 
@@ -264,11 +269,9 @@ $ autheod keys show test --bech cons
 
 You can delete a key in your storage path.
 
-<Important>
-
-Make sure you have backed up the key mnemonic before removing any of your keys, as there will be no way to recover your key without the mnemonic.
-
-</Important>
+<Warning>
+Back up the key mnemonic before deleting. There is no way to recover a deleted key without the mnemonic.
+</Warning>
 
 **Example: Remove a key**
 
@@ -329,6 +332,10 @@ The `test` backend is a password-less variation of the file backend. It stores u
 ### `tx bank send`: Transfer operation
 
 Transfer operation involves the transfer of tokens between two addresses.
+
+<Note>
+THEO uses 18 decimal places. **1 THEO = 1,000,000,000,000,000,000 aauth** (10¹⁸). All CLI amounts must be expressed in `aauth`. See [Token overview](/token/overview) for the full denomination table.
+</Note>
 
 **Send Funds [`tx bank send <from_key_or_address> <to_address> <amount> <network_id>`]**
 
@@ -426,7 +433,7 @@ $ autheod tx staking create-validator [flags]
 
 ```
 $ autheod tx staking create-validator \
---amount="100theo" \
+--amount="100000000000000000000aauth" \  # 100 THEO (1 THEO = 10^18 aauth)
 --pubkey='{"@type":...,"key":...}' \
 --moniker="The_new_node" \
 --chain-id="auth_ChainID-1" \

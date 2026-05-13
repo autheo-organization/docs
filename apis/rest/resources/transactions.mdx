@@ -17,7 +17,7 @@ Returns transactions of the specified queries:
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/transactions?filter=pending&type=token_transfer&method=transfer' \
+  'https://evm-explorer.autheo.com/api/v2/transactions?filter=pending&type=token_transfer&method=transfer' \
   -H 'accept: application/json'
 ```
 
@@ -320,7 +320,7 @@ Returns information for the given transaction hash.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/transactions/0x5d90a9da2b8da402b11bc92c8011ec8a62a2d59da5c7ac4ae0f73ec51bb73368' \
+  'https://evm-explorer.autheo.com/api/v2/transactions/0x5d90a9da2b8da402b11bc92c8011ec8a62a2d59da5c7ac4ae0f73ec51bb73368' \
   -H 'accept: application/json'
 ```
 
@@ -614,7 +614,7 @@ Returns token transfers within a given transaction hash.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/transactions/0x6662ad1ad2ea899e9e27832dc202fd2ef915a5d2816c1142e6933cff93f7c592/token-transfers?type=ERC-20' \
+  'https://evm-explorer.autheo.com/api/v2/transactions/0x6662ad1ad2ea899e9e27832dc202fd2ef915a5d2816c1142e6933cff93f7c592/token-transfers?type=ERC-20' \
   -H 'accept: application/json'
 ```
 
@@ -687,7 +687,7 @@ Returns internal transactions for a given transaction hash.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/transactions/0x08ea4d75ad0abe327a7fd368733eaeac43077989e635d800530d7906ebf3bd54/internal-transactions' \
+  'https://evm-explorer.autheo.com/api/v2/transactions/0x08ea4d75ad0abe327a7fd368733eaeac43077989e635d800530d7906ebf3bd54/internal-transactions' \
   -H 'accept: application/json'
 ```
 
@@ -808,7 +808,7 @@ Returns logs for a given transaction hash.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/transactions/0x08ea4d75ad0abe327a7fd368733eaeac43077989e635d800530d7906ebf3bd54/logs' \
+  'https://evm-explorer.autheo.com/api/v2/transactions/0x08ea4d75ad0abe327a7fd368733eaeac43077989e635d800530d7906ebf3bd54/logs' \
   -H 'accept: application/json'
 ```
 
@@ -912,7 +912,7 @@ Returns raw traces from the given transaction hash.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/transactions/0x08ea4d75ad0abe327a7fd368733eaeac43077989e635d800530d7906ebf3bd54/raw-trace' \
+  'https://evm-explorer.autheo.com/api/v2/transactions/0x08ea4d75ad0abe327a7fd368733eaeac43077989e635d800530d7906ebf3bd54/raw-trace' \
   -H 'accept: application/json'
 ```
 
@@ -954,7 +954,7 @@ Returns state changes for the given transaction hash.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/transactions/0x08ea4d75ad0abe327a7fd368733eaeac43077989e635d800530d7906ebf3bd54/state-changes' \
+  'https://evm-explorer.autheo.com/api/v2/transactions/0x08ea4d75ad0abe327a7fd368733eaeac43077989e635d800530d7906ebf3bd54/state-changes' \
   -H 'accept: application/json'
 ```
 

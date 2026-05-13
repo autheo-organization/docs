@@ -14,7 +14,7 @@ Returns a list of all tokens that match a given string query or of a certain typ
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/tokens?q=USDT&type=ERC-20%2CERC-721%2CERC-1155' \
+  'https://evm-explorer.autheo.com/api/v2/tokens?q=USDT&type=ERC-20%2CERC-721%2CERC-1155' \
   -H 'accept: application/json'
 ```
 
@@ -57,7 +57,7 @@ Returns info on all tokens held by the given address hash.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/tokens/0x394c399dbA25B99Ab7708EdB505d755B3aa29997' \
+  'https://evm-explorer.autheo.com/api/v2/tokens/0x394c399dbA25B99Ab7708EdB505d755B3aa29997' \
   -H 'accept: application/json'
 ```
 
@@ -88,7 +88,7 @@ Returns all token transfers performed by the given address hash.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/tokens/0x394c399dbA25B99Ab7708EdB505d755B3aa29997/transfers' \
+  'https://evm-explorer.autheo.com/api/v2/tokens/0x394c399dbA25B99Ab7708EdB505d755B3aa29997/transfers' \
   -H 'accept: application/json'
 ```
 
@@ -193,7 +193,7 @@ Returns all token holders for the given address.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/tokens/0x394c399dbA25B99Ab7708EdB505d755B3aa29997/holders' \
+  'https://evm-explorer.autheo.com/api/v2/tokens/0x394c399dbA25B99Ab7708EdB505d755B3aa29997/holders' \
   -H 'accept: application/json'
 ```
 
@@ -263,7 +263,7 @@ Returns a counter for token holders and transfers for the given address hash.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/tokens/0x394c399dbA25B99Ab7708EdB505d755B3aa29997/counters' \
+  'https://evm-explorer.autheo.com/api/v2/tokens/0x394c399dbA25B99Ab7708EdB505d755B3aa29997/counters' \
   -H 'accept: application/json'
 ```
 
@@ -286,7 +286,7 @@ Returns all non-fungible token (NFT) instances for the given address hash.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/tokens/0x394c399dbA25B99Ab7708EdB505d755B3aa29997/instances' \
+  'https://evm-explorer.autheo.com/api/v2/tokens/0x394c399dbA25B99Ab7708EdB505d755B3aa29997/instances' \
   -H 'accept: application/json'
 ```
 
@@ -397,7 +397,7 @@ Returns an NFT instance by id from a the given address hash.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/tokens/0x394c399dbA25B99Ab7708EdB505d755B3aa29997/instances/431' \
+  'https://evm-explorer.autheo.com/api/v2/tokens/0x394c399dbA25B99Ab7708EdB505d755B3aa29997/instances/431' \
   -H 'accept: application/json'
 ```
 
@@ -501,7 +501,7 @@ Returns transfers of the specified NFT instance for the given address hash.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/tokens/0x394c399dbA25B99Ab7708EdB505d755B3aa29997/instances/431/transfers' \
+  'https://evm-explorer.autheo.com/api/v2/tokens/0x394c399dbA25B99Ab7708EdB505d755B3aa29997/instances/431/transfers' \
   -H 'accept: application/json'
 ```
 
@@ -607,7 +607,7 @@ Returns token holders for a specific NFT instance and address hash.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/tokens/0x394c399dbA25B99Ab7708EdB505d755B3aa29997/instances/431/holders' \
+  'https://evm-explorer.autheo.com/api/v2/tokens/0x394c399dbA25B99Ab7708EdB505d755B3aa29997/instances/431/holders' \
   -H 'accept: application/json'
 ```
 
@@ -678,7 +678,7 @@ Returns a transfer counter for the specific NFT instance and address hash.
 
 ```
 curl -X 'GET' \
-  'https://devnet-explorer.autheo.com/api/v2/tokens/0x394c399dbA25B99Ab7708EdB505d755B3aa29997/instances/431/transfers-count' \
+  'https://evm-explorer.autheo.com/api/v2/tokens/0x394c399dbA25B99Ab7708EdB505d755B3aa29997/instances/431/transfers-count' \
   -H 'accept: application/json'
 ```
 
