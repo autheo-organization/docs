@@ -255,8 +255,7 @@
                 ]
               },
               {
-                "group": "testnet",
-                "expanded": false,
+                "group": "Node Setup",
                 "pages": [
                   "nodes/testnet/validator-checklist",
                   "nodes/testnet/node-setup",
