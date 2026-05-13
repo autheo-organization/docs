@@ -1,0 +1,555 @@
+---
+title: "Self-hosting guide"
+description: "End-to-end guide for running an Autheo Chain validator node on your own infrastructure, including hardware setup, binary installation, NFT license binding, production deployment, key management, security hardening, monitoring, and backup."
+keywords: ["self-host", "validator", "node setup", "installation", "key management", "monitoring", "backup", "security", "zeeve", "autheo chain"]
+---
+
+This guide walks through every step required to run an Autheo Chain validator node on self-managed infrastructure. It covers hardware sizing, binary installation, NFT license setup, production deployment, key management, security hardening, monitoring, and backup/recovery.
+
+<Info>
+This guide was authored in collaboration with Zeeve, an approved Autheo managed-hosting partner. Steps apply equally to fully self-hosted setups.
+</Info>
+
+## 1. Infrastructure requirements
+
+Size your server to meet the following minimums before proceeding. Under-provisioned nodes are more likely to miss blocks and get jailed.
+
+| Resource | Minimum | Recommended |
+|---|---|---|
+| CPU | 8 vCPU | 16 vCPU |
+| RAM | 32 GB | 64 GB |
+| Storage | 1 TB NVMe SSD | 2 TB NVMe SSD |
+| Network | 1 Gbps | 10 Gbps |
+| OS | Ubuntu 22.04 LTS | Ubuntu 22.04 LTS |
+
+Additional notes:
+
+- MemIAVL (in-memory IAVL tree) requires an extra 8–16 GB of RAM above the process baseline. Factor this into your RAM provisioning.
+- Use NVMe storage. Standard SSDs and HDDs will cause I/O bottlenecks under normal block load.
+- Ensure your server has a static, publicly reachable IP address and that TCP ports `26656` (P2P) and `26657` (RPC) are open inbound.
+
+## 2. Binary installation
+
+<Steps>
+
+<Step title="Download the binary">
+
+Download the pre-built `autheod` binary from the official GitHub releases page:
+
+```bash
+curl -L https://github.com/autheo-blockchain/autheo-chain-lab/releases/download/v1.0.6/autheod \
+  -o autheod
+```
+
+</Step>
+
+<Step title="Make executable and install">
+
+```bash
+chmod +x autheod
+sudo mv autheod /usr/local/bin/autheod
+```
+
+</Step>
+
+<Step title="Verify installation">
+
+```bash
+autheod version
+```
+
+Expected output: `1.0.6`
+
+</Step>
+
+</Steps>
+
+<Note>
+The docs elsewhere reference v1.0.8. Always use the latest version from the [releases page](https://github.com/autheo-blockchain/autheo-chain-lab/releases). The installation steps above are identical regardless of version.
+</Note>
+
+## 3. NFT license system
+
+An NFT license is required before you can register a validator or delegate stake. Licenses originate as ERC-721 tokens on Arbitrum. Bridging one to your Autheo Chain EVM address automatically mints a `LicenseRecord` on the Cosmos side.
+
+### License tiers
+
+| Tier | Role | Annual THEO emission |
+|---|---|---|
+| Sovereign | Create and operate a validator | ~187,969 THEO/yr |
+| Prime | External delegation — higher tier | ~18,797 THEO/yr |
+| Core | External delegation — standard tier | ~1,880 THEO/yr |
+
+### Bind a Sovereign license (validator operator)
+
+```bash
+autheod tx license bind-license <license-id> \
+  --validator-address <autheovaloper-address> \
+  --from <key-name> \
+  --chain-id autheo_785-1 \
+  --keyring-backend file \
+  --fees 5000000aauth \
+  --yes
+```
+
+### Bind a Prime or Core license (delegator)
+
+```bash
+autheod tx license bind-license <license-id> \
+  --validator-address <autheovaloper-address> \
+  --from <key-name> \
+  --chain-id autheo_785-1 \
+  --keyring-backend file \
+  --fees 5000000aauth \
+  --yes
+```
+
+### Verify license status
+
+```bash
+# All licenses by owner
+autheod query license licenses-by-owner <cosmos-address>
+
+# Specific license
+autheod query license license <license-id>
+```
+
+A license must reach `ACTIVE` status (bound + delegation present) before it earns per-block NFT rewards.
+
+### Claim NFT rewards
+
+```bash
+# Check accrued rewards
+autheod query emissions license-accrued-rewards <license-id>
+
+# Claim to the license owner address
+autheod tx licensedistribution claim-nft-rewards <license-id> \
+  --from <owner-key> \
+  --chain-id autheo_785-1 \
+  --keyring-backend file \
+  --fees 5000000aauth \
+  --yes
+
+# Claim to a different recipient address
+autheod tx licensedistribution claim-nft-rewards <license-id> \
+  --from <owner-key> \
+  --recipient <recipient-address> \
+  --chain-id autheo_785-1 \
+  --keyring-backend file \
+  --fees 5000000aauth \
+  --yes
+```
+
+## 4. Production deployment
+
+<Steps>
+
+<Step title="Create your validator key">
+
+```bash
+autheod keys add <key-name> \
+  --keyring-backend file
+```
+
+<Warning>
+Save the mnemonic phrase securely offline — in cold storage or a hardware security module. Anyone with the mnemonic can drain your account and unbind your validator. There is no recovery path without the mnemonic.
+</Warning>
+
+</Step>
+
+<Step title="Initialize the node">
+
+```bash
+autheod init <moniker> \
+  --chain-id autheo_785-1
+```
+
+Replace `<moniker>` with your validator's display name.
+
+</Step>
+
+<Step title="Copy genesis and load a snapshot">
+
+Copy the network genesis file into your node home directory:
+
+```bash
+cp /path/to/genesis.json ~/.autheod/config/genesis.json
+```
+
+Download and apply the latest snapshot to avoid syncing from block 0:
+
+```bash
+sudo systemctl stop autheod  # if already running
+rm -rf ~/.autheod/data/
+wget https://snapshot.autheo.com/data_backup_latest.tar.gz
+tar xzvf data_backup_latest.tar.gz
+mv data/ ~/.autheod/data/
+```
+
+After restoring the snapshot, replace `priv_validator_state.json` with **your own** — never use the snapshot's validator state file, as it can cause double-signing.
+
+</Step>
+
+<Step title="Get your delegated (Cosmos) address">
+
+```bash
+autheod keys show <key-name> \
+  --keyring-backend file \
+  --bech val
+```
+
+Record both the `cosmos1...` address (operator) and `autheovaloper1...` address (validator).
+
+</Step>
+
+<Step title="Fund the validator account">
+
+Transfer enough THEO to cover:
+- Minimum self-delegation (check current network minimum with `autheod query staking params`)
+- Transaction fees for upcoming operations (10–50 THEO is typically sufficient)
+
+```bash
+# Check balance
+autheod query bank balances <cosmos-address>
+```
+
+</Step>
+
+<Step title="Configure peers and create the systemd service">
+
+Add seed/peer addresses to `~/.autheod/config/config.toml`:
+
+```toml
+[p2p]
+seeds = "<seed-id>@<seed-host>:26656"
+persistent_peers = "<peer-id>@<peer-host>:26656"
+```
+
+Create a systemd service so the node restarts automatically:
+
+```bash
+sudo tee /etc/systemd/system/autheod.service > /dev/null << 'EOF'
+[Unit]
+Description=Autheo Chain Node
+After=network-online.target
+
+[Service]
+User=ubuntu
+ExecStart=/usr/local/bin/autheod start \
+  --home /home/ubuntu/.autheod \
+  --x-crisis-skip-assert-invariants
+Restart=always
+RestartSec=5
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl enable autheod
+sudo systemctl start autheod
+```
+
+Wait until the node is fully synced before proceeding:
+
+```bash
+autheod status | jq '.SyncInfo.catching_up'
+# Returns false when synced
+```
+
+</Step>
+
+<Step title="Create the validator">
+
+Once synced, submit the `create-validator` transaction:
+
+```bash
+autheod tx staking create-validator \
+  --amount 1000000000000000000aauth \
+  --from <key-name> \
+  --pubkey $(autheod tendermint show-validator) \
+  --moniker "<your-moniker>" \
+  --chain-id autheo_785-1 \
+  --commission-rate 0.10 \
+  --commission-max-rate 0.20 \
+  --commission-max-change-rate 0.01 \
+  --min-self-delegation 1 \
+  --keyring-backend file \
+  --fees 5000000aauth \
+  --yes
+```
+
+Then bind your Sovereign license to the validator (see [Section 3](#3-nft-license-system)).
+
+After binding, self-delegate to move the license from `BOUND` to `ACTIVE`:
+
+```bash
+autheod tx staking delegate <autheovaloper-address> <amount>aauth \
+  --from <key-name> \
+  --chain-id autheo_785-1 \
+  --keyring-backend file \
+  --fees 5000000aauth \
+  --yes
+```
+
+<Warning>
+Do not sign the `create-validator` transaction twice with the same consensus key. Double-signing results in permanent tombstoning — the validator cannot be recovered. Always verify you have only one running instance before submitting.
+</Warning>
+
+</Step>
+
+<Step title="Verify active validator status">
+
+```bash
+# Check validator status
+autheod query staking validator <autheovaloper-address>
+
+# Confirm license is ACTIVE
+autheod query license licenses-by-owner <cosmos-address> \
+  --status LICENSE_STATUS_ACTIVE
+```
+
+Your validator should now appear in the active set (if bonded stake is within the top `max_validators`) and your Sovereign license should show `ACTIVE`.
+
+</Step>
+
+</Steps>
+
+## 5. Authentication and key management
+
+### Keyring backends
+
+| Backend | Storage | Use case |
+|---|---|---|
+| `file` | Encrypted file on disk | Recommended for production; passphrase required on start |
+| `os` | OS native keystore | Convenient for development; system-managed |
+| `memory` | In-memory only | Testing; keys lost on restart |
+| `test` | Unencrypted file | Development only; never use in production |
+| `kwallet` / `pass` | KDE Wallet / GPG pass | Alternative Linux keystores |
+
+For production validators, use the `file` backend with a strong passphrase stored separately from the server.
+
+### Key management commands
+
+```bash
+# Create a new key
+autheod keys add <key-name> --keyring-backend file
+
+# Restore from mnemonic
+autheod keys add <key-name> --recover --keyring-backend file
+
+# List all keys
+autheod keys list --keyring-backend file
+
+# Show a specific key (addresses only)
+autheod keys show <key-name> --keyring-backend file
+
+# Show validator operator address
+autheod keys show <key-name> --keyring-backend file --bech val
+```
+
+### Consensus key
+
+The consensus key (`priv_validator_key.json`) is separate from your operator key. It lives in `~/.autheod/config/` and is used to sign blocks. Back it up independently and never share it.
+
+For high-security deployments, consider a remote signer (e.g., [tmkms](https://github.com/iqlusioninc/tmkms)) which keeps the consensus key in a hardware security module and removes it from the validator host entirely.
+
+## 6. Security best practices
+
+### OS hardening
+
+```bash
+# Disable root SSH login
+sudo sed -i 's/^PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config
+sudo systemctl restart sshd
+
+# Disable password authentication (use SSH keys only)
+sudo sed -i 's/^#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+
+# Enable and configure UFW firewall
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow 22/tcp      # SSH
+sudo ufw allow 26656/tcp   # P2P
+sudo ufw allow 26660/tcp   # Prometheus metrics (restrict to monitoring server only)
+sudo ufw enable
+
+# Keep packages up to date
+sudo apt update && sudo apt upgrade -y
+sudo apt install unattended-upgrades -y
+sudo dpkg-reconfigure -plow unattended-upgrades
+```
+
+### Key security rules
+
+- Store mnemonic phrases offline, in cold storage or a hardware wallet.
+- Never store plaintext keys on the validator host.
+- Do not reuse operator keys across multiple validators.
+- Rotate the consensus key periodically — see the [key rotation guide](/nodes/validator-lifecycle/key-rotation).
+
+### Network security
+
+- Do not expose the RPC port (`26657`) to the public internet. Use it only over localhost or a trusted internal network.
+- Restrict JSON-RPC namespaces in `app.toml`. Only enable what your use case requires:
+
+| Namespace | Purpose | Recommended exposure |
+|---|---|---|
+| `eth` | Standard Ethereum JSON-RPC | Localhost or trusted only |
+| `net` | Network info | Localhost or trusted only |
+| `web3` | Client version | Localhost or trusted only |
+| `personal` | Key management | **Disable in production** |
+| `debug` | Debug tracing | **Disable in production** |
+
+- Optionally add an address allowlist in `app.toml` under `[json-rpc]` to restrict which IPs can call the JSON-RPC endpoint:
+
+```toml
+[json-rpc]
+api = "eth,net,web3"
+address = "127.0.0.1:8545"
+```
+
+### Sentry node architecture
+
+For high-value validators, place your signing node behind one or more sentry nodes:
+- Sentry nodes connect to the public P2P network.
+- The validator node connects only to sentry nodes (`private_peer_ids` in `config.toml`).
+- This prevents direct DDoS exposure of the consensus key holder.
+
+## 7. Monitoring and health checks
+
+### Health endpoints
+
+| Endpoint | Method | Description |
+|---|---|---|
+| `http://localhost:26657/health` | GET | Returns `{}` if node is running |
+| `http://localhost:26657/status` | GET | Sync info, validator pubkey, latest block |
+| `http://localhost:26660/metrics` | GET | Prometheus metrics |
+
+### Prometheus configuration
+
+Enable metrics in `~/.autheod/config/config.toml`:
+
+```toml
+[instrumentation]
+prometheus = true
+prometheus_listen_addr = ":26660"
+```
+
+Add a scrape job in your Prometheus `prometheus.yml`:
+
+```yaml
+scrape_configs:
+  - job_name: "autheod"
+    static_configs:
+      - targets: ["<validator-ip>:26660"]
+    scrape_interval: 15s
+```
+
+### Key metrics and alert thresholds
+
+| Metric | Alert threshold | Notes |
+|---|---|---|
+| `tendermint_consensus_height` | No increase in 60s | Node has stopped producing/receiving blocks |
+| `tendermint_p2p_peers` | < 3 | Node is under-peered; check firewall and seeds |
+| `tendermint_consensus_missed_blocks` | > 5% of window | Risk of jailing approaching |
+| `process_resident_memory_bytes` | > 80% of total RAM | Risk of OOM kill |
+| `tendermint_consensus_rounds` | Consistently > 1 | Consensus instability |
+
+### Log monitoring
+
+```bash
+# Stream live logs
+journalctl -u autheod -f
+
+# Filter for errors
+journalctl -u autheod -p err --since "1 hour ago"
+
+# Check for missed pre-commits (validator not signing)
+journalctl -u autheod | grep "miss" | tail -20
+```
+
+### Grafana dashboard
+
+Import the [Cosmos SDK community dashboard](https://grafana.com/grafana/dashboards/11036) (Grafana ID: 11036) for a pre-built view of consensus health, peer count, block height, and memory usage.
+
+## 8. Backup and recovery
+
+### Critical files to back up
+
+| File | Location | Description |
+|---|---|---|
+| `priv_validator_key.json` | `~/.autheod/config/` | Consensus signing key — most critical file |
+| `node_key.json` | `~/.autheod/config/` | Node identity for P2P — loss requires re-peering |
+| Operator key mnemonic | Secure offline storage | Restores your `keys` keyring |
+| `genesis.json` | `~/.autheod/config/` | Chain genesis (can be re-downloaded but good to have) |
+
+<Warning>
+Never back up `priv_validator_state.json` from a running node and restore it to a second node. Using the same validator state on two nodes simultaneously causes double-signing, which results in permanent tombstoning.
+</Warning>
+
+### Create a node snapshot
+
+```bash
+sudo systemctl stop autheod
+
+tar czf autheod-snapshot-$(date +%Y%m%d).tar.gz \
+  -C ~/.autheod data/ \
+  --exclude="data/cs.wal"
+
+sudo systemctl start autheod
+```
+
+### Restore from a snapshot
+
+```bash
+sudo systemctl stop autheod
+rm -rf ~/.autheod/data/
+
+# Restore from your own snapshot
+tar xzvf autheod-snapshot-<date>.tar.gz -C ~/.autheod/
+
+# OR restore from the Autheo network snapshot
+wget https://snapshot.autheo.com/data_backup_latest.tar.gz
+tar xzvf data_backup_latest.tar.gz
+mv data/ ~/.autheod/data/
+
+# Always restore YOUR OWN priv_validator_state.json after applying any snapshot
+cp /path/to/backup/priv_validator_state.json \
+  ~/.autheod/data/priv_validator_state.json
+
+sudo systemctl start autheod
+```
+
+### Export chain state
+
+```bash
+autheod export > autheo-state-$(date +%Y%m%d).json
+```
+
+Exported state can be used to bootstrap a new network or debug state issues.
+
+---
+
+## Further reading
+
+<CardGroup cols={2}>
+  <Card title="Node setup" href="/nodes/testnet/node-setup" icon="server">
+    Detailed hardware prerequisites and OS configuration for testnet
+  </Card>
+  <Card title="Key rotation" href="/nodes/validator-lifecycle/key-rotation" icon="rotate">
+    Safely rotate consensus keys without downtime
+  </Card>
+  <Card title="Security hardening" href="/nodes/operations/security-hardening" icon="shield">
+    Full OS and network hardening reference
+  </Card>
+  <Card title="Monitoring" href="/nodes/operations/monitoring" icon="chart-line">
+    Prometheus, Grafana, and alerting setup
+  </Card>
+  <Card title="Backup and restore" href="/nodes/operations/backups-and-restore" icon="database">
+    Key backup procedures and snapshot recovery
+  </Card>
+  <Card title="Incident response" href="/nodes/operations/incident-response" icon="triangle-exclamation">
+    Runbooks for jailing, tombstoning, and hardware failure
+  </Card>
+</CardGroup>
