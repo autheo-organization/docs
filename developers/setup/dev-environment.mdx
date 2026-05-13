@@ -1,49 +1,91 @@
 ---
-title: 'Autheo development environment setup'
+title: "Development environment setup"
+description: "Install Go, Git, and the autheod CLI to interact with Autheo Chain's Cosmos-native modules."
+keywords: ["dev environment", "go", "git", "autheod", "cli", "setup", "install"]
 ---
 
-Autheo uses an underlying architecture based on the Cosmos SDK. When developing for the Autheo blockchain, you will need to install `autheod`, the command-line interface(CLI) associated with the Autheo blockchain. The following document while guide you through the installation process for `autheod`.
+Autheo Chain uses the Cosmos SDK. To interact with native chain modules — staking, key management, querying — you need the `autheod` CLI. This guide installs all required dependencies.
+
+<Note>
+For EVM smart contract development with Remix IDE, `autheod` is optional. You can deploy and interact with contracts entirely through MetaMask without any CLI tooling. Return here when you need to operate a node or run Cosmos-native transactions.
+</Note>
 
 ## Install dependencies
+
 Before you install `autheod`, you'll need some basic dependencies.
 
-### Install Go (Golang)
-The Cosmos SDK, which Autheo is built on, uses Go as its primary programming language. The first thing you'll need is to install Go on your machine.
+### Install Go
 
-Install Go on macOS/Linux: If you’re on macOS or Linux, you can install Go using Homebrew (for macOS) or your package manager (for Linux).
+The Cosmos SDK uses Go as its primary language. Install Go 1.23 or later.
 
 **macOS:**
 
-```
+```bash
 brew install go
 ```
 
 **Ubuntu/Debian:**
 
-```
-sudo apt update
-sudo apt install golang-go
+```bash
+sudo apt update && sudo apt install golang-go
 ```
 
-For other systems or installation methods, follow the official instructions from the Go website: [Go Installation](https://go.dev/dl/).
+For other systems, follow the official instructions at [go.dev/dl](https://go.dev/dl/).
+
+Verify the installation:
+
+```bash
+go version
+# Expected: go version go1.23.x ...
+```
 
 ### Install Git
-You will also need Git to clone the Autheo repository from GitHub. If Git is not already installed on your system, you can install it as follows:
 
 **macOS:**
 
-```
+```bash
 brew install git
 ```
 
 **Ubuntu/Debian:**
 
-```
+```bash
 sudo apt install git
 ```
 
-For other operating systems, visit: [Git Downloads](https://git-scm.com/downloads).
+For other systems, see [git-scm.com/downloads](https://git-scm.com/downloads).
 
-## Install Autheod
-Install `autheod` by following the [CLI installation guide](/developers/setup/cli-installation).
+## Install autheod
 
+`autheod` is the Autheo Chain binary. It handles key management, transaction signing, staking, and node operations.
+
+<Steps>
+  <Step title="Download the latest release">
+    ```bash
+    curl -L -o autheod \
+      https://github.com/autheo-blockchain/autheo-chain-lab/releases/latest/download/autheod
+    ```
+  </Step>
+  <Step title="Make executable and move to PATH">
+    ```bash
+    chmod +x autheod
+    sudo mv autheod /usr/local/bin/
+    ```
+  </Step>
+  <Step title="Verify the version">
+    ```bash
+    autheod version
+    ```
+    Expected output: `1.0.8`
+  </Step>
+</Steps>
+
+<Note>
+To build `autheod` from source (required for some custom configurations), see the [Installation guide](/nodes/testnet/installation). The pre-built binary is sufficient for development and CLI usage.
+</Note>
+
+## Next steps
+
+- Explore CLI commands → [CLI installation guide](/developers/setup/cli-installation)
+- Set up a full development project → [Project scaffolding](/developers/setup/project-scaffolding)
+- Deploy your first smart contract → [Deploy a smart contract](/developers/tutorials/deploy-smart-contract)
