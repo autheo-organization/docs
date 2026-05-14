@@ -257,13 +257,13 @@
               {
                 "group": "Node Setup",
                 "pages": [
-                  "nodes/testnet/validator-checklist",
-                  "nodes/testnet/node-setup",
-                  "nodes/testnet/installation",
-                  "nodes/testnet/license-setup",
-                  "nodes/testnet/configuration",
-                  "nodes/testnet/upgrades",
-                  "nodes/testnet/troubleshooting"
+                  "nodes/node-setup/validator-checklist",
+                  "nodes/node-setup/node-setup",
+                  "nodes/node-setup/installation",
+                  "nodes/node-setup/license-setup",
+                  "nodes/node-setup/configuration",
+                  "nodes/node-setup/upgrades",
+                  "nodes/node-setup/troubleshooting"
                 ]
               },
               {
