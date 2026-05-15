@@ -45,6 +45,8 @@ On first access, Keplr will prompt you to add the Autheo Alpha chain. Approve th
     1. **Validator Agreement** — "I agree with the Autheo validator agreement and operational policies."
     2. **Key Security** — "I understand validator keys are non-transferable and secured by me."
     3. **Reward Eligibility** — "Reward eligibility depends on meeting Autheo uptime and compliance requirements."
+
+    ![Validator Portal sign-in page with terms and conditions](/images/vp-accept-terms.png)
   </Step>
   <Step title="Connect your wallet">
     1. Click **Connect Wallet**
@@ -52,6 +54,10 @@ On first access, Keplr will prompt you to add the Autheo Alpha chain. Approve th
     3. Approve the chain addition if prompted (first-time only)
     4. Sign the gasless authentication message (**ADR-36**) in Keplr
     5. Upon successful authentication, you are redirected to the Dashboard
+
+    ![Connect wallet — Keplr popup](/images/vp-connect-wallet-1.png)
+
+    ![Connect wallet — ADR-36 signature request](/images/vp-connect-wallet-2.png)
   </Step>
 </Steps>
 
@@ -60,3 +66,5 @@ The ADR-36 signature confirms you control the wallet address — it does not ini
 </Note>
 
 To sign out, click the **Logout** button in the top-right corner of the header. Your local session is cleared; on-chain delegations, rewards, and node subscriptions remain unaffected.
+
+![Signing out of the Validator Portal](/images/vp-sign-out.png)

@@ -16,7 +16,13 @@ Once logged in, the main navigation is a tab bar at the top of the content area:
 | Referrals Code | `/referrals` | Generate and manage your referral code |
 | My Orders | `/orders` | View your purchase and referral order history |
 
+![Platform navigation tab bar](/images/node-sale-platform-nav.png)
+
 The **header** includes the Autheo logo (returns to the Purchase page), links to the LitePaper and Autheo Explorer, social links, and your connected wallet address. On mobile, these are accessible via the hamburger menu (☰) in the top right.
+
+![Header navigation bar](/images/node-sale-header.png)
+
+![Platform footer with external links](/images/node-sale-footer.png)
 
 ## Purchasing a node license
 
@@ -29,6 +35,8 @@ The **header** includes the Autheo logo (returns to the Purchase page), links to
 | Sovereign | 100× Core | Enterprise-grade license with 100× the computing weight of a Core node. |
 
 Click the node type you wish to purchase to see the current price and available supply.
+
+![Purchase page showing Core, Prime, and Sovereign node tiers](/images/node-sale-purchase-main.png)
 
 <Note>
 To learn how these license types map to on-chain roles and reward tiers, see [License gating](/nodes/architecture/license-gating).
@@ -47,24 +55,38 @@ To learn how these license types map to on-chain roles and reward tiers, see [Li
 | USDC | Pay with USD Coin (ERC-20 stablecoin) |
 | FIAT | Pay with a credit or debit card via a hosted payment session |
 
+![Currency selector dropdown](/images/node-sale-currency-selector.png)
+
 **Promo / Referral code (optional)** — Enter a referral code in the Promo Code field and click **Apply** to receive a discount and credit the referrer with a commission.
 
+![Promo and referral code input field](/images/node-sale-promo-code.png)
+
 **Safety Fund (optional)** — Enabling the Safety Fund checkbox allocates a small additional amount as a network safety reserve.
+
+![Safety Fund checkbox option](/images/node-sale-safety-fund.png)
 
 ### Step 3 — Confirm the purchase
 
 1. Review the order summary and click **Purchase**
 2. A Purchase Confirmation modal appears with a real-time transaction progress flow
 
+![Purchase confirmation modal — step 1](/images/node-sale-confirm-purchase-1.png)
+
+![Purchase confirmation modal — step 2](/images/node-sale-confirm-purchase-2.png)
+
 **For ETH / USDT / USDC payments:**
 - Approve the transaction in your wallet (ERC-20 tokens require an approval step first)
 - Gas fees apply
 - On success, you are redirected to the Success page
 
+![ETH/USDT/USDC payment transaction flow](/images/node-sale-payment-crypto.png)
+
 **For FIAT payments:**
 - You are redirected to a hosted payment page
 - On successful payment, you are redirected to the Success page
 - If you cancel, you are redirected to the Cancel page with no charge applied
+
+![FIAT payment flow](/images/node-sale-payment-fiat.png)
 
 <Warning>
 Do not close your browser or disconnect your wallet during an active transaction.

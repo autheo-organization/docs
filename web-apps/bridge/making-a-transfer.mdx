@@ -26,18 +26,26 @@ The Bridge has a clean, single-page layout with four main areas:
 | Remote balance | Recipient's current balance on the destination chain |
 | Continue button | Proceeds to review mode |
 
+![Bridge transfer token form](/images/bridge-transfer-form.png)
+
 **Floating action buttons** — The clock icon opens the sidebar with transfer history and connected wallets.
 
+![Bridge floating action buttons](/images/bridge-floating-buttons.png)
+
 **Footer** — Links to Hyperlane documentation, Discord, GitHub, Twitter/X, Blog, Terms of Service, and Privacy Policy.
+
+![Bridge footer](/images/bridge-footer.png)
 
 ## Transferring tokens
 
 <Steps>
   <Step title="Select the source chain">
     Click the **From** dropdown. A searchable chain selection modal appears. Select your source chain (e.g., Arbitrum Sepolia).
+
+    ![Chain selection modal](/images/bridge-select-chain.png)
   </Step>
   <Step title="Select the destination chain">
-    Click the **To** dropdown and select the target chain (e.g., Autheo Alpha).
+    Click the **To** dropdown and select the target chain (e.g., Autheo Alpha). The same chain selection modal is used for both source and destination.
     <Tip>Use the swap icon (↕) between the chain selectors to quickly reverse the direction.</Tip>
   </Step>
   <Step title="Choose a token">
@@ -47,6 +55,8 @@ The Bridge has a clean, single-page layout with four main areas:
     4. Click the desired token
 
     Tokens that appear dimmed are currently disabled. If only one token is available on a route, it is auto-selected.
+
+    ![Token selection modal](/images/bridge-choose-token.png)
   </Step>
   <Step title="Enter the token ID or amount">
     Type the token ID (for NFTs) or amount in the input field. Your available balance is shown as **My balance**.
@@ -54,6 +64,8 @@ The Bridge has a clean, single-page layout with four main areas:
   </Step>
   <Step title="Enter the recipient address">
     Enter the destination wallet address in the **Recipient address** field. The application displays the recipient's current balance on the destination chain.
+
+    ![Recipient address field](/images/bridge-recipient-address.png)
   </Step>
   <Step title="Review and confirm">
     1. Click **Continue** to enter review mode
@@ -61,6 +73,8 @@ The Bridge has a clean, single-page layout with four main areas:
     3. Click **Cancel** to go back and correct anything, or **Send** to proceed
 
     If the recipient address differs from your connected wallet, a confirmation modal appears asking you to verify.
+
+    ![Review and confirm transfer details](/images/bridge-review-confirm.png)
   </Step>
   <Step title="Sign the transactions">
     Depending on the token type, you may need to sign one or two transactions:
@@ -78,6 +92,14 @@ The Bridge has a clean, single-page layout with four main areas:
     5. Signing transfer
     6. Confirming transfer
 
+    ![Sign transaction — step 1](/images/bridge-sign-tx-1.png)
+
+    ![Sign transaction — step 2](/images/bridge-sign-tx-2.png)
+
+    ![Sign transaction — step 3](/images/bridge-sign-tx-3.png)
+
+    ![Sign transaction — step 4, transfer confirmed](/images/bridge-sign-tx-4.png)
+
     <Warning>Do not close the browser tab or navigate away while waiting for confirmation.</Warning>
   </Step>
   <Step title="Track delivery">
@@ -88,6 +110,10 @@ The Bridge has a clean, single-page layout with four main areas:
     - Status updates once tokens arrive on the destination chain
 
     Most transfers complete within a few minutes. Times vary by chain and network congestion.
+
+    ![Transfer delivery tracking — in progress](/images/bridge-track-delivery-1.png)
+
+    ![Transfer delivery tracking — completed](/images/bridge-track-delivery-2.png)
   </Step>
 </Steps>
 
