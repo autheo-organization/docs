@@ -207,33 +207,6 @@
         ]
       },
       {
-        "group": "SDKs",
-        "hidden": true,
-        "pages": [
-          "sdks/overview",
-          {
-            "group": "go",
-            "expanded": false,
-            "pages": [
-              "sdks/go/overview",
-              "sdks/go/install",
-              "sdks/go/quickstart",
-              "sdks/go/methods",
-              {
-                "group": "Examples",
-                "expanded": false,
-                "pages": [
-                  "sdks/go/examples/query-balance",
-                  "sdks/go/examples/send-transaction",
-                  "sdks/go/examples/contract-interaction"
-                ]
-              },
-              "sdks/go/reference"
-            ]
-          }
-        ]
-      },
-      {
         "group": "Node operations",
         "pages": [
           {

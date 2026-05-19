@@ -1,9 +1,16 @@
 ---
-title: 'Overview'
+title: 'APIs overview'
+description: 'Autheo Chain exposes two public API interfaces: an Ethereum-compatible JSON-RPC API and a block explorer REST API.'
+keywords: ["api", "json-rpc", "rest", "overview", "endpoints"]
 ---
 
-## Using the REST and JSON-RPC clients
-The Autheo Go SDK provides two main ways to communicate with the Autheo blockchain:
+Autheo Chain exposes two public API interfaces for interacting with the network programmatically.
 
-* [**REST client**](/rest/overview):  Great for API endpoints
-* [**JSON-RPC client**](/json-rpc/overview): Ideal for lower level, Ethereum style interaction
+| API | Best for | Docs |
+|---|---|---|
+| JSON-RPC | EVM interactions — deploying contracts, sending transactions, querying balances, subscribing to events. Compatible with ethers.js, viem, web3.js, and any standard Ethereum client library. | [JSON-RPC overview](/apis/json-rpc/overview) |
+| REST | Read-only data access — blocks, transactions, addresses, token balances. Simple HTTP requests, no library required. | [REST overview](/apis/rest/overview) |
+
+## Endpoints
+
+See [Network endpoints](/getting-started/network/endpoints) for the full list of RPC and API URLs for both mainnet and testnet.
