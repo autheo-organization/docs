@@ -1,16 +1,38 @@
 ---
 title: "Self-hosting guide"
-description: "End-to-end guide for running an Autheo Chain validator node on your own infrastructure, including hardware setup, binary installation, NFT license binding, production deployment, key management, security hardening, monitoring, and backup."
-keywords: ["self-host", "validator", "node setup", "installation", "key management", "monitoring", "backup", "security", "zeeve", "autheo chain"]
+description: "End-to-end guide for running an Autheo Chain validator node on your own infrastructure using Docker or systemd, including network configuration, sync methods, key management, and validator registration."
+keywords: ["self-host", "validator", "node setup", "docker", "systemd", "autheod", "autheo chain", "ghcr", "installation"]
 ---
 
-This guide walks through every step required to run an Autheo Chain validator node on self-managed infrastructure. It covers hardware sizing, binary installation, NFT license setup, production deployment, key management, security hardening, monitoring, and backup/recovery.
+This guide covers running an Autheo node from scratch. Two deployment methods are provided: **Method A — systemd** (build from source) and **Method B — Docker** (official GHCR image).
 
-<Info>
-This guide was authored in collaboration with Zeeve, an approved Autheo managed-hosting partner. Steps apply equally to fully self-hosted setups.
-</Info>
+## 1. Chain reference
 
-## 1. Infrastructure requirements
+| Property | Value |
+|---|---|
+| Binary | `autheod` |
+| Cosmos chain ID | `autheo_2127-1` (mainnet) |
+| EVM chain ID | `2127` (`0x84f`) |
+| Native denom | `aauth` |
+| Denom decimals | 18 (1 THEO = 10^18 aauth) |
+| Default home dir | `$HOME/.autheo` |
+| Key algorithm | `eth_secp256k1` |
+| Block time | ~5 seconds |
+| Block max gas | `30000000` |
+| Min gas prices | `10000000000000aauth` |
+
+**Ports (single node defaults):**
+
+| Port | Protocol | Purpose |
+|---|---|---|
+| `26656` | TCP | CometBFT P2P |
+| `26657` | TCP | CometBFT RPC |
+| `9090` | TCP | gRPC |
+| `1317` | TCP | REST API |
+| `8545` | TCP | EVM JSON-RPC |
+| `8546` | TCP | EVM WebSocket |
+
+## 2. Infrastructure requirements
 
 Size your server to meet the following minimums before proceeding. Under-provisioned nodes are more likely to miss blocks and get jailed.
 
@@ -22,534 +44,583 @@ Size your server to meet the following minimums before proceeding. Under-provisi
 | Network | 1 Gbps | 10 Gbps |
 | OS | Ubuntu 22.04 LTS | Ubuntu 22.04 LTS |
 
-Additional notes:
+---
 
-- MemIAVL (in-memory IAVL tree) requires an extra 8–16 GB of RAM above the process baseline. Factor this into your RAM provisioning.
-- Use NVMe storage. Standard SSDs and HDDs will cause I/O bottlenecks under normal block load.
-- Ensure your server has a static, publicly reachable IP address and that TCP ports `26656` (P2P) and `26657` (RPC) are open inbound.
+## 3. Method A: systemd
 
-## 2. Binary installation
-
-<Steps>
-
-<Step title="Download the binary">
-
-Download the pre-built `autheod` binary from the official GitHub releases page:
+### 3.1 Prerequisites
 
 ```bash
-curl -L https://github.com/autheo-blockchain/autheo-chain-lab/releases/download/v1.0.6/autheod \
-  -o autheod
+# Ubuntu / Debian
+sudo apt update && sudo apt install -y \
+  git make gcc build-essential \
+  jq curl wget
+
+# Go (must match go.mod — verify exact version at https://go.dev/dl/)
+GO_VERSION=1.25.0
+wget https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz
+sudo rm -rf /usr/local/go
+sudo tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz
+echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bashrc
+source ~/.bashrc
+
+go version
 ```
 
-</Step>
-
-<Step title="Make executable and install">
+### 3.2 Build the binary
 
 ```bash
-chmod +x autheod
-sudo mv autheod /usr/local/bin/autheod
+git clone https://github.com/autheo-blockchain/autheo-chain-core
+cd autheo-chain-core
+
+make build
 ```
 
-</Step>
-
-<Step title="Verify installation">
+Install to PATH:
 
 ```bash
-autheod version
+sudo cp ./build/autheod /usr/local/bin/autheod
+autheod --help
 ```
 
-Expected output: `1.0.6`
+### 3.3 Join the network
 
-</Step>
-
-</Steps>
-
-<Note>
-The docs elsewhere reference v1.0.8. Always use the latest version from the [releases page](https://github.com/autheo-blockchain/autheo-chain-lab/releases). The installation steps above are identical regardless of version.
-</Note>
-
-## 3. NFT license system
-
-An NFT license is required before you can register a validator or delegate stake. Licenses originate as ERC-721 tokens on Arbitrum. Bridging one to your Autheo Chain EVM address automatically mints a `LicenseRecord` on the Cosmos side.
-
-### License tiers
-
-| Tier | Role | Annual THEO emission |
-|---|---|---|
-| Sovereign | Create and operate a validator | ~187,969 THEO/yr |
-| Prime | External delegation — higher tier | ~18,797 THEO/yr |
-| Core | External delegation — standard tier | ~1,880 THEO/yr |
-
-### Bind a Sovereign license (validator operator)
+All official configuration files are in the [autheo-blockchain/networks](https://github.com/autheo-blockchain/networks) repository.
 
 ```bash
-autheod tx license bind-license <license-id> \
-  --validator-address <autheovaloper-address> \
-  --from <key-name> \
-  --chain-id autheo_2127-1 \
-  --keyring-backend file \
-  --fees 5000000aauth \
-  --yes
-```
+# 1. Clone the networks repo
+git clone https://github.com/autheo-blockchain/networks
 
-### Bind a Prime or Core license (delegator)
-
-```bash
-autheod tx license bind-license <license-id> \
-  --validator-address <autheovaloper-address> \
-  --from <key-name> \
-  --chain-id autheo_2127-1 \
-  --keyring-backend file \
-  --fees 5000000aauth \
-  --yes
-```
-
-### Verify license status
-
-```bash
-# All licenses by owner
-autheod query license licenses-by-owner <cosmos-address>
-
-# Specific license
-autheod query license license <license-id>
-```
-
-A license must reach `ACTIVE` status (bound + delegation present) before it earns per-block NFT rewards.
-
-### Claim NFT rewards
-
-```bash
-# Check accrued rewards
-autheod query emissions license-accrued-rewards <license-id>
-
-# Claim to the license owner address
-autheod tx licensedistribution claim-nft-rewards <license-id> \
-  --from <owner-key> \
-  --chain-id autheo_2127-1 \
-  --keyring-backend file \
-  --fees 5000000aauth \
-  --yes
-
-# Claim to a different recipient address
-autheod tx licensedistribution claim-nft-rewards <license-id> \
-  --from <owner-key> \
-  --recipient <recipient-address> \
-  --chain-id autheo_2127-1 \
-  --keyring-backend file \
-  --fees 5000000aauth \
-  --yes
-```
-
-## 4. Production deployment
-
-<Steps>
-
-<Step title="Create your validator key">
-
-```bash
-autheod keys add <key-name> \
-  --keyring-backend file
-```
-
-<Warning>
-Save the mnemonic phrase securely offline — in cold storage or a hardware security module. Anyone with the mnemonic can drain your account and unbind your validator. There is no recovery path without the mnemonic.
-</Warning>
-
-</Step>
-
-<Step title="Initialize the node">
-
-```bash
+# 2. Initialize the node
 autheod init <moniker> \
-  --chain-id autheo_2127-1
+  --chain-id $(cat networks/mainnet/chain-id) \
+  --home $HOME/.autheo
+
+# 3. Copy the official genesis
+cp networks/mainnet/genesis.json $HOME/.autheo/config/genesis.json
+
+# 4. Set persistent peers
+CONFIG=$HOME/.autheo/config/config.toml
+sed -i "s|^persistent_peers = .*|persistent_peers = \"$(cat networks/mainnet/persistent_peers.txt)\"|" $CONFIG
+
+# 5. Set minimum gas prices
+APP=$HOME/.autheo/config/app.toml
+sed -i 's|^minimum-gas-prices = .*|minimum-gas-prices = "10000000000000aauth"|' $APP
 ```
 
-Replace `<moniker>` with your validator's display name.
+Then choose a sync method from [section 5](#5-sync-methods).
 
-</Step>
+### 3.4 Configure the node
 
-<Step title="Copy genesis and load a snapshot">
-
-Copy the network genesis file into your node home directory:
+**`$HOME/.autheo/config/config.toml`**
 
 ```bash
-cp /path/to/genesis.json ~/.autheod/config/genesis.json
+CONFIG=$HOME/.autheo/config/config.toml
+
+# Expose RPC to all interfaces (default is 127.0.0.1)
+sed -i 's|laddr = "tcp://127.0.0.1:26657"|laddr = "tcp://0.0.0.0:26657"|' $CONFIG
 ```
 
-Download and apply the latest snapshot to avoid syncing from block 0:
+**`$HOME/.autheo/config/app.toml`**
 
 ```bash
-sudo systemctl stop autheod  # if already running
-rm -rf ~/.autheod/data/
-wget https://snapshot.autheo.com/data_backup_latest.tar.gz
-tar xzvf data_backup_latest.tar.gz
-mv data/ ~/.autheod/data/
+APP=$HOME/.autheo/config/app.toml
+
+# Enable REST API (disabled by default)
+sed -i '/^\[api\]/,/^\[/{s/^enable = false/enable = true/}' $APP
+sed -i 's|address = "tcp://localhost:1317"|address = "tcp://0.0.0.0:1317"|' $APP
+
+# Expose EVM JSON-RPC (enabled by default, bound to 127.0.0.1)
+sed -i 's|address = "127.0.0.1:8545"|address = "0.0.0.0:8545"|' $APP
+sed -i 's|ws-address = "127.0.0.1:8546"|ws-address = "0.0.0.0:8546"|' $APP
+
+# Add debug and txpool namespaces
+sed -i 's|api = "eth,net,web3"|api = "eth,net,web3,debug,txpool"|' $APP
+
+# Expose gRPC (default is localhost:9090)
+sed -i 's|address = "localhost:9090"|address = "0.0.0.0:9090"|' $APP
 ```
 
-After restoring the snapshot, replace `priv_validator_state.json` with **your own** — never use the snapshot's validator state file, as it can cause double-signing.
-
-</Step>
-
-<Step title="Get your delegated (Cosmos) address">
+**`$HOME/.autheo/config/client.toml`**
 
 ```bash
-autheod keys show <key-name> \
-  --keyring-backend file \
-  --bech val
+CLIENT=$HOME/.autheo/config/client.toml
+
+sed -i 's|^keyring-backend = .*|keyring-backend = "file"|' $CLIENT
 ```
 
-Record both the `cosmos1...` address (operator) and `autheovaloper1...` address (validator).
+### 3.5 Start with systemd
 
-</Step>
+Create `/etc/systemd/system/autheod.service`, adjusting `User`, `WorkingDirectory`, and `ExecStart` for your system user:
 
-<Step title="Fund the validator account">
-
-Transfer enough THEO to cover:
-- Minimum self-delegation (check current network minimum with `autheod query staking params`)
-- Transaction fees for upcoming operations (10–50 THEO is typically sufficient)
-
-```bash
-# Check balance
-autheod query bank balances <cosmos-address>
-```
-
-</Step>
-
-<Step title="Configure peers and create the systemd service">
-
-Add seed/peer addresses to `~/.autheod/config/config.toml`:
-
-```toml
-[p2p]
-seeds = "<seed-id>@<seed-host>:26656"
-persistent_peers = "<peer-id>@<peer-host>:26656"
-```
-
-Create a systemd service so the node restarts automatically:
-
-```bash
-sudo tee /etc/systemd/system/autheod.service > /dev/null << 'EOF'
+```ini
 [Unit]
 Description=Autheo Chain Node
 After=network-online.target
+Wants=network-online.target
 
 [Service]
-User=ubuntu
-ExecStart=/usr/local/bin/autheod start \
-  --home /home/ubuntu/.autheod \
-  --x-crisis-skip-assert-invariants
-Restart=always
+User=autheo
+WorkingDirectory=/home/autheo
+ExecStart=/usr/local/bin/autheod start --home /home/autheo/.autheo
+Restart=on-failure
 RestartSec=5
 LimitNOFILE=65535
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=autheod
 
 [Install]
 WantedBy=multi-user.target
-EOF
+```
 
+```bash
 sudo systemctl daemon-reload
 sudo systemctl enable autheod
 sudo systemctl start autheod
+sudo systemctl status autheod
+sudo journalctl -u autheod -f
 ```
-
-Wait until the node is fully synced before proceeding:
-
-```bash
-autheod status | jq '.SyncInfo.catching_up'
-# Returns false when synced
-```
-
-</Step>
-
-<Step title="Create the validator">
-
-Once synced, submit the `create-validator` transaction:
-
-```bash
-autheod tx staking create-validator \
-  --amount 1000000000000000000aauth \
-  --from <key-name> \
-  --pubkey $(autheod tendermint show-validator) \
-  --moniker "<your-moniker>" \
-  --chain-id autheo_2127-1 \
-  --commission-rate 0.10 \
-  --commission-max-rate 0.20 \
-  --commission-max-change-rate 0.01 \
-  --min-self-delegation 1 \
-  --keyring-backend file \
-  --fees 5000000aauth \
-  --yes
-```
-
-Then bind your Sovereign license to the validator (see [Section 3](#3-nft-license-system)).
-
-After binding, self-delegate to move the license from `BOUND` to `ACTIVE`:
-
-```bash
-autheod tx staking delegate <autheovaloper-address> <amount>aauth \
-  --from <key-name> \
-  --chain-id autheo_2127-1 \
-  --keyring-backend file \
-  --fees 5000000aauth \
-  --yes
-```
-
-<Warning>
-Do not sign the `create-validator` transaction twice with the same consensus key. Double-signing results in permanent tombstoning — the validator cannot be recovered. Always verify you have only one running instance before submitting.
-</Warning>
-
-</Step>
-
-<Step title="Verify active validator status">
-
-```bash
-# Check validator status
-autheod query staking validator <autheovaloper-address>
-
-# Confirm license is ACTIVE
-autheod query license licenses-by-owner <cosmos-address> \
-  --status LICENSE_STATUS_ACTIVE
-```
-
-Your validator should now appear in the active set (if bonded stake is within the top `max_validators`) and your Sovereign license should show `ACTIVE`.
-
-</Step>
-
-</Steps>
-
-## 5. Authentication and key management
-
-### Keyring backends
-
-| Backend | Storage | Use case |
-|---|---|---|
-| `file` | Encrypted file on disk | Recommended for production; passphrase required on start |
-| `os` | OS native keystore | Convenient for development; system-managed |
-| `memory` | In-memory only | Testing; keys lost on restart |
-| `test` | Unencrypted file | Development only; never use in production |
-| `kwallet` / `pass` | KDE Wallet / GPG pass | Alternative Linux keystores |
-
-For production validators, use the `file` backend with a strong passphrase stored separately from the server.
-
-### Key management commands
-
-```bash
-# Create a new key
-autheod keys add <key-name> --keyring-backend file
-
-# Restore from mnemonic
-autheod keys add <key-name> --recover --keyring-backend file
-
-# List all keys
-autheod keys list --keyring-backend file
-
-# Show a specific key (addresses only)
-autheod keys show <key-name> --keyring-backend file
-
-# Show validator operator address
-autheod keys show <key-name> --keyring-backend file --bech val
-```
-
-### Consensus key
-
-The consensus key (`priv_validator_key.json`) is separate from your operator key. It lives in `~/.autheod/config/` and is used to sign blocks. Back it up independently and never share it.
-
-For high-security deployments, consider a remote signer (e.g., [tmkms](https://github.com/iqlusioninc/tmkms)) which keeps the consensus key in a hardware security module and removes it from the validator host entirely.
-
-## 6. Security best practices
-
-### OS hardening
-
-```bash
-# Disable root SSH login
-sudo sed -i 's/^PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config
-sudo systemctl restart sshd
-
-# Disable password authentication (use SSH keys only)
-sudo sed -i 's/^#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
-
-# Enable and configure UFW firewall
-sudo ufw default deny incoming
-sudo ufw default allow outgoing
-sudo ufw allow 22/tcp      # SSH
-sudo ufw allow 26656/tcp   # P2P
-sudo ufw allow 26660/tcp   # Prometheus metrics (restrict to monitoring server only)
-sudo ufw enable
-
-# Keep packages up to date
-sudo apt update && sudo apt upgrade -y
-sudo apt install unattended-upgrades -y
-sudo dpkg-reconfigure -plow unattended-upgrades
-```
-
-### Key security rules
-
-- Store mnemonic phrases offline, in cold storage or a hardware wallet.
-- Never store plaintext keys on the validator host.
-- Do not reuse operator keys across multiple validators.
-- Rotate the consensus key periodically — see the [key rotation guide](/nodes/validator-lifecycle/key-rotation).
-
-### Network security
-
-- Do not expose the RPC port (`26657`) to the public internet. Use it only over localhost or a trusted internal network.
-- Restrict JSON-RPC namespaces in `app.toml`. Only enable what your use case requires:
-
-| Namespace | Purpose | Recommended exposure |
-|---|---|---|
-| `eth` | Standard Ethereum JSON-RPC | Localhost or trusted only |
-| `net` | Network info | Localhost or trusted only |
-| `web3` | Client version | Localhost or trusted only |
-| `personal` | Key management | **Disable in production** |
-| `debug` | Debug tracing | **Disable in production** |
-
-- Optionally add an address allowlist in `app.toml` under `[json-rpc]` to restrict which IPs can call the JSON-RPC endpoint:
-
-```toml
-[json-rpc]
-api = "eth,net,web3"
-address = "127.0.0.1:8545"
-```
-
-### Sentry node architecture
-
-For high-value validators, place your signing node behind one or more sentry nodes:
-- Sentry nodes connect to the public P2P network.
-- The validator node connects only to sentry nodes (`private_peer_ids` in `config.toml`).
-- This prevents direct DDoS exposure of the consensus key holder.
-
-## 7. Monitoring and health checks
-
-### Health endpoints
-
-| Endpoint | Method | Description |
-|---|---|---|
-| `http://localhost:26657/health` | GET | Returns `{}` if node is running |
-| `http://localhost:26657/status` | GET | Sync info, validator pubkey, latest block |
-| `http://localhost:26660/metrics` | GET | Prometheus metrics |
-
-### Prometheus configuration
-
-Enable metrics in `~/.autheod/config/config.toml`:
-
-```toml
-[instrumentation]
-prometheus = true
-prometheus_listen_addr = ":26660"
-```
-
-Add a scrape job in your Prometheus `prometheus.yml`:
-
-```yaml
-scrape_configs:
-  - job_name: "autheod"
-    static_configs:
-      - targets: ["<validator-ip>:26660"]
-    scrape_interval: 15s
-```
-
-### Key metrics and alert thresholds
-
-| Metric | Alert threshold | Notes |
-|---|---|---|
-| `tendermint_consensus_height` | No increase in 60s | Node has stopped producing/receiving blocks |
-| `tendermint_p2p_peers` | < 3 | Node is under-peered; check firewall and seeds |
-| `tendermint_consensus_missed_blocks` | > 5% of window | Risk of jailing approaching |
-| `process_resident_memory_bytes` | > 80% of total RAM | Risk of OOM kill |
-| `tendermint_consensus_rounds` | Consistently > 1 | Consensus instability |
-
-### Log monitoring
-
-```bash
-# Stream live logs
-journalctl -u autheod -f
-
-# Filter for errors
-journalctl -u autheod -p err --since "1 hour ago"
-
-# Check for missed pre-commits (validator not signing)
-journalctl -u autheod | grep "miss" | tail -20
-```
-
-### Grafana dashboard
-
-Import the [Cosmos SDK community dashboard](https://grafana.com/grafana/dashboards/11036) (Grafana ID: 11036) for a pre-built view of consensus health, peer count, block height, and memory usage.
-
-## 8. Backup and recovery
-
-### Critical files to back up
-
-| File | Location | Description |
-|---|---|---|
-| `priv_validator_key.json` | `~/.autheod/config/` | Consensus signing key — most critical file |
-| `node_key.json` | `~/.autheod/config/` | Node identity for P2P — loss requires re-peering |
-| Operator key mnemonic | Secure offline storage | Restores your `keys` keyring |
-| `genesis.json` | `~/.autheod/config/` | Chain genesis (can be re-downloaded but good to have) |
-
-<Warning>
-Never back up `priv_validator_state.json` from a running node and restore it to a second node. Using the same validator state on two nodes simultaneously causes double-signing, which results in permanent tombstoning.
-</Warning>
-
-### Create a node snapshot
-
-```bash
-sudo systemctl stop autheod
-
-tar czf autheod-snapshot-$(date +%Y%m%d).tar.gz \
-  -C ~/.autheod data/ \
-  --exclude="data/cs.wal"
-
-sudo systemctl start autheod
-```
-
-### Restore from a snapshot
-
-```bash
-sudo systemctl stop autheod
-rm -rf ~/.autheod/data/
-
-# Restore from your own snapshot
-tar xzvf autheod-snapshot-<date>.tar.gz -C ~/.autheod/
-
-# OR restore from the Autheo network snapshot
-wget https://snapshot.autheo.com/data_backup_latest.tar.gz
-tar xzvf data_backup_latest.tar.gz
-mv data/ ~/.autheod/data/
-
-# Always restore YOUR OWN priv_validator_state.json after applying any snapshot
-cp /path/to/backup/priv_validator_state.json \
-  ~/.autheod/data/priv_validator_state.json
-
-sudo systemctl start autheod
-```
-
-### Export chain state
-
-```bash
-autheod export > autheo-state-$(date +%Y%m%d).json
-```
-
-Exported state can be used to bootstrap a new network or debug state issues.
 
 ---
 
-## Further reading
+## 4. Method B: Docker
 
-<CardGroup cols={2}>
-  <Card title="Node setup" href="/nodes/node-setup/node-setup" icon="server">
-    Detailed hardware prerequisites and OS configuration for testnet
-  </Card>
-  <Card title="Key rotation" href="/nodes/validator-lifecycle/key-rotation" icon="rotate">
-    Safely rotate consensus keys without downtime
-  </Card>
-  <Card title="Security hardening" href="/nodes/operations/security-hardening" icon="shield">
-    Full OS and network hardening reference
-  </Card>
-  <Card title="Monitoring" href="/nodes/operations/monitoring" icon="chart-line">
-    Prometheus, Grafana, and alerting setup
-  </Card>
-  <Card title="Backup and restore" href="/nodes/operations/backups-and-restore" icon="database">
-    Key backup procedures and snapshot recovery
-  </Card>
-  <Card title="Incident response" href="/nodes/operations/incident-response" icon="triangle-exclamation">
-    Runbooks for jailing, tombstoning, and hardware failure
-  </Card>
-</CardGroup>
+The official image is published at `ghcr.io/autheo-blockchain/autheod`.
+
+**Available tags:**
+
+| Tag | Use |
+|---|---|
+| `latest` | Current mainnet release |
+| `testnet` | Current testnet release |
+| `X.Y.Z` | Pinned mainnet release |
+| `X.Y.Z-testnet` | Pinned testnet release |
+
+<Note>
+For production validators, pin to a specific release tag rather than `latest` so that container restarts do not pull an unexpected upgrade. Find release tags on the [GHCR package page](https://github.com/autheo-blockchain/autheod/pkgs/container/autheod).
+</Note>
+
+### 4.1 Pull the image
+
+```bash
+docker pull ghcr.io/autheo-blockchain/autheod:latest
+```
+
+### 4.2 Prepare the data directory
+
+The node home inside the container is `/root/.autheo`. Mount a host directory to persist state across container restarts.
+
+```bash
+mkdir -p $HOME/.autheo
+```
+
+<Note>
+All `autheod` commands inside the container must use `--home /root/.autheo`. To run commands against a running container from the host, use `docker exec autheo-node autheod <command> --home /root/.autheo`.
+</Note>
+
+### 4.3 Join the network
+
+```bash
+# 1. Clone the networks repo (on the host)
+git clone https://github.com/autheo-blockchain/networks
+
+# 2. Initialize the node
+docker run --rm \
+  -v $HOME/.autheo:/root/.autheo \
+  ghcr.io/autheo-blockchain/autheod:latest \
+  autheod init <moniker> --chain-id autheo_2127-1 --home /root/.autheo
+
+# 3. Copy the official genesis
+cp networks/mainnet/genesis.json $HOME/.autheo/config/genesis.json
+
+# 4. Set persistent peers
+CONFIG=$HOME/.autheo/config/config.toml
+sed -i "s|^persistent_peers = .*|persistent_peers = \"$(cat networks/mainnet/persistent_peers.txt)\"|" $CONFIG
+
+# 5. Set minimum gas prices
+APP=$HOME/.autheo/config/app.toml
+sed -i 's|^minimum-gas-prices = .*|minimum-gas-prices = "10000000000000aauth"|' $APP
+```
+
+Then apply the sync method of your choice from [section 5](#5-sync-methods) using the host-side config files.
+
+### 4.4 Configure the node
+
+Apply config changes directly to the host-side directory. Use the same `sed` commands from [section 3.4](#34-configure-the-node) — they operate on `$HOME/.autheo/config/` which is mounted into the container.
+
+### 4.5 Run the container
+
+```bash
+docker run -d \
+  --name autheo-node \
+  --restart unless-stopped \
+  -v $HOME/.autheo:/root/.autheo \
+  -p 26656:26656 \
+  -p 26657:26657 \
+  -p 9090:9090 \
+  -p 1317:1317 \
+  -p 8545:8545 \
+  -p 8546:8546 \
+  ghcr.io/autheo-blockchain/autheod:latest \
+  autheod start --home /root/.autheo
+```
+
+**View logs:**
+
+```bash
+docker logs -f autheo-node
+```
+
+**Stop and restart:**
+
+```bash
+docker stop autheo-node
+docker start autheo-node
+```
+
+---
+
+## 5. Sync methods
+
+After completing the join and configure steps for your chosen method, select one of the following sync strategies.
+
+### Option A: State sync (recommended)
+
+Downloads a recent snapshot from a live sentry and syncs only the remaining blocks.
+
+```bash
+TRUST_HEIGHT=$(curl -s https://sentry1.autheo.com/block | jq -r '.result.block.header.height')
+TRUST_HASH=$(curl -s "https://sentry1.autheo.com/block?height=$TRUST_HEIGHT" | jq -r '.result.block_id.hash')
+
+CONFIG=$HOME/.autheo/config/config.toml
+sed -i '/^\[statesync\]/,/^\[/{s/^enable = false/enable = true/}' $CONFIG
+sed -i "s|^rpc_servers = .*|rpc_servers = \"https://sentry1.autheo.com,https://sentry2.autheo.com,https://sentry3.autheo.com\"|" $CONFIG
+sed -i "s|^trust_height = .*|trust_height = $TRUST_HEIGHT|" $CONFIG
+sed -i "s|^trust_hash = .*|trust_hash = \"$TRUST_HASH\"|" $CONFIG
+sed -i 's|^trust_period = .*|trust_period = "336h"|' $CONFIG
+```
+
+<Note>
+State sync does not retain historical data before the snapshot height. If you need a full archive node, use genesis sync instead.
+</Note>
+
+### Option B: Genesis sync
+
+Replays every block from block 1. Required only for a full archive node.
+
+<Note>
+The chain has had no governance upgrades since genesis — no additional setup is needed for current genesis sync.
+</Note>
+
+If governance upgrades occur in the future, genesis sync will require **cosmovisor** to manage binary swaps at each upgrade height. Historical upgrade plan names, heights, and binaries will be listed in `mainnet/upgrades.json` in the networks repo, following this structure:
+
+```json
+[
+  {
+    "plan_name": "v1.7",
+    "height": 1000000,
+    "binary_version": "v1.7.0",
+    "binary_url": "https://github.com/autheo-blockchain/autheo-chain-core/releases/download/v1.7.0/autheod_linux_amd64"
+  }
+]
+```
+
+`plan_name` is the exact string used in `MsgSoftwareUpgrade`. For each entry, create a matching cosmovisor directory with the corresponding binary.
+
+```bash
+go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
+
+export DAEMON_NAME=autheod
+export DAEMON_HOME=$HOME/.autheo
+
+mkdir -p $DAEMON_HOME/cosmovisor/genesis/bin
+cp <genesis-binary> $DAEMON_HOME/cosmovisor/genesis/bin/autheod
+
+# For each upgrade in mainnet/upgrades.json:
+#   mkdir -p $DAEMON_HOME/cosmovisor/upgrades/<plan_name>/bin
+#   cp <binary> $DAEMON_HOME/cosmovisor/upgrades/<plan_name>/bin/autheod
+# The directory name must exactly match the plan_name field.
+```
+
+---
+
+## 6. Verify the node
+
+**Sync status — `catching_up` must be `false` when fully synced:**
+
+```bash
+# systemd
+autheod status --node http://localhost:26657 | jq '.sync_info'
+
+# Docker
+docker exec autheo-node autheod status --node http://localhost:26657 | jq '.sync_info'
+```
+
+**EVM and REST checks — run from the host for both methods:**
+
+```bash
+# EVM - result must be "0x84f" (2127)
+curl -s -X POST http://localhost:8545 \
+  -H 'Content-Type: application/json' \
+  -d '{"jsonrpc":"2.0","method":"eth_chainId","params":[],"id":1}'
+
+# EVM - block number
+curl -s -X POST http://localhost:8545 \
+  -H 'Content-Type: application/json' \
+  -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}'
+
+# REST API
+curl -s http://localhost:1317/cosmos/base/tendermint/v1beta1/blocks/latest | jq '.block.header.height'
+```
+
+---
+
+## 7. Key management
+
+This chain uses **`eth_secp256k1`** keys.
+
+**Create a new key:**
+
+```bash
+# systemd
+autheod keys add <key_name> \
+  --keyring-backend file \
+  --algo eth_secp256k1 \
+  --home $HOME/.autheo
+
+# Docker
+docker exec -it autheo-node autheod keys add <key_name> \
+  --keyring-backend file \
+  --algo eth_secp256k1 \
+  --home /root/.autheo
+```
+
+Keyring backends:
+
+| Backend | Storage | Use case |
+|---|---|---|
+| `file` | Encrypted file on disk | Recommended for production — passphrase required on each use |
+| `os` | OS keychain | macOS Keychain / Linux Secret Service |
+| `test` | Plaintext on disk | Development only — never use in production |
+
+**Show address:**
+
+```bash
+# systemd
+autheod keys show <key_name> -a \
+  --keyring-backend file \
+  --home $HOME/.autheo
+
+# Docker
+docker exec autheo-node autheod keys show <key_name> -a \
+  --keyring-backend file \
+  --home /root/.autheo
+```
+
+**List keys:**
+
+```bash
+# systemd
+autheod keys list \
+  --keyring-backend file \
+  --home $HOME/.autheo
+
+# Docker
+docker exec autheo-node autheod keys list \
+  --keyring-backend file \
+  --home /root/.autheo
+```
+
+**Show validator consensus public key:**
+
+```bash
+# systemd
+autheod tendermint show-validator --home $HOME/.autheo
+
+# Docker
+docker exec autheo-node autheod tendermint show-validator --home /root/.autheo
+```
+
+---
+
+## 8. Create a validator
+
+Requirements:
+
+- Node is fully synced (`catching_up: false`)
+- Sufficient `aauth` balance for self-delegation and fees
+- A Sovereign license owned by this account and bound to this validator address in **BOUND** status
+
+The `x/licensedstaking` module enforces at the `MsgCreateValidator` level that a Sovereign license in BOUND status exists on the validator address. The transaction is rejected if this condition is not met.
+
+**Step 1 — Verify your Sovereign license is BOUND:**
+
+```bash
+# systemd
+autheod query license licenses-by-owner <your_address> \
+  --node http://localhost:26657 --output json
+
+autheod query license license-by-validator <validator_address> \
+  --node http://localhost:26657 --output json
+
+# Docker
+docker exec autheo-node autheod query license licenses-by-owner <your_address> \
+  --node http://localhost:26657 --output json
+
+docker exec autheo-node autheod query license license-by-validator <validator_address> \
+  --node http://localhost:26657 --output json
+```
+
+If your Sovereign license is in ISSUED status (not yet bound), bind it first:
+
+```bash
+# systemd
+autheod tx license bind <license_id> \
+  --from <key_name> \
+  --keyring-backend file \
+  --chain-id autheo_2127-1 \
+  --gas auto \
+  --gas-adjustment 1.5 \
+  --gas-prices 10000000000000aauth \
+  --home $HOME/.autheo \
+  --yes
+
+# Docker
+docker exec autheo-node autheod tx license bind <license_id> \
+  --from <key_name> \
+  --keyring-backend file \
+  --chain-id autheo_2127-1 \
+  --gas auto \
+  --gas-adjustment 1.5 \
+  --gas-prices 10000000000000aauth \
+  --home /root/.autheo \
+  --yes
+```
+
+Confirm the license is now BOUND before proceeding:
+
+```bash
+# systemd
+autheod query license license <license_id> \
+  --node http://localhost:26657 --output json
+
+# Docker
+docker exec autheo-node autheod query license license <license_id> \
+  --node http://localhost:26657 --output json
+```
+
+**Step 2 — Create the validator:**
+
+<Warning>
+Do not submit `create-validator` more than once with the same consensus key. Double-signing results in permanent tombstoning — the validator cannot be recovered. Verify you have only one running instance before submitting.
+</Warning>
+
+```bash
+# systemd
+VALIDATOR_PUBKEY=$(autheod tendermint show-validator --home $HOME/.autheo)
+
+autheod tx staking create-validator \
+  --pubkey "$VALIDATOR_PUBKEY" \
+  --value 500000000000000000000aauth \
+  --description '{"moniker":"<your_moniker>"}' \
+  --commission '{"rate":"100000000000000000","max_rate":"200000000000000000","max_change_rate":"10000000000000000"}' \
+  --min-self-delegation "1" \
+  --from <key_name> \
+  --keyring-backend file \
+  --chain-id autheo_2127-1 \
+  --home $HOME/.autheo \
+  --gas auto \
+  --gas-adjustment 1.5 \
+  --gas-prices 10000000000000aauth \
+  --yes
+
+# Docker
+VALIDATOR_PUBKEY=$(docker exec autheo-node autheod tendermint show-validator --home /root/.autheo)
+
+docker exec autheo-node autheod tx staking create-validator \
+  --pubkey "$VALIDATOR_PUBKEY" \
+  --value 500000000000000000000aauth \
+  --description '{"moniker":"<your_moniker>"}' \
+  --commission '{"rate":"100000000000000000","max_rate":"200000000000000000","max_change_rate":"10000000000000000"}' \
+  --min-self-delegation "1" \
+  --from <key_name> \
+  --keyring-backend file \
+  --chain-id autheo_2127-1 \
+  --home /root/.autheo \
+  --gas auto \
+  --gas-adjustment 1.5 \
+  --gas-prices 10000000000000aauth \
+  --yes
+```
+
+The self-delegation inside `create-validator` triggers the BOUND→ACTIVE license transition automatically.
+
+**Step 3 — Verify the validator and license are active:**
+
+```bash
+# systemd
+VALIDATOR_ADDR=$(autheod keys show <key_name> --bech val -a \
+  --keyring-backend file \
+  --home $HOME/.autheo)
+
+autheod query staking validator $VALIDATOR_ADDR \
+  --node http://localhost:26657 --output json
+
+# License must now show ACTIVE
+autheod query license license-by-validator $VALIDATOR_ADDR \
+  --node http://localhost:26657 --output json
+
+# Docker
+VALIDATOR_ADDR=$(docker exec autheo-node autheod keys show <key_name> --bech val -a \
+  --keyring-backend file \
+  --home /root/.autheo)
+
+docker exec autheo-node autheod query staking validator $VALIDATOR_ADDR \
+  --node http://localhost:26657 --output json
+
+# License must now show ACTIVE
+docker exec autheo-node autheod query license license-by-validator $VALIDATOR_ADDR \
+  --node http://localhost:26657 --output json
+```
+
+---
+
+## 9. Troubleshooting
+
+### Cannot connect to EVM JSON-RPC
+
+Confirm the JSON-RPC server is enabled and bound correctly in `app.toml`:
+
+```bash
+# Both methods — config is on the host-mounted directory
+grep -A5 '\[json-rpc\]' $HOME/.autheo/config/app.toml
+```
+
+### Node not producing blocks / stuck
+
+**systemd:**
+
+```bash
+# Check peer count
+curl -s http://localhost:26657/net_info | jq '.result.n_peers'
+
+# Check sync status
+autheod status --node http://localhost:26657 | jq '.sync_info.catching_up'
+
+# Check logs
+sudo journalctl -u autheod -n 100 --no-pager
+```
+
+**Docker:**
+
+```bash
+# Check peer count
+curl -s http://localhost:26657/net_info | jq '.result.n_peers'
+
+# Check sync status
+docker exec autheo-node autheod status --node http://localhost:26657 | jq '.sync_info.catching_up'
+
+# Check logs
+docker logs --tail 100 autheo-node
+```
