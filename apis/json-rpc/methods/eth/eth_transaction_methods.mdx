@@ -35,7 +35,7 @@ Signs a transaction that can be submitted to the network at a later time using w
 * `from`: `DATA`, 20 Bytes - The address the transaction is sent from.
 * `to`: `DATA`, 20 Bytes - (optional when creating new contract) The address the transaction is directed to.
 * `gas`: `QUANTITY` - (optional, default: 90000) Integer of the gas provided for the transaction execution. It will return unused gas.
-* `gasPrice`: `QUANTITY` - (optional, default: To-Be-Determined) Integer of the gasPrice used for each paid gas, in Wei.
+* `gasPrice`: `QUANTITY` - (optional, default: 0x9184e72a000) Integer of the gasPrice used for each paid gas, in Wei.
 * `value`: `QUANTITY` - (optional) Integer of the value sent with this transaction, in Wei.
 * `data`: `DATA` - The compiled code of a contract OR the hash of the invoked method signature and encoded parameters.
 * `nonce`: `QUANTITY` - (optional) Integer of a nonce. This allows to overwrite your own pending transactions that use the same nonce.
@@ -62,7 +62,7 @@ Creates new message call transaction or a contract creation, if the data field c
 * `from`: `DATA`, 20 Bytes - The address the transaction is sent from.
 * `to`: `DATA`, 20 Bytes - (optional when creating new contract) The address the transaction is directed to.
 * `gas`: `QUANTITY` - (optional, default: 90000) Integer of the gas provided for the transaction execution. It will return unused gas.
-* `gasPrice`: `QUANTITY` - (optional, default: To-Be-Determined) Integer of the gasPrice used for each paid gas.
+* `gasPrice`: `QUANTITY` - (optional, default: 0x9184e72a000) Integer of the gasPrice used for each paid gas.
 * `value`: `QUANTITY` - (optional) Integer of the value sent with this transaction.
 * `input`: `DATA` - The compiled code of a contract OR the hash of the invoked method signature and encoded parameters.
 * `nonce`: `QUANTITY` - (optional) Integer of a nonce. This allows to overwrite your own pending transactions that use the same nonce.
