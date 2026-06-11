@@ -9,6 +9,8 @@ This guide covers running an Autheo node from scratch. Two deployment methods ar
 <Note>
 **Before you begin:** This guide assumes you have already bridged your Sovereign license NFT from Arbitrum One to Autheo Mainnet. Complete that step first.
 
+Make sure you are bridging to the address you intend to use for creating the validator. That address must have enough THEO tokens for self-delegation and signing transactions. If you do not have a wallet yet, see [Key management](#7-key-management) to create one and obtain its address before bridging.
+
 See: [Bridging your Sovereign license NFT to Autheo Mainnet](https://hyper.autheo.com)
 {/* TODO: replace with dedicated bridging doc link */}
 </Note>
@@ -403,6 +405,24 @@ docker exec -it autheo-node autheod keys add <key_name> \
   --home /root/.autheo
 ```
 
+After creating the key, get its hex address for bridging:
+
+```bash
+# systemd - run as two steps
+# Step 1 - get Bech32 address
+autheod keys show <key_name> -a --keyring-backend file --home $HOME/.autheo
+# Step 2 - convert to hex
+autheod debug addr <bech32_address>
+
+# Docker - run as two steps
+# Step 1 - get Bech32 address
+docker exec -it autheo-node autheod keys show <key_name> -a --keyring-backend file --home /root/.autheo
+# Step 2 - convert to hex
+docker exec autheo-node autheod debug addr <bech32_address>
+```
+
+Use the `Address (hex)` value (prefixed with `0x`) when bridging your Sovereign license NFT and transferring THEO tokens to this address. Complete both steps before proceeding.
+
 Keyring backends:
 
 | Backend | Storage | Use case |
@@ -413,7 +433,7 @@ Keyring backends:
 
 **Import an existing key:**
 
-If you already have a wallet (MetaMask, Keplr, or any BIP-39 wallet), you can import it using its mnemonic. Only do this if you understand the risk: entering a mnemonic on a server exposes it to that environment.
+If you already have a wallet (MetaMask, Keplr, or any BIP-39 compatible wallet), import it using its mnemonic. The imported address must be the same one you bridged the Sovereign license NFT to and that holds enough THEO for self-delegation. Only do this if you understand the risk: entering a mnemonic on a server exposes it to that environment.
 
 ```bash
 # systemd
@@ -440,7 +460,7 @@ autheod keys show <key_name> -a \
   --home $HOME/.autheo
 
 # Docker
-docker exec autheo-node autheod keys show <key_name> -a \
+docker exec -it autheo-node autheod keys show <key_name> -a \
   --keyring-backend file \
   --home /root/.autheo
 ```
@@ -454,7 +474,7 @@ autheod keys list \
   --home $HOME/.autheo
 
 # Docker
-docker exec autheo-node autheod keys list \
+docker exec -it autheo-node autheod keys list \
   --keyring-backend file \
   --home /root/.autheo
 ```
@@ -528,7 +548,7 @@ autheod tx license bind <license_id> \
   --yes
 
 # Docker
-docker exec autheo-node autheod tx license bind <license_id> \
+docker exec -it autheo-node autheod tx license bind <license_id> \
   --from <key_name> \
   --keyring-backend file \
   --chain-id autheo_2127-1 \
@@ -579,7 +599,7 @@ autheod tx staking create-validator \
 # Docker
 VALIDATOR_PUBKEY=$(docker exec autheo-node autheod tendermint show-validator --home /root/.autheo)
 
-docker exec autheo-node autheod tx staking create-validator \
+docker exec -it autheo-node autheod tx staking create-validator \
   --pubkey "$VALIDATOR_PUBKEY" \
   --value 500000000000000000000aauth \
   --description '{"moniker":"<your_moniker>"}' \
@@ -601,27 +621,31 @@ The self-delegation inside `create-validator` triggers the BOUND→ACTIVE licens
 
 ```bash
 # systemd
-VALIDATOR_ADDR=$(autheod keys show <key_name> --bech val -a \
+# Step 1 - get validator address (will prompt for passphrase)
+autheod keys show <key_name> --bech val -a \
   --keyring-backend file \
-  --home $HOME/.autheo)
+  --home $HOME/.autheo
 
-autheod query staking validator $VALIDATOR_ADDR \
+# Step 2 - use the output from above
+autheod query staking validator <validator_address> \
   --node http://localhost:26657 --output json
 
 # License must now show ACTIVE
-autheod query license license-by-validator $VALIDATOR_ADDR \
+autheod query license license-by-validator <validator_address> \
   --node http://localhost:26657 --output json
 
 # Docker
-VALIDATOR_ADDR=$(docker exec autheo-node autheod keys show <key_name> --bech val -a \
+# Step 1 - get validator address (will prompt for passphrase)
+docker exec -it autheo-node autheod keys show <key_name> --bech val -a \
   --keyring-backend file \
-  --home /root/.autheo)
+  --home /root/.autheo
 
-docker exec autheo-node autheod query staking validator $VALIDATOR_ADDR \
+# Step 2 - use the output from above
+docker exec autheo-node autheod query staking validator <validator_address> \
   --node http://localhost:26657 --output json
 
 # License must now show ACTIVE
-docker exec autheo-node autheod query license license-by-validator $VALIDATOR_ADDR \
+docker exec autheo-node autheod query license license-by-validator <validator_address> \
   --node http://localhost:26657 --output json
 ```
 
