@@ -519,16 +519,32 @@ The `x/licensedstaking` module enforces at the `MsgCreateValidator` level that a
 
 ```bash
 # systemd
-autheod query license licenses-by-owner <your_address> \
+
+# Query licenses owned by your account
+autheod query license licenses-by-owner <your_autheo_address> \
   --node http://localhost:26657 --output json
 
+# Get your validator address (will prompt for passphrase)
+autheod keys show <key_name> --bech val -a \
+  --keyring-backend file \
+  --home $HOME/.autheo
+
+# Query license bound to your validator
 autheod query license license-by-validator <validator_address> \
   --node http://localhost:26657 --output json
 
 # Docker
-docker exec autheo-node autheod query license licenses-by-owner <your_address> \
+
+# Query licenses owned by your account
+docker exec autheo-node autheod query license licenses-by-owner <your_autheo_address> \
   --node http://localhost:26657 --output json
 
+# Get your validator address (will prompt for passphrase)
+docker exec -it autheo-node autheod keys show <key_name> --bech val -a \
+  --keyring-backend file \
+  --home /root/.autheo
+
+# Query license bound to your validator
 docker exec autheo-node autheod query license license-by-validator <validator_address> \
   --node http://localhost:26657 --output json
 ```
@@ -630,8 +646,12 @@ autheod keys show <key_name> --bech val -a \
 autheod query staking validator <validator_address> \
   --node http://localhost:26657 --output json
 
-# License must now show ACTIVE
+# Step 3 - get the license ID bound to this validator
 autheod query license license-by-validator <validator_address> \
+  --node http://localhost:26657 --output json
+
+# Step 4 - check license status using the license ID from above, it must be ACTIVE
+autheod query license license <license_id> \
   --node http://localhost:26657 --output json
 
 # Docker
@@ -644,8 +664,12 @@ docker exec -it autheo-node autheod keys show <key_name> --bech val -a \
 docker exec autheo-node autheod query staking validator <validator_address> \
   --node http://localhost:26657 --output json
 
-# License must now show ACTIVE
+# Step 3 - get the license ID bound to this validator
 docker exec autheo-node autheod query license license-by-validator <validator_address> \
+  --node http://localhost:26657 --output json
+
+# Step 4 - check license status using the license ID from above, it must be ACTIVE
+docker exec autheo-node autheod query license license <license_id> \
   --node http://localhost:26657 --output json
 ```
 
