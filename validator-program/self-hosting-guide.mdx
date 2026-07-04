@@ -1,7 +1,7 @@
 ---
 title: "Self-hosting guide"
-description: "End-to-end guide for running an Autheo Chain validator node on your own infrastructure using Docker or systemd, including network configuration, sync methods, key management, and validator registration."
-keywords: ["self-host", "validator", "node setup", "docker", "systemd", "autheod", "autheo chain", "ghcr", "installation"]
+description: "End-to-end guide for running an Autheo Chain validator node on your own infrastructure using Docker or systemd, including network configuration, sync methods, key management, validator registration, and claiming rewards."
+keywords: ["self-host", "validator", "node setup", "docker", "systemd", "autheod", "autheo chain", "ghcr", "installation", "claim rewards"]
 ---
 
 This guide covers running an Autheo node from scratch. Two deployment methods are provided: **Method A — systemd** (build from source) and **Method B — Docker** (official GHCR image).
@@ -121,12 +121,16 @@ Then choose a sync method from [section 5](#5-sync-methods).
 
 ### 3.4 Configure the node
 
+<Warning>
+RPC (26657), gRPC (9090), REST (1317), and EVM JSON-RPC/WS (8545/8546) should stay bound to `127.0.0.1` on a production validator — see the firewall table in [Security hardening](/nodes/operations/security-hardening), which lists all of these as **Closed**. Only bind them to `0.0.0.0` below if you have your own firewall rules or a sentry architecture in front of this node restricting who can reach these ports. If you don't, skip this section and leave the defaults in place.
+</Warning>
+
 **`$HOME/.autheo/config/config.toml`**
 
 ```bash
 CONFIG=$HOME/.autheo/config/config.toml
 
-# Expose RPC to all interfaces (default is 127.0.0.1)
+# Expose RPC to all interfaces (default is 127.0.0.1) — see warning above
 sed -i 's|laddr = "tcp://127.0.0.1:26657"|laddr = "tcp://0.0.0.0:26657"|' $CONFIG
 ```
 
@@ -159,6 +163,15 @@ sed -i 's|^keyring-backend = .*|keyring-backend = "file"|' $CLIENT
 ```
 
 ### 3.5 Start with systemd
+
+Create a dedicated, unprivileged system user to run the node as — do not run it as your own login user or as `root`:
+
+```bash
+sudo useradd -r -s /bin/false autheo
+sudo mkdir -p /home/autheo
+sudo cp -r $HOME/.autheo /home/autheo/.autheo
+sudo chown -R autheo:autheo /home/autheo
+```
 
 Create `/etc/systemd/system/autheod.service`, adjusting `User`, `WorkingDirectory`, and `ExecStart` for your system user:
 
@@ -259,6 +272,10 @@ Then apply the sync method of your choice from [section 5](#5-sync-methods) usin
 Apply config changes directly to the host-side directory. Use the same `sed` commands from [section 3.4](#34-configure-the-node) — they operate on `$HOME/.autheo/config/` which is mounted into the container.
 
 ### 4.5 Run the container
+
+<Warning>
+The `-p` flags below publish each port to all interfaces on the host, equivalent to the `0.0.0.0` binds in [section 3.4](#34-configure-the-node). Per the firewall table in [Security hardening](/nodes/operations/security-hardening), only 26656 (P2P) should be reachable from the internet on a validator. For the others, either drop the `-p` flag (keep the service container-internal only) or bind to localhost explicitly, e.g. `-p 127.0.0.1:26657:26657`.
+</Warning>
 
 ```bash
 docker run -d \
@@ -713,3 +730,52 @@ docker exec autheo-node autheod status --node http://localhost:26657 | jq '.sync
 # Check logs
 docker logs --tail 100 autheo-node
 ```
+
+---
+
+## 10. Claiming rewards
+
+Once your validator is `ACTIVE`, two independent reward streams accrue in parallel — neither one claims automatically, and neither expires.
+
+**NFT emission rewards** (from your Sovereign license, via `x/licensedistribution`):
+
+```bash
+# Check accrued amount
+autheod query emissions license-accrued-rewards <license_id> \
+  --node http://localhost:26657
+
+# Claim
+autheod tx licensedistribution claim-nft-rewards <license_id> \
+  --from <key_name> \
+  --keyring-backend file \
+  --chain-id autheo_2127-1 \
+  --gas auto \
+  --gas-adjustment 1.5 \
+  --gas-prices 10000000000000aauth \
+  --home $HOME/.autheo \
+  --yes
+```
+
+**Staking rewards** (from delegations to your validator, via `x/distribution` — includes your commission):
+
+```bash
+# Check accrued amount (includes commission)
+autheod query distribution validator-outstanding-rewards <autheovaloper_address> \
+  --node http://localhost:26657
+
+# Claim, including commission
+autheod tx distribution withdraw-rewards <autheovaloper_address> \
+  --commission \
+  --from <key_name> \
+  --keyring-backend file \
+  --chain-id autheo_2127-1 \
+  --gas auto \
+  --gas-adjustment 1.5 \
+  --gas-prices 10000000000000aauth \
+  --home $HOME/.autheo \
+  --yes
+```
+
+Run the same two commands with `docker exec autheo-node ...` and `--home /root/.autheo` for Docker deployments.
+
+See [Staking and rewards](/token/staking-and-rewards) for the full breakdown of both reward streams, rates by license tier, and the global emissions cap.
