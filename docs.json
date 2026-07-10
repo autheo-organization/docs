@@ -290,6 +290,32 @@
         ]
       },
       {
+        "group": "SDKs",
+        "pages": [
+          "sdks/overview",
+          {
+            "group": "Go",
+            "expanded": false,
+            "pages": [
+              "sdks/go/overview",
+              "sdks/go/install",
+              "sdks/go/quickstart",
+              "sdks/go/methods",
+              "sdks/go/reference",
+              {
+                "group": "Examples",
+                "expanded": false,
+                "pages": [
+                  "sdks/go/examples/contract-interaction",
+                  "sdks/go/examples/query-balance",
+                  "sdks/go/examples/send-transaction"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
         "group": "Papers",
         "pages": [
           "papers/overview",
