@@ -4,14 +4,19 @@ description: "How staking works on Autheo Chain, the dual reward streams, and ho
 keywords: ["staking", "rewards", "delegation", "nft emissions", "staking rewards", "claim", "theo"]
 ---
 
-Autheo Chain has two independent reward streams running in parallel: staking rewards (proportional to stake) and NFT emission rewards (fixed per license tier). Both require manual claiming.
+Autheo Chain has two independent reward streams running in parallel:
+
+- **Staking rewards** — rewards associated with delegated THEO and proportional to bonded stake.
+- **NFT emission rewards** — fixed rewards determined by the active license tier.
+
+The two reward streams are independent and are managed through separate reward mechanisms.
 
 ## Dual reward streams
 
 | Aspect | Staking rewards | NFT emission rewards |
-|---|---|---|
-| Source module | `x/mint` + `x/distribution` | `x/emissions` + `x/licensedistribution` |
-| Distribution | Manual: `withdraw-all-rewards` | Manual: `claim-nft-rewards` |
+| --- | --- | --- |
+| Source module | `x/mint` \+ `x/distribution` | `x/emissions` \+ `x/licensedistribution` |
+| Distribution | See **Claim staking rewards** below | Manual: `claim-nft-rewards` |
 | Basis | Proportional to bonded stake | Fixed per license tier |
 | Requirement | Any delegated THEO | Active license (`ACTIVE` status) |
 | Emissions cap | Not capped by `x/emissions` | 7B THEO global cap |
@@ -21,10 +26,12 @@ Autheo Chain has two independent reward streams running in parallel: staking rew
 
 Emission rewards are minted per-block by `x/emissions` and credited to each `ACTIVE` license holder. A license must be in `ACTIVE` status (bound to a validator with a live delegation) to accrue rewards.
 
+> **Important:** NFT emission rewards are tied to the license, not to the amount of THEO delegated. The reward amount depends on the license tier.
+
 ### Rates
 
 | License tier | Annual THEO | Per-block THEO (approx.) |
-|---|---|---|
+| --- | --- | --- |
 | Sovereign | ~187,969 | ~0.000361 |
 | Prime | ~18,797 | ~0.0000361 |
 | Core | ~1,880 | ~0.00000361 |
@@ -60,6 +67,8 @@ autheod query distribution validator-outstanding-rewards <autheovaloper-address>
 
 ### Claim staking rewards
 
+> **Note:** Staking rewards and NFT emission rewards are separate. Claiming staking rewards does not claim NFT emission rewards. NFT rewards must be claimed separately using `claim-nft-rewards`.
+
 ```bash
 # Withdraw all delegation rewards across all validators
 autheod tx distribution withdraw-all-rewards \
@@ -80,25 +89,40 @@ autheod tx distribution withdraw-rewards <autheovaloper-address> \
 Validators set their commission rate when registering and can change it over time. Parameters:
 
 | Parameter | Description |
-|---|---|
+| --- | --- |
 | `commission-rate` | Current rate charged to delegators (e.g., `0.10` = 10%) |
 | `commission-max-rate` | Maximum rate this validator can ever charge |
 | `commission-max-change-rate` | Maximum daily rate change |
 
+> **Note:** A validator's commission rate applies to staking rewards generated from delegations to that validator. It does not change the fixed NFT emission rate associated with a license tier.
+
 ## Staking requirements
 
 | Role | NFT license required | Action |
-|---|---|---|
+| --- | --- | --- |
 | Validator | Sovereign | `MsgCreateValidator`, `MsgDelegate` |
 | Delegator | Prime or Core | `MsgDelegate` |
 
 <Note>
-`MsgBeginRedelegate` is permanently disabled on Autheo Chain. To move stake from one validator to another, you must first undelegate (subject to the ~21-day unbonding period), then delegate to the new validator.
+  `MsgBeginRedelegate` is permanently disabled on Autheo Chain. To move stake from one validator to another, you must first undelegate (subject to the ~21-day unbonding period), then delegate to the new validator.
 </Note>
+
+### Changing validators
+
+Autheo does not support redelegation.
+
+To move your THEO from one validator to another:
+
+1. Undelegate your THEO from the current validator.
+2. Wait for the approximately 21-day unbonding period to complete.
+3. Delegate the available THEO to the new validator.
+
+No staking rewards are earned on tokens while they are unbonding.
 
 ## Global emissions cap
 
 The total NFT emission rewards are capped at 7 billion THEO across all licenses. Once the cap is reached:
+
 - No new emission rewards are minted
 - Previously accrued (unclaimed) rewards remain claimable indefinitely
 - Staking rewards from `x/mint` and fee-based rewards continue unaffected
