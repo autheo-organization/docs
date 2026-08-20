@@ -7,8 +7,8 @@ Autheo's supply architecture is designed to create a balanced, transparent, and 
 Performance-weighted emissions ensure that validators and infrastructure providers receive rewards based on uptime, reliability, and service metrics rather than pure stake alone. By combining predictable emissions with performance-weighted rewards, Autheo ensures that circulating supply expands in step with genuine network activity and adoption rather than speculation:
 
 * Total supply: 7,000,000,000 THEO
-* Initial circulating supply: ~358,750,000 THEO (~5.1%)
-* TGE circulating sources: Liquidity Res (100% at TGE), Presale & Launch Related (25% at TGE)
+* Initial supply available at launch: ~371,000,000 THEO (~5.3%)
+* Launch-available sources: Liquidity Reserve (100% at TGE), Launch Related (50% at TGE), Validator Node rewards already emitted pre-launch
 
 ## 1. THEO token allocation
 
@@ -29,15 +29,16 @@ Performance-weighted emissions ensure that validators and infrastructure provide
 | **Team allocation** | 1,190,000,000 | 17.0% | 0.0% | 6 | 36 | 0 | 33,055,556 |
 | **Early seed investment** | 140,000,000 | 2.0% | 0.0% | 6 | 36 | 0 | 3,888,889 |
 | **Early investor & team unlock** | 70,000,000 | 1.0% | 0.0% | 1 | 4 | 0 | 17,500,000 |
-| **Presale & Launch Related** | 35,000,000 | 0.5% | 25.0% | 0 | 12 | 8,750,000 | 2,187,500 |
-| **Overall** | **7,000,000,000** | **100%** | — | — | — | **358,750,000** | — |
+| **Launch Related** | 35,000,000 | 0.5% | 50.0% | 0 | 12 | 17,500,000 | 1,458,333 |
+| **Overall** | **7,000,000,000** | **100%** | — | — | — | **367,500,000** | — |
 
 Design notes:
 
 * Long cliffs and extended linear vesting reduce short-term supply shocks.
-* Liquidity Res is fully unlocked at TGE to support CEX/DEX provisioning and market depth.
-* Emissions for Validator Nodes, Ecosystem, Infra Nodes, and DevHub Economy Rewards pools are performance-weighted and contingent on uptime and service metrics (Block Rewards).
+* Liquidity Res is fully unlocked at TGE to support CEX/DEX provisioning and market depth. Of the 350,000,000 THEO Liquidity Reserve allocation, 50,000,000 THEO has been bridged to Base and deployed for initial trading at launch; the remaining balance is not immediately entering the tradable market and will be deployed over time to support additional market depth as needed.
+* Emissions for Validator Nodes, Ecosystem, Infra Nodes, and DevHub Economy Rewards pools are performance-weighted and contingent on uptime and service metrics (Block Rewards). The Validator Nodes row above shows 0% TGE unlock under the formal vesting schedule, but 3,500,000 THEO of Validator Node rewards were already emitted via block rewards prior to launch (the Validator Node program was operational pre-TGE). That amount is not reflected in the "Token amount TGE" column, but is included in the total available-at-launch figure in Section 1.1 below; the remainder of the 525,000,000 THEO Validator Node allocation continues to release through ongoing block emissions.
 * Strategic Operations, Team Allocation, and other non-emission pools are premined via smart contracts with defined vesting schedules.
+* The "Token amount TGE" column and Overall total (367,500,000 THEO) reflect only tokens unlocked directly by the formal vesting schedule at TGE. Combined with the 3,500,000 THEO of Validator Node rewards already emitted pre-launch, total tokens available at launch reach 371,000,000 THEO (5.3% of total supply) — see Section 1.1 for the full reconciliation.
 
 ![THEO allocation](/images/theo-allocation.png)
 
@@ -45,47 +46,49 @@ Design notes:
 
 Autheo's token release strategy is structured to balance accessibility with sustainability. Early liquidity is provided to support exchange depth, validator onboarding, and ecosystem activation, while the majority of supply remains locked under extended cliffs and long-term vesting. This approach ensures alignment among contributors, investors, and builders, maintaining orderly market dynamics as the network scales.
 
-At Token Generation Event (TGE), approximately 5.1% of total supply (approximately 358,750,000 THEO) will enter circulation across two distinct pools:
+At launch (Token Generation Event, or TGE), approximately 5.3% of total supply (approximately 371,000,000 THEO) is available, made up of three components:
 
-| Pool | TGE amount | Purpose |
+| Component | Amount | Purpose |
 |---|---|---|
-| Liquidity Res (CEX, DEX & MM) | 350,000,000 THEO (100%) | Deployed directly to exchange liquidity pools and market makers to support trading depth. Not distributed to individuals. |
-| Presale & Launch Related | 8,750,000 THEO (25% of 35M) | Released to presale participants at TGE. The remaining 75% (26,250,000 THEO) vests linearly over 12 months. |
-| **Total TGE circulating** | **358,750,000 THEO** | |
-
-These are separate allocation buckets with different purposes and recipients. The Liquidity Res pool underpins market infrastructure; the Presale & Launch Related pool represents early participant entitlements.
-
-All other allocations remain subject to their defined cliffs and linear monthly vesting schedules, aligning long-term incentives among contributors, validators, and builders while minimizing short-term supply shocks.
-
-## 2. Emissions and circulating growth (9-year horizon)
-
-Autheo's token emission model is structured to balance network growth with long-term deflationary discipline. Rather than relying on perpetual inflation, THEO's supply curve is front-loaded for expansion — driving validator onboarding, developer incentives, and infrastructure activation — then progressively transitions toward fee-funded sustainability through the Autheo Storage & Compute Fund (ASCF) and productive-deflation mechanisms.
-
-This nine-year schedule defines the cadence by which cumulative supply enters circulation, aligning with key operational milestones in validator performance, DevHub engagement, and ecosystem maturity. Each stage compounds network productivity while simultaneously reducing dependency on inflationary issuance, creating a self-reinforcing liquidity cycle that supports compute, storage, and governance capacity.
-
-Adaptive parameters ensure the system remains resilient to market conditions. The emission policy begins within a controlled inflation band (~13% to ~10%) and can be refined by our Foundation and DAO governance proposals within predefined limits. As ASCF reserves expand through transaction and compute fees, the share of emissions funded by inflation decreases correspondingly, sustaining validator and developer rewards through organic network activity.
-
-### High-level schedule (cumulative supply milestones)
-
-| **Year** | **Cumulative supply released** | **Milestone summary** |
-| -------- | ------------------------------ | --------------------- |
-| **1** | ~5.1% | TGE unlocks, validator onboarding, DevHub activation, and initial liquidity provisioning. |
-| **2** | ~18% | Infrastructure emissions begin; developer rewards scale; staking participation expands. |
-| **3** | ~31% | Compute, storage, and AI node rewards accelerate; ecosystem integrations deepen. |
-| **4** | ~45% | Validator emissions peak; DevHub rewards intensify and ecosystem grants continue. |
-| **5** | ~59% | Infrastructure scaling advances; productive-deflation pools compound; treasury rotation stabilizes. |
-| **6** | ~72% | Emission taper begins; fee-funded mechanisms increasingly replace inflationary issuance. |
-| **7** | ~83% | Dynamic reductions continue; governance ratios balance growth with buybacks. |
-| **8** | ~92% | Ecosystem maturity achieved; ecosystem-managed grants decelerate; staking rewards dominate circulation. |
-| **9** | ~100% | Steady-state equilibrium reached between emissions, productive deflation, and fee recycling. |
-
-![9-year horizon](/images/token-9-year-horizon.png)
+| Liquidity Reserve (CEX, DEX & MM) | 350,000,000 THEO (100% of allocation) | Full Liquidity Reserve allocation, unlocked at TGE for deployment to exchange liquidity pools and market makers to support trading depth. Not distributed to individuals. Only 50,000,000 THEO of this has been bridged to Base and deployed for initial trading — see note below. |
+| Launch Related | 17,500,000 THEO (50% of 35M) | Released to launch participants at TGE. The remaining 17,500,000 THEO (50%) remains subject to its applicable release schedule (12-month linear vesting). |
+| Validator Node rewards already emitted | 3,500,000 THEO | Rewards already emitted via block rewards to validators who operated prior to launch (the Validator Node program was live pre-TGE). The remaining balance of the 525,000,000 THEO Validator Node allocation continues to release through ongoing block emissions. |
+| **Total available at launch** | **371,000,000 THEO (5.3%)** | |
 
 <Note>
 
-**Autheo token emission and circulating growth (9-year horizon)**
+**Liquidity Reserve vs. Base-deployed liquidity** — The 350,000,000 THEO figure represents the full Liquidity Reserve allocation, not the amount actively trading. As of launch, only 50,000,000 THEO has been bridged to Base and deployed for initial trading; the remainder of the Liquidity Reserve is not immediately entering the tradable market and will be deployed over time, as needed, to support additional market depth.
 
-The table and graph illustrate cumulative token release milestones and network growth phases. As emissions taper, liquidity transitions from inflationary issuance to fee-backed reward circulation, maintaining continuous economic activity while converging toward long-term equilibrium.
+</Note>
+
+These are three separate allocation buckets with different purposes and recipients: the Liquidity Reserve underpins market infrastructure, Launch Related represents early participant entitlements, and Validator Node rewards already emitted reflect network operation prior to launch. All three reconcile to the same 371,000,000 THEO (5.3%) total available at launch.
+
+All other allocations remain subject to their defined cliffs and linear monthly vesting schedules, aligning long-term incentives among contributors, validators, and builders while minimizing short-term supply shocks.
+
+## 2. Emissions and circulating growth (10-year horizon)
+
+Autheo's token emission model is structured to balance network growth with long-term deflationary discipline. Rather than relying on perpetual inflation, THEO's supply curve is front-loaded for expansion — driving validator onboarding, developer incentives, and infrastructure activation — then progressively transitions toward fee-funded sustainability through the Autheo Storage & Compute Fund (ASCF) and productive-deflation mechanisms.
+
+This ten-year schedule (2025 TGE through 2035) defines the cadence by which cumulative supply enters circulation across three phases — Expansion, Scaling, and Maturity — aligning with key operational milestones in validator performance, DevHub engagement, and ecosystem maturity. Each phase compounds network productivity while simultaneously reducing dependency on inflationary issuance, creating a self-reinforcing liquidity cycle that supports compute, storage, and governance capacity.
+
+Adaptive parameters ensure the system remains resilient to market conditions. The emission policy begins within a controlled inflation band (~13% to ~10%) and can be refined by our Foundation and DAO governance proposals within predefined limits. As ASCF reserves expand through transaction and compute fees, the share of emissions funded by inflation decreases correspondingly, sustaining validator and developer rewards through organic network activity.
+
+### High-level schedule (phase milestones)
+
+| **Phase** | **Years** | **Cumulative supply released** | **Milestone summary** |
+| --------- | --------- | ------------------------------- | ---------------------- |
+| **TGE / Launch** | 2025 | ~5.3% | Launch unlocks (~371,000,000 THEO available at launch), validator onboarding, and initial liquidity provisioning (50,000,000 THEO bridged to Base). |
+| **Expansion** | Years 1–3 (2026–2028) | ~47% | Infra networks come online; validator onboarding and DevHub activation accelerate ecosystem growth. |
+| **Scaling** | Years 4–7 (2029–2032) | ~74% | Emission taper begins; infrastructure and staking participation scale; fee-funded mechanisms increasingly replace inflationary issuance. |
+| **Maturity** | Years 8–10 (2033–2035) | ~94% → 100% | Steady-state equilibrium approaches; ecosystem-managed grants decelerate; full 7,000,000,000 THEO fixed supply cap reached by 2035. |
+
+![10-year emissions schedule](/images/token-10-year-horizon.png)
+
+<Note>
+
+**Autheo token emission and circulating growth (10-year horizon)**
+
+The table and graph illustrate cumulative token release milestones across the Expansion, Scaling, and Maturity phases. As emissions taper, liquidity transitions from inflationary issuance to fee-backed reward circulation, maintaining continuous economic activity while converging toward the fixed 7,000,000,000 THEO supply cap.
 
 </Note>
 
