@@ -1,6 +1,6 @@
 ---
 title: "Delegation"
-description: "How to browse validators, delegate THEO tokens, and bind Prime or Core licenses in the Autheo Validator Portal."
+description: "How to find validators, delegate THEO tokens, and bind Prime or Core licenses in the Autheo Validator Portal."
 keywords: ["delegation", "delegate", "theo", "keplr", "prime", "core", "license bind", "validator", "staking"]
 ---
 
@@ -12,11 +12,11 @@ For how license binding relates to on-chain mechanics, see [License gating](/nod
 
 Navigate to the **Nodes** page from the main menu.
 
-- Use the **search bar** to find validators by name (moniker) or address
+- Use the search bar to find validators by **validator name (moniker)** or **validator address**.
 - Use the **status dropdown** to filter:
 
 | Filter | Shows |
-|---|---|
+| --- | --- |
 | All | All validators |
 | Active | Bonded and not jailed validators |
 | Inactive | Not bonded and not jailed validators |
@@ -32,24 +32,23 @@ Each validator entry shows: moniker, status, address, commission rate, and token
   <Step title="Open the delegation modal">
     Click a validator from the Nodes page to open the delegation modal. Review the validator's details — commission rate, status, and description.
 
-    <img src="/images/vp-delegate-1.png" alt="Delegation modal showing validator details" />
+    ![Delegation modal showing validator details](/images/vp-delegate-1.png)
   </Step>
   <Step title="Enter the delegation amount">
-    Enter the THEO amount in the **Amount** field.
-    <Warning>Retain sufficient THEO for gas fees. Do not delegate your entire balance.</Warning>
-
-    <img src="/images/vp-delegate-2.png" alt="Entering delegation amount" />
+    ![Entering delegation amount](/images/vp-delegate-2.png)
   </Step>
   <Step title="Confirm and sign">
     Click **Confirm Delegate** and sign the transaction in Keplr. Your delegation becomes active once the transaction confirms on-chain.
 
-    <img src="/images/vp-delegate-3.png" alt="Confirming delegation in Keplr" />
+    ![Confirming delegation in Keplr](/images/vp-delegate-3.png)
   </Step>
 </Steps>
 
+> **Order matters:** Delegate your THEO to the validator first, then bind your Prime or Core license to that delegation. The license becomes `ACTIVE` after it is successfully bound.
+
 ## Binding a license
 
-After delegating, you are prompted to bind a Prime or Core license to the delegation. Binding activates the license, moving it from `BOUND` to `ACTIVE` status and enabling per-block NFT emission rewards.
+After delegating, you can bind a **Prime or Core license to that delegation**. The license becomes associated with the selected validator and moves from `BOUND` to `ACTIVE` status when the transaction succeeds.
 
 <Steps>
   <Step title="Select the license type">
@@ -68,13 +67,15 @@ After delegating, you are prompted to bind a Prime or Core license to the delega
 Navigate to the **Delegation** page from the main menu to see all your active delegations.
 
 | Column | Description |
-|---|---|
-| Validator Address | The validator's operator address |
+| --- | --- |
+| Validator | The validator name (moniker) and operator address |
 | Bound Licenses | Licenses currently bound to this delegation |
 | Staked Amount | Amount of THEO delegated |
-| Rewards Earned | Accumulated rewards (hover for full precision) |
+| Staking Rewards | Accumulated staking rewards |
 | Actions | Claim Rewards, Unbind License, Unstake |
 
 ![Delegation page showing active delegations and action buttons](/images/vp-manage-delegations.png)
+
+> **Changing validators:** Autheo does not currently support redelegation. To move your THEO to another validator, you must unstake first and wait for the approximately 21-day unbonding period to complete before delegating to the new validator. See [Moving your delegation to another validator](/web-apps/validator-portal/rewards-and-unstaking#moving-your-delegation-to-another-validator).
 
 From this page you can claim rewards, unbind licenses, and initiate unstaking. See [Rewards and unstaking](/web-apps/validator-portal/rewards-and-unstaking) for details.

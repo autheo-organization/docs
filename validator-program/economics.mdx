@@ -1,60 +1,63 @@
 ---
 title: "Validator economics"
-description: "Revenue estimates, costs, and economic considerations for running an Autheo Chain validator."
+description: "Revenue, infrastructure costs, staking economics, and other considerations for operating a Sovereign validator on Autheo Chain."
 keywords: ["economics", "revenue", "rewards", "cost", "roi", "theo", "validator", "emissions"]
 ---
 
 <Info>
-**Tokenomics disclaimer** — All figures are estimates based on current emission parameters and hosting costs. Token allocations, emission rates, and pricing remain subject to change as Autheo finalizes its mainnet launch details.
+  **Tokenomics disclaimer** — All figures are estimates based on current emission parameters and hosting costs. Token allocations, emission rates, and pricing remain subject to change as Autheo finalizes its mainnet launch details.
 </Info>
 
 ## Reward streams
 
 Validators earn from two independent sources:
 
-| Source | Module | Distribution | Basis |
-|---|---|---|---|
-| NFT emission rewards | `x/emissions` | Manual: `claim-nft-rewards` | Fixed per license tier (~187,969 THEO/year for Sovereign) |
-| Staking rewards | `x/mint` + `x/distribution` | Manual: `withdraw-all-rewards` | Proportional to delegated stake |
+| Source | Distribution | Basis |
+| --- | --- | --- |
+| NFT/license emission rewards | Manual: \`claim-nft-rewards\` | Fixed by license tier |
+| Staking rewards | Auto-credited | Proportional to delegated stake |
+
+> **Note:** NFT/license emission rewards and staking rewards are separate reward streams. NFT/license rewards depend on the active license tier, while staking rewards depend on delegated stake and the validator's commission rate.
 
 ### NFT emission rewards by tier
 
 | Tier | Estimated annual THEO | Estimated per-block THEO |
-|---|---|---|
+| --- | --- | --- |
 | Sovereign | ~187,969 | ~0.000361 |
 | Prime | ~18,797 | ~0.0000361 |
 | Core | ~1,880 | ~0.00000361 |
+
+> **License roles:** Sovereign licenses are used to operate validators. Prime and Core licenses are delegation licenses and do not require the license holder to run validator infrastructure.
 
 These rates are active while the license is in `ACTIVE` status (i.e., bound to a validator with a live delegation). The global emissions cap is 7 billion THEO. Once the cap is reached, new rewards stop accruing.
 
 ### Staking rewards
 
 Staking rewards depend on:
+
 - Your validator's total bonded stake relative to total network stake
 - The network's current inflation rate (~13% → tapering toward ~10%)
 - Your commission rate
 
 Higher delegated stake (from your own delegation plus external delegators) increases your share of staking rewards.
 
-## Infrastructure costs
+## Sovereign validator infrastructure costs
 
 ### Managed hosting (monthly estimates)
 
-| License tier | Estimated monthly cost | Provider example |
-|---|---|---|
-| Sovereign node | $200 – $350 | InfStones, Zeeve |
-| Prime license (fractional) | ~$35 | Provider-dependent |
-| Core license (fractional) | ~$5 | Provider-dependent |
+| Validator infrastructure | Estimated monthly cost | Provider example |
+| --- | --- | --- |
+| Sovereign node | \$200–\$350 | InfStones, Zeeve |
 
-Costs vary by provider and region. Month-to-month billing is typical; check provider terms for exact pricing.
+Infrastructure costs apply to validators operated under Sovereign licenses. Prime and Core licenses are used for delegation and do not require the license holder to provision or host validator infrastructure.
 
 ### Self-hosted (monthly estimates)
 
 | Resource | Estimated monthly cost |
-|---|---|
-| Bare-metal server (recommended specs) | $150 – $400 depending on provider and region |
-| Bandwidth (10 Gbps, usage-based) | Variable |
-| Monitoring stack (Prometheus + Grafana) | ~$0 self-hosted / ~$10–$30 managed |
+| --- | --- |
+| Bare-metal server | \$150–\$400, depending on provider and region |
+| Bandwidth | Variable |
+| Monitoring stack | \$0 self-hosted / \$10–\$30 managed |
 
 See the [hardware requirements](/nodes/node-setup/node-setup) for minimum and recommended server specifications.
 
@@ -62,12 +65,11 @@ See the [hardware requirements](/nodes/node-setup/node-setup) for minimum and re
 
 Your validator's total staking rewards scale with total bonded stake. Attracting delegators (who must hold Prime or Core licenses) increases your proportional share of network staking rewards. Your commission rate is the percentage you retain from delegators' staking rewards.
 
+Prime and Core license holders provide delegated stake to validators; they do not operate the validator infrastructure themselves.
+
 ## Key economic considerations
 
-1. **Emissions are performance-conditional**: Only `ACTIVE` licenses (bound + live delegation) earn emission rewards. Downtime causes your license to return to `BOUND`, pausing emission accrual.
-
+1. **Emissions are performance-conditional**: Only `ACTIVE` licenses (bound \+ live delegation) earn emission rewards. Downtime causes your license to return to `BOUND`, pausing emission accrual.
 2. **No redelegation**: `MsgBeginRedelegate` is permanently disabled. Delegators must fully unbond and wait the ~21-day unbonding period before delegating to a different validator — factor this into your validator selection and commission rate strategy.
-
 3. **No emissions cap restart**: Once the global 7B THEO emissions cap is reached, `x/emissions` stops. Plan for the long-term transition to fee-driven rewards as described in the [Tokenomics paper](/token/tokenomics-paper-v1-2).
-
 4. **Validator set is stake-ranked**: The active set size is capped (`max_validators`). Validators with insufficient stake may remain unbonded. Build delegated stake to secure an active set position.
