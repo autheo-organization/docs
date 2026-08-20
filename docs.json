@@ -68,7 +68,8 @@
               "web-apps/bridge/overview",
               "web-apps/bridge/connecting-wallets",
               "web-apps/bridge/making-a-transfer",
-              "web-apps/bridge/transfer-history"
+              "web-apps/bridge/transfer-history",
+              "web-apps/bridge/bridging-theo-to-base"
             ]
           },
           {
@@ -283,6 +284,7 @@
               "token/staking-and-rewards",
               "token/allocations-and-emissions",
               "token/vesting",
+              "token/buying-and-trading-theo",
               "token/risks-and-disclaimers",
               "token/tokenomics-paper-v1-2"
             ]

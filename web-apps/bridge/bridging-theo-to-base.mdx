@@ -1,0 +1,130 @@
+---
+title: "Bridging THEO from Autheo Mainnet to Base"
+description: "Step-by-step guide to bridging THEO tokens from Autheo Mainnet to Base network using the Autheo Bridge, so they can be traded on Hydrex."
+keywords: ["bridge", "theo", "base network", "autheo mainnet", "hyper.autheo.com", "hydrex", "validator rewards"]
+---
+
+This guide covers the specific flow for moving THEO tokens from Autheo Mainnet to Base network. This is the step you need before selling or trading THEO earned from validator rewards, staking, or the Node Sale on [Hydrex](https://www.hydrex.fi/) — Hydrex runs on Base, not Autheo Mainnet, so tokens have to arrive on Base first.
+
+<Note>
+If you already hold THEO on Base (for example, tokens you bought directly on Hydrex), you can skip this guide and go straight to [Buying and trading THEO on Hydrex](/token/buying-and-trading-theo).
+</Note>
+
+## Requirements
+
+| Requirement | Details |
+|---|---|
+| Wallet | An EVM-compatible wallet where your THEO tokens are stored (e.g. MetaMask, Keplr) |
+| Gas | THEO on Autheo Mainnet, to pay the source-chain gas fee |
+
+## 1. Add THEO as a custom token on Base
+
+The first time you interact with THEO on Base network, your wallet won't recognize it automatically — you need to add it as a custom token. The steps below use MetaMask; the process is similar for other EVM wallets.
+
+<Steps>
+  <Step title="Select Base network">
+    In your wallet, go to **Tokens** and select **Base network**.
+
+    <img src="/images/bridge-theo-base-select-network.png" alt="Selecting Base network in wallet tokens view" />
+  </Step>
+  <Step title="Open Manage tokens">
+    Click the three-dot menu and choose **Manage tokens**.
+
+    <img src="/images/bridge-theo-base-manage-tokens.png" alt="Manage tokens menu option" />
+  </Step>
+  <Step title="Add a custom token">
+    Click **Add a custom token**.
+
+    <img src="/images/bridge-theo-base-add-custom-token.png" alt="Add a custom token option" />
+  </Step>
+  <Step title="Enter the THEO contract address">
+    Make sure the **Network** is set to **Base**, then enter the token contract address:
+
+    ```
+    0xebE516a20238F79DC20b07eaD6768e08891Ed309
+    ```
+
+    Click **Add token**.
+
+    <Warning>
+    Always verify this contract address against this page or [docs.autheo.com](https://docs.autheo.com) directly before adding it. Never trust a contract address sent to you in a message or DM.
+    </Warning>
+
+    <img src="/images/bridge-theo-base-token-contract-address.png" alt="Entering the THEO token contract address on Base" />
+  </Step>
+  <Step title="Confirm THEO is visible">
+    THEO now appears in your wallet's token list for Base network.
+
+    <img src="/images/bridge-theo-base-token-visible.png" alt="THEO token visible in wallet" />
+  </Step>
+</Steps>
+
+## 2. Bridge THEO using the Autheo Bridge
+
+The Autheo Bridge at [hyper.autheo.com](https://hyper.autheo.com/) is the primary way to move THEO between Autheo Mainnet and Base. See the [Bridge overview](/web-apps/bridge/overview) for more on how the Bridge works generally.
+
+<Steps>
+  <Step title="Go to the Autheo Bridge">
+    Navigate to [https://hyper.autheo.com/](https://hyper.autheo.com/).
+
+    <img src="/images/bridge-theo-hyper-autheo-home.png" alt="Autheo Bridge homepage" />
+  </Step>
+  <Step title="Connect your wallet">
+    Click **Connect Wallet**.
+
+    <img src="/images/bridge-theo-connect-wallet.png" alt="Connect Wallet button" />
+
+    Choose the wallet you want to connect.
+
+    <img src="/images/bridge-theo-choose-wallet.png" alt="Wallet selection modal" />
+
+    After choosing the desired wallet (e.g. MetaMask), click **Connect**.
+
+    <img src="/images/bridge-theo-wallet-connect-confirm.png" alt="Confirming wallet connection" />
+
+    Your wallet address is displayed once the connection succeeds.
+
+    <img src="/images/bridge-theo-wallet-connected.png" alt="Wallet connected and address displayed" />
+  </Step>
+  <Step title="Open the Token Transfer tab">
+    Click the **Token Transfer** tab. This defaults the source network (**From**) to **Autheo Mainnet** and the destination network (**To**) to **Base Mainnet**.
+
+    <img src="/images/bridge-theo-token-transfer-tab.png" alt="Token Transfer tab with Autheo Mainnet to Base Mainnet" />
+  </Step>
+  <Step title="Enter the amount">
+    Enter the amount of THEO you want to bridge.
+
+    <img src="/images/bridge-theo-input-amount.png" alt="Entering the amount of THEO to bridge" />
+  </Step>
+  <Step title="Enter the recipient address">
+    Enter the recipient address, or click **Self** if you're bridging to the same wallet, then click **Continue**.
+
+    <img src="/images/bridge-theo-recipient-address.png" alt="Entering the recipient address" />
+  </Step>
+  <Step title="Double-check the recipient address">
+    Verify the recipient address is correct, then click **Continue**.
+
+    <img src="/images/bridge-theo-confirm-recipient.png" alt="Confirming recipient address" />
+  </Step>
+  <Step title="Double-check the remote token address">
+    Verify the **Remote Token** address matches `0xebE516a20238F79DC20b07eaD6768e08891Ed309`, then click **Send to Base Mainnet**.
+
+    <img src="/images/bridge-theo-confirm-remote-token.png" alt="Confirming remote token address before sending" />
+  </Step>
+  <Step title="Sign the transaction">
+    A transaction request pop-up appears in your wallet. Click **Confirm** to sign it.
+
+    <img src="/images/bridge-theo-sign-transaction.png" alt="Signing the bridge transaction" />
+  </Step>
+  <Step title="Bridging complete">
+    Once the bridge completes, you'll see success confirmations.
+
+    <img src="/images/bridge-theo-bridging-success.png" alt="Bridging success confirmation" />
+
+    Your THEO is now on Base network and ready to sell or trade on Hydrex. See [Buying and trading THEO on Hydrex](/token/buying-and-trading-theo) for the next steps.
+  </Step>
+</Steps>
+
+<Warning>
+The Bridge enforces geographic compliance restrictions. Users in certain jurisdictions may be unable to access the service.
+</Warning>
