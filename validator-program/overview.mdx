@@ -4,12 +4,26 @@ description: "Overview of the Autheo validator program: license tiers, responsib
 keywords: ["validator program", "node operator", "sovereign", "prime", "core", "nft license", "rewards"]
 ---
 
-The Autheo validator program enables node operators to secure the network and earn THEO rewards in exchange for running reliable, performant infrastructure. Participation requires holding an NFT license — a tier-based credential that governs what role you can play in the network.
+The Autheo validator program enables **Sovereign license holders** to operate validators and secure the network. **Prime and Core license holders do not operate validator nodes; they delegate THEO to existing validators.**
+
+Each NFT license is a tier-based credential that determines what role you can perform on the network.
+
+## Choose your role
+
+Your license determines how you participate in the Autheo network:
+
+| License | Role | Runs a validator? |
+| --- | --- | --- |
+| **Sovereign** | Operate a validator and earn validator rewards | Yes |
+| **Prime** | Delegate THEO to an existing validator | No |
+| **Core** | Delegate THEO to an existing validator | No |
+
+> **Important:** Prime and Core licenses are delegation licenses. They do not require you to run or host a validator node.
 
 ## License tiers
 
 | Tier | Role | Annual THEO emission | Requirement |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | **Sovereign** | Create and operate a validator node | ~187,969 THEO | 1 Sovereign NFT license |
 | **Prime** | Delegate to external validators (higher tier) | ~18,797 THEO | 1 Prime NFT license |
 | **Core** | Delegate to external validators (standard tier) | ~1,880 THEO | 1 Core NFT license |
@@ -18,6 +32,8 @@ Licenses originate as ERC-721 tokens on **Arbitrum** and are bridged to Autheo C
 
 ## Validator responsibilities
 
+Only Sovereign license holders who operate validators have these infrastructure and validator-operations responsibilities. Prime and Core holders participate through delegation and do not operate validator infrastructure.
+
 As a validator, you are responsible for:
 
 - Maintaining a node that meets the [hardware requirements](/nodes/node-setup/node-setup)
@@ -25,10 +41,6 @@ As a validator, you are responsible for:
 - Securing both the operator key and consensus key
 - Monitoring for liveness failures and responding to incidents promptly
 - Keeping the binary version up to date
-
-<Warning>
-`MsgBeginRedelegate` is permanently disabled on Autheo Chain. Once you delegate stake to a validator, you must unbond and wait the ~21-day unbonding period before delegating elsewhere. Choose your validator carefully before committing stake.
-</Warning>
 
 ## Reward streams
 
@@ -41,40 +53,49 @@ See [Staking and rewards](/token/staking-and-rewards) for the full mechanics.
 
 ## How to participate
 
-<Steps>
-  <Step title="Acquire a Sovereign NFT license">
-    Purchase a Sovereign license on the [Node Sale Platform](/web-apps/node-sale/purchasing-a-license) or secondary market on Arbitrum.
-  </Step>
-  <Step title="Set up infrastructure">
-    Provision a server meeting the [hardware requirements](/nodes/node-setup/node-setup) or use a [managed hosting provider](/validator-program/hosting-options).
-  </Step>
-  <Step title="Install and configure the node">
-    Follow the [installation](/nodes/node-setup/installation) and [configuration](/nodes/node-setup/configuration) guides.
-  </Step>
-  <Step title="Bridge and bind your license">
-    Follow the [license setup](/nodes/node-setup/license-setup) guide to bridge from Arbitrum and bind on-chain.
-  </Step>
-  <Step title="Register your validator">
-    Submit `MsgCreateValidator` following the [register validator](/nodes/validator-lifecycle/register-validator) guide.
-  </Step>
-</Steps>
+### Sovereign validator operators
+
+If you want to operate a validator:
+
+1. **Acquire a Sovereign NFT license.** Purchase a Sovereign license from the [Node Sale Platform](/web-apps/node-sale/purchasing-a-license) or an approved secondary market.
+2. **Set up your infrastructure.** Provision a server that meets the [hardware requirements](/nodes/requirements/hardware) or use a supported managed hosting provider.
+3. **Install and configure the node.** Follow the [installation](/nodes/node-setup/installation) and [configuration](/nodes/node-setup/configuration) guides.
+4. **Bridge and bind your license.** Follow the [License setup](/nodes/node-setup/license-setup) guide to bridge the license from Arbitrum and bind it on Autheo Chain.
+5. **Register your validator.** Submit `MsgCreateValidator` using the [validator registration](/nodes/node-setup/validator-registration) guide.
+
+### Prime and Core delegators
+
+If you want to delegate THEO to an existing validator:
+
+1. **Acquire a Prime or Core NFT license.**
+2. **Bridge and bind your license** using the [License setup](/nodes/node-setup/license-setup) guide.
+3. **Select an eligible validator** to delegate to.
+4. **Delegate your THEO** through the Validator Portal.
+
+Prime and Core holders do not need to provision infrastructure or register a validator.
+
+> **Important:** Autheo does not support redelegation. Once you delegate THEO to a validator, you must unstake and wait approximately 21 days for the tokens to unbond before you can delegate to another validator. Choose your validator carefully.
 
 ## Resources
 
 <CardGroup cols={2}>
-  <Card title="Hosting options" href="/validator-program/hosting-options" icon="server">
+  <Card title="Hosting options" icon="server" href="/validator-program/hosting-options">
     Self-host or use a managed provider
   </Card>
-  <Card title="Economics" href="/validator-program/economics" icon="chart-line">
+
+  <Card title="Economics" icon="chart-line" href="/validator-program/economics">
     Revenue estimates and cost breakdown
   </Card>
-  <Card title="Node brochure" href="/validator-program/brochure" icon="file">
+
+  <Card title="Node brochure" icon="file" href="/validator-program/brochure">
     Full node sale brochure
   </Card>
-  <Card title="Compliance" href="/validator-program/compliance" icon="shield">
+
+  <Card title="Compliance" icon="shield" href="/validator-program/compliance">
     KYC and jurisdictional requirements
   </Card>
-  <Card title="Validator Portal" href="/web-apps/validator-portal/overview" icon="display">
+
+  <Card title="Validator Portal" icon="display" href="/web-apps/validator-portal/overview">
     Deploy and manage your node via the web portal
   </Card>
 </CardGroup>
