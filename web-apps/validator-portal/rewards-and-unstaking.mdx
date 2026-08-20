@@ -1,6 +1,6 @@
 ---
 title: "Rewards and unstaking"
-description: "How to claim delegation rewards, unbind licenses, and unstake THEO tokens in the Autheo Validator Portal."
+description: "How to claim staking rewards, unbind a license, and unstake THEO tokens in the Autheo Validator Portal."
 keywords: ["rewards", "claim rewards", "unstake", "unbond", "unbonding period", "license unbind", "cooldown", "keplr"]
 ---
 
@@ -8,26 +8,31 @@ This page covers claiming your earned rewards, unbinding licenses, and unstaking
 
 For staking mechanics and reward calculations, see [Staking and rewards](/token/staking-and-rewards).
 
-## Claiming rewards
+## Claiming staking rewards
+
+> **Two reward types:** Staking rewards and NFT/license rewards are separate reward streams. This page covers staking rewards. NFT/license rewards are claimed separately through the license reward mechanism.
 
 <Steps>
   <Step title="Go to the Delegation page">
     Navigate to the **Delegation** page from the main menu.
   </Step>
   <Step title="Claim from the delegation row">
-    Find the delegation you want to claim from and click **Claim Rewards** in the Actions column.
+    Find the delegation you want to claim from and click **Claim Rewards** in the Actions column to claim your staking rewards.
 
-    <img src="/images/vp-claim-rewards-1.png" alt="Delegation page with Claim Rewards button highlighted" />
+    ![Delegation page with Claim Rewards button highlighted](/images/vp-claim-rewards-1.png)
   </Step>
   <Step title="Sign in Keplr">
     Sign the transaction in Keplr. Rewards transfer to your wallet upon confirmation.
 
-    <img src="/images/vp-claim-rewards-2.png" alt="Claim rewards — Keplr signing prompt" />
-    <img src="/images/vp-claim-rewards-3.png" alt="Claim rewards — transaction confirmed" />
+    ![Claim rewards — Keplr signing prompt](/images/vp-claim-rewards-2.png)
+
+    ![Claim rewards — transaction confirmed](/images/vp-claim-rewards-3.png)
   </Step>
 </Steps>
 
 ## Unbinding a license
+
+> **Before you unbind:** Unbinding disconnects the license from its current delegation. Review any unclaimed license/NFT rewards before confirming the transaction.
 
 Unbinding releases a Prime or Core license from a delegation. The license enters a cooldown period before it can be rebound to another validator.
 
@@ -47,34 +52,50 @@ Unbinding releases a Prime or Core license from a delegation. The license enters
 </Steps>
 
 <Warning>
-Unbinding a license moves it from `ACTIVE` back to `BOUND` or `ISSUED` status and may affect reward eligibility during the cooldown period. The license cannot be rebound until the cooldown expires.
+  Unbinding a license moves it from `ACTIVE` back to `BOUND` or `ISSUED` status. The license cannot be rebound until the cooldown period expires.
 </Warning>
 
 ## Unstaking tokens
 
 Unstaking (undelegating) removes your THEO from a validator. Tokens enter an **unbonding period** during which they are locked and do not earn rewards. They become available in your wallet after the unbonding period completes.
 
+> **Unbonding period:** Approximately **21 days**. During this period, unstaked THEO is locked, does not earn staking rewards, and cannot be transferred.
+
+> **Note:** Unstaking and unbinding are different actions. **Unstaking** removes your THEO delegation and starts the token unbonding period. **Unbinding** releases a Prime or Core license from its delegation so the license can later be rebound.
+
 <Steps>
   <Step title="Open the unstake flow">
     On the **Delegation** page, click the **Unstake** button in the Actions column for the delegation you want to exit.
 
-    <img src="/images/vp-unstake-1.png" alt="Delegation page with Unstake button highlighted" />
+    ![Delegation page with Unstake button highlighted](/images/vp-unstake-1.png)
   </Step>
   <Step title="Enter the amount">
     Enter the THEO amount to unstake, or click **MAX** to unstake your full delegated amount.
 
-    <img src="/images/vp-unstake-2.png" alt="Unstake amount input modal" />
+    ![Unstake amount input modal](/images/vp-unstake-2.png)
   </Step>
   <Step title="Confirm and sign">
     Click **Confirm** and sign the transaction in Keplr.
 
-    <img src="/images/vp-unstake-3.png" alt="Unstake transaction confirmed in Keplr" />
+    ![Unstake transaction confirmed in Keplr](/images/vp-unstake-3.png)
   </Step>
 </Steps>
 
 <Note>
-The unbonding period is an on-chain parameter (~21 days). During this period, your tokens are neither earning rewards nor available for transfer. Plan accordingly before initiating a large unstake.
+  The unbonding period is an on-chain parameter (~21 days). During this period, your tokens are neither earning rewards nor available for transfer. Plan accordingly before initiating a large unstake.
 </Note>
+
+### Moving your delegation to another validator
+
+Autheo does not currently support redelegation.
+
+To move your THEO from one validator to another:
+
+1. Unstake your THEO from the current validator.
+2. Wait for the approximately 21-day unbonding period to complete.
+3. After the THEO becomes available in your wallet, delegate it to the new validator.
+
+Because the unbonding period is required before redelegation, consider the validator's commission rate and other relevant factors before delegating.
 
 ## Selling or trading claimed rewards
 
