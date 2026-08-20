@@ -1,34 +1,56 @@
 ---
 title: "License setup"
-description: "How to acquire, bridge, bind, and verify an NFT license on Autheo Chain before running a validator or delegating."
+description: "How to acquire, bridge, bind, and verify an NFT license on Autheo Chain before running a validator or delegating. The NFT represents your Autheo node license and determines which validator or delegation activities you can perform."
 keywords: ["license setup", "nft license", "sovereign", "prime", "core", "arbitrum", "bind", "issued", "bound"]
 ---
 
 All staking participants on Autheo Chain must hold an on-chain license record before operating a validator or delegating. Licenses originate as ERC-721 NFTs on Arbitrum and are bridged automatically when transferred to your Autheo Chain EVM address.
 
+## Before you start
+
+Before purchasing and setting up a license, make sure you have:
+
+1. **MetaMask configured for Arbitrum One.** The Node Sale uses Arbitrum One for license purchases.
+2. **ETH on Arbitrum One.** You need ETH on Arbitrum to pay for the node license.
+3. **ARB on Arbitrum One for transaction fees.** Keep a small amount of ARB available to pay network gas fees.
+4. **A wallet address that you control.** You will use your wallet to purchase, bridge, and manage the license.
+5. **The appropriate license tier selected.** Choose a Sovereign license if you are operating a validator. Choose a Prime or Core license if you are delegating to an existing validator.
+
+For details on purchasing a license, see [Purchasing a license](/web-apps/node-sale/purchasing-a-license).
+
 ## License tiers
 
 | Tier | Purpose | Annual THEO emission | Required for |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Sovereign | Create and operate a validator | ~187,969 | Validator operators |
 | Prime | External delegation (higher tier) | ~18,797 | Prime delegators |
 | Core | External delegation (standard tier) | ~1,880 | Standard delegators |
 
 <Note>
-Only one Sovereign license can bind to a given validator at any time. This enforces a strict 1:1 relationship between Sovereign licenses and validators.
+  **Important:** Sovereign licenses and Prime/Core licenses serve different purposes. A Sovereign license is used by the operator of a validator. Prime and Core licenses are used for delegation to an existing validator and do not create or operate a validator themselves.
+
+  Only one Sovereign license can bind to a given validator at any time. This enforces a strict 1:1 relationship between Sovereign licenses and validators.
 </Note>
 
 ## Step 1: Acquire the NFT on Arbitrum
 
-Purchase the appropriate ERC-721 NFT on the [Node Sale Platform](/web-apps/node-sale/purchasing-a-license). View contract addresses:
+Purchase the appropriate ERC-721 license NFT on the [Node Sale Platform](/web-apps/node-sale/purchasing-a-license).
+
+The license NFT is purchased on **Arbitrum One**. Before starting the purchase, make sure MetaMask is connected to Arbitrum One and that your wallet contains the required ETH on Arbitrum for the purchase and a small amount of ARB for transaction fees.
+
+ View contract addresses:
 
 ```bash
 autheod query license params
 ```
 
+> **Next step:** After purchasing the license NFT on Arbitrum One, you must transfer it to your Autheo Chain EVM address using the Autheo Bridge. The license is not ready for binding until the bridge process creates the corresponding license record on Autheo Chain.
+
 ## Step 2: Transfer to your Autheo Chain EVM address
 
-Use the [Autheo Bridge](/web-apps/bridge/making-a-transfer) to send the NFT from Arbitrum to your EVM address (`0x...` format). This triggers an automatic on-chain hook that mints a `LicenseRecord` in `ISSUED` status — no separate transaction needed.
+Use the [Autheo Bridge](/web-apps/bridge) to transfer the license NFT from Arbitrum One to your Autheo Chain EVM address (`0x...` format).
+
+The bridge creates the corresponding `LicenseRecord` on Autheo Chain with an initial status of `ISSUED`. No separate license-record transaction is required.
 
 ```bash
 autheod keys show <key-name> --bech eth --keyring-backend file
@@ -47,15 +69,26 @@ You should see `status: ISSUED`.
 
 <Tabs>
   <Tab title="Sovereign license">
+    ### Sovereign license
+
+    A Sovereign license is used by a validator operator. When binding a Sovereign license, the validator address is derived from your operator key.
+
     ```bash
     autheod tx license bind <license-id> \
       --from <owner-key> \
       --chain-id autheo_2127-1 \
       --keyring-backend file
     ```
+
     The validator address is derived automatically from your operator key.
   </Tab>
   <Tab title="Prime / Core license">
+    ### Prime / Core license
+
+    Prime and Core licenses are used for delegation to an existing validator.
+
+    When binding a Prime or Core license, you must specify the validator you want the license to be associated with. The target validator must be bonded and not jailed.
+
     ```bash
     autheod tx license bind <license-id> \
       --validator-address <autheovaloper-address> \
@@ -63,6 +96,7 @@ You should see `status: ISSUED`.
       --chain-id autheo_2127-1 \
       --keyring-backend file
     ```
+
     The target validator must be bonded and not jailed.
   </Tab>
 </Tabs>
@@ -73,12 +107,15 @@ You should see `status: ISSUED`.
 autheod query license license <license-id>
 ```
 
-Confirm `status: BOUND`. Your license is ready for validator creation or delegation.
+Confirm `status: BOUND`.
+
+- **Sovereign:** The license is ready to be used for validator creation.
+- **Prime/Core:** The license is ready to be used for delegation to the selected validator.
 
 ## License status after binding
 
 | Action | Resulting status |
-|---|---|
+| --- | --- |
 | `MsgCreateValidator` | BOUND → ACTIVE |
 | `MsgDelegate` | BOUND → ACTIVE |
 | Full undelegation | ACTIVE → BOUND |
@@ -87,7 +124,7 @@ Confirm `status: BOUND`. Your license is ready for validator creation or delegat
 
 ## Claiming NFT rewards
 
-Once `ACTIVE`, the license accrues per-block NFT rewards. Claim them manually:
+Once `ACTIVE`, the license accrues NFT rewards. These rewards are separate from staking rewards and must be claimed manually.
 
 ```bash
 autheod query emissions license-accrued-rewards <license-id>
