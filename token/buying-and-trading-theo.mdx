@@ -1,0 +1,140 @@
+---
+title: "Buying and trading THEO on Hydrex"
+description: "Step-by-step guide to buying and selling THEO on Hydrex, a decentralized exchange built on Base network."
+keywords: ["theo", "hydrex", "base network", "buy theo", "sell theo", "trade theo", "dex"]
+---
+
+[Hydrex](https://www.hydrex.fi/) is a decentralized exchange (DEX) built on Base network where THEO can be bought, sold, and traded. Because Hydrex runs on Base rather than Autheo Mainnet, you'll need THEO (or funds to buy THEO) available on Base network before you can trade.
+
+<Note>
+If you already hold THEO on Autheo Mainnet — for example, validator rewards, staking rewards, or Node Sale tokens — bridge it to Base first. See [Bridging THEO from Autheo Mainnet to Base](/web-apps/bridge/bridging-theo-to-base).
+</Note>
+
+## Requirements
+
+| Requirement | Details |
+|---|---|
+| Wallet | An EVM-compatible wallet (e.g. MetaMask, Keplr, Coinbase Wallet, Ledger) |
+| Gas | ETH on Base network, to pay transaction fees |
+
+## 1. Get ETH on Base for gas
+
+Every buy, sell, or trade on Hydrex requires ETH on Base network to pay gas. You can acquire it by:
+
+- Buying ETH (Base) directly on a CEX or DEX
+- Swapping into it using your wallet's built-in swap feature (e.g. MetaMask Swap)
+- Bridging ETH from another network to Base via [Base Bridge](https://bridge.base.org/) or a third-party cross-chain bridge (e.g. Superbridge, Brid.gg)
+
+## 2. Add THEO as a custom token on Base
+
+The first time you interact with THEO on Base, add it as a custom token in your wallet. The steps below use MetaMask; the process is similar for other EVM wallets.
+
+<Steps>
+  <Step title="Select Base network">
+    In your wallet, go to **Tokens** and select **Base network**.
+
+    <img src="/images/hydrex-theo-select-network.png" alt="Selecting Base network in wallet tokens view" />
+  </Step>
+  <Step title="Open Manage tokens">
+    Click the three-dot menu and choose **Manage tokens**.
+
+    <img src="/images/hydrex-theo-manage-tokens.png" alt="Manage tokens menu option" />
+  </Step>
+  <Step title="Add a custom token">
+    Click **Add a custom token**.
+
+    <img src="/images/hydrex-theo-add-custom-token.png" alt="Add a custom token option" />
+  </Step>
+  <Step title="Enter the THEO contract address">
+    Make sure the **Network** is set to **Base**, then enter the token contract address:
+
+    ```
+    0xebE516a20238F79DC20b07eaD6768e08891Ed309
+    ```
+
+    Click **Add token**.
+
+    <Warning>
+    Always verify this contract address against this page or [docs.autheo.com](https://docs.autheo.com) directly before adding it or entering it into a swap. Never trust a contract address sent to you in a message or DM.
+    </Warning>
+
+    <img src="/images/hydrex-theo-token-contract-address.png" alt="Entering the THEO token contract address on Base" />
+  </Step>
+  <Step title="Confirm THEO is visible">
+    THEO now appears in your wallet's token list for Base network.
+
+    <img src="/images/hydrex-theo-token-visible.png" alt="THEO token visible in wallet" />
+  </Step>
+</Steps>
+
+## 3. Connect to Hydrex
+
+<Steps>
+  <Step title="Go to Hydrex">
+    Navigate to [https://www.hydrex.fi/](https://www.hydrex.fi/).
+
+    <img src="/images/hydrex-fi-home.png" alt="Hydrex homepage" />
+  </Step>
+  <Step title="Connect your wallet">
+    Click **Connect**.
+
+    <img src="/images/hydrex-connect-wallet.png" alt="Connect button on Hydrex" />
+
+    Choose the wallet you want to use.
+
+    <img src="/images/hydrex-choose-wallet.png" alt="Wallet selection modal" />
+
+    After choosing the desired wallet (e.g. MetaMask), click **Connect**.
+
+    <img src="/images/hydrex-wallet-connect-confirm.png" alt="Confirming wallet connection" />
+
+    Your wallet address is displayed once the connection succeeds.
+
+    <img src="/images/hydrex-wallet-connected.png" alt="Wallet connected and address displayed" />
+  </Step>
+  <Step title="Open the swap interface">
+    Click **Trade**, or go directly to [hydrex.fi/swap](https://www.hydrex.fi/swap).
+
+    <img src="/images/hydrex-trade-swap-page.png" alt="Hydrex trade and swap page" />
+  </Step>
+</Steps>
+
+## 4. Buy THEO
+
+<Steps>
+  <Step title="Choose the token to sell">
+    In the **Sell** field, choose the token you want to use to buy THEO (e.g. USDC).
+
+    <img src="/images/hydrex-buy-sell-field.png" alt="Choosing the sell token" />
+  </Step>
+  <Step title="Choose THEO in the Buy field">
+    In the **Buy** field, choose THEO. Verify the contract address by copying it (using the overlapping-squares copy icon) and checking it matches `0xebE516a20238F79DC20b07eaD6768e08891Ed309`.
+
+    <img src="/images/hydrex-buy-field-theo.png" alt="Selecting THEO in the buy field and verifying the contract address" />
+  </Step>
+  <Step title="Confirm the trade">
+    Enter the amount you want to buy, then confirm the transaction. This triggers a wallet pop-up for signing — approve it to complete the purchase.
+  </Step>
+</Steps>
+
+## 5. Sell or trade THEO
+
+<Steps>
+  <Step title="Choose THEO as the token to sell">
+    In the **Sell** field, choose THEO.
+
+    <img src="/images/hydrex-sell-field-theo.png" alt="Choosing THEO in the sell field" />
+  </Step>
+  <Step title="Choose the token to buy">
+    In the **Buy** field, choose the token you want to receive (e.g. USDC).
+
+    <img src="/images/hydrex-buy-field-desired-token.png" alt="Choosing the token to receive" />
+  </Step>
+  <Step title="Confirm the trade">
+    Enter the amount you want to sell, then confirm the transaction. This triggers a wallet pop-up for signing — approve it to complete the trade.
+  </Step>
+</Steps>
+
+<Info>
+Hydrex is an independent, third-party decentralized exchange built on Base and is not owned or operated by Autheo. Trading on Hydrex is subject to Hydrex's own terms — review [Hydrex's Terms of Service](https://www.hydrex.fi/terms) before trading.
+</Info>
