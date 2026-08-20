@@ -1,15 +1,19 @@
 ---
 title: "NFT rewards"
-description: "How Autheo Chain's dual-stream emission model works: per-block NFT rewards, the remainder carry mechanism, the global emissions cap, and how to claim."
+description: "How Autheo Chain’s dual reward streams work, including NFT/license rewards, staking rewards, eligibility, and reward claiming."
 keywords: ["nft rewards", "emissions", "x/emissions", "sovereign", "prime", "core", "claim", "aauth", "THEO"]
 ---
 
 Autheo Chain implements a dual-stream emission model. Community rewards and NFT emission rewards share a single global emissions cap and are both minted per block. NFT rewards operate completely independently from staking rewards.
 
-## Reward tiers
+> **What does the NFT represent?**<br />The NFT is the on-chain representation of your Autheo node license. Its tier determines the license's reward rate and the role it can be used for. Sovereign licenses are used by validator operators, while Prime and Core licenses are used for delegation.
+
+## License reward tiers
+
+NFT emission rewards are determined by the license tier. The values below are the default annual emission amounts for each license tier.
 
 | Tier | Annual emission (THEO) | Annual emission (aauth) |
-|---|---|---|
+| --- | --- | --- |
 | Sovereign | ~187,969 | 187,969,000,000,000,000,000,000 |
 | Prime | ~18,797 | 18,797,000,000,000,000,000,000 |
 | Core | ~1,880 | 1,880,000,000,000,000,000,000 |
@@ -18,14 +22,14 @@ Autheo Chain implements a dual-stream emission model. Community rewards and NFT 
 
 With a 5-second block time, there are approximately 6,307,200 blocks per year (31,536,000 ÷ 5).
 
-```
+```text
 reward_per_block = AnnualUtheo / 6,307,200
 ```
 
 Default per-block values:
 
 | Tier | Per-block (aauth) |
-|---|---|
+| --- | --- |
 | Sovereign | ~29,802,050,528,169,014 |
 | Prime | ~2,980,205,052,816,901 |
 | Core | ~298,020,505,281,690 |
@@ -34,7 +38,7 @@ Default per-block values:
 
 To prevent truncation losses from integer arithmetic, the system carries remainders across blocks:
 
-```
+```text
 totalWithRemainder = totalMintDec + GetNFTRemainder(ctx)
 totalMintInt       = truncate(totalWithRemainder)
 newRemainder       = totalWithRemainder - totalMintInt
@@ -48,22 +52,24 @@ The default cap is **7 billion THEO** (`7,000,000,000,000,000,000,000,000,000 aa
 
 ## Eligibility
 
-A license qualifies for per-block rewards only when **all** of the following are true:
+A license earns NFT/license rewards only while it is actively participating in the network. All of the following conditions must be met:
 
 - Status is `LICENSE_STATUS_ACTIVE`
 - A binding record exists
 - The bound validator is not jailed
 - A delegation record exists with positive token value (dust shares excluded)
 
-## Staking vs. NFT rewards
+> **Unbinding and rewards:** A license that is no longer `ACTIVE` or no longer meets the eligibility conditions does not qualify for NFT/license rewards. Review the [rewards and unstaking](/web-apps/validator-portal/rewards-and-unstaking) guide before unbinding a license.
 
-| Aspect | NFT emission rewards | Staking rewards |
-|---|---|---|
-| Source module | `x/emissions` | `x/mint` |
-| Distribution | `x/licensedistribution` (manual claim) | `x/distribution` (auto) |
-| Basis | Fixed per license tier per block | Proportional to delegated stake |
-| Emissions cap | Counted against 7B THEO cap | Not capped by `x/emissions` |
-| Accrual | KV balance (pull model) | Auto-credited per block |
+## NFT/license rewards vs. staking rewards
+
+| Aspect | NFT/license rewards | Staking rewards |
+| --- | --- | --- |
+| Source | License-based emission system | Staking reward system |
+| Distribution | Manual claim | Auto-credited |
+| Basis | Fixed by license tier | Proportional to delegated stake |
+| Emissions cap | Counted against the 7B THEO emissions cap | Not counted against the NFT emissions cap |
+| Accrual | Accumulates while the license is eligible | Accrued based on delegated stake |
 
 ## Querying accrued rewards
 
@@ -89,12 +95,12 @@ autheod tx licensedistribution claim-nft-rewards <license-id> \
   --keyring-backend file
 ```
 
-Accrued rewards accumulate indefinitely. There is no expiry or automatic sweep.
+Accrued NFT/license rewards accumulate indefinitely. There is no expiry or automatic sweep. You must claim them separately from staking rewards.
 
 ## Governance parameters
 
 | Parameter | Default | Description |
-|---|---|---|
+| --- | --- | --- |
 | `Enabled` | `true` | Master on/off switch |
 | `EmissionsCap` | 7B THEO | Maximum total mintable by x/emissions |
 | `CommunityPerBlockUtheo` | 55,492,135,971,600,000,000 aauth | Community pool reward per block |
