@@ -1,6 +1,6 @@
 ---
 title: "Prerequisites"
-description: "Hardware, operating system, firewall, and NFT license requirements before setting up an Autheo Chain validator node."
+description: "Hardware, software, wallet, license, and network requirements to complete before setting up an Autheo Chain validator."
 keywords: ["prerequisites", "hardware", "requirements", "ubuntu", "firewall", "nft license", "sovereign", "validator setup"]
 ---
 
@@ -9,7 +9,7 @@ Before setting up an Autheo Chain validator, ensure your environment meets all o
 ## 1. Hardware requirements
 
 | Resource | Minimum | Recommended |
-|---|---|---|
+| --- | --- | --- |
 | CPU | 16 vCPU | 32 vCPU |
 | RAM | 32 GB | 64 GB |
 | Storage | 1 TB NVMe SSD | 2 TB NVMe SSD (RAID 10) |
@@ -17,7 +17,7 @@ Before setting up an Autheo Chain validator, ensure your environment meets all o
 | OS | Ubuntu 22.04 LTS | Ubuntu 22.04 LTS |
 
 <Warning>
-MemIAVL requires an additional 8–16 GB of RAM above your process baseline. NVMe SSDs are mandatory — spinning disks and SATA SSDs are not supported.
+  MemIAVL requires an additional 8–16 GB of RAM above your process baseline. NVMe SSDs are mandatory — spinning disks and SATA SSDs are not supported.
 </Warning>
 
 ## 2. Operating system
@@ -69,10 +69,21 @@ echo "* hard nofile 65535" | sudo tee -a /etc/security/limits.conf
   </Tab>
 </Tabs>
 
+## Wallet and network prerequisites
+
+Before continuing with node setup:
+
+- Configure your wallet for the Autheo network as required by the license and validator setup flow.
+- Make sure your Sovereign license has been purchased and transferred from Arbitrum to your Autheo Chain address.
+- Keep sufficient THEO (`aauth`) in the operator account for validator transactions and network fees.
+- Keep the wallet credentials and validator keys securely backed up.
+
 ## 4. NFT license requirement
 
 <Warning>
-A Sovereign NFT license in `BOUND` status is protocol-enforced before validator creation. You cannot submit `MsgCreateValidator` without it.
+  A Sovereign NFT license in `BOUND` status is protocol-enforced before validator creation. You cannot submit `MsgCreateValidator` without it.
+
+  Only a **Sovereign** license can be used to create and operate a validator. Prime and Core licenses are for delegation and are not valid for `MsgCreateValidator`.
 </Warning>
 
 See [License setup](/nodes/node-setup/license-setup) for a full walkthrough.
@@ -80,7 +91,7 @@ See [License setup](/nodes/node-setup/license-setup) for a full walkthrough.
 License tiers:
 
 | Tier | Purpose | Annual THEO emission |
-|---|---|---|
+| --- | --- | --- |
 | Sovereign | Create and operate a validator | ~187,969 |
 | Prime | External delegation | ~18,797 |
 | Core | External delegation | ~1,880 |
@@ -96,7 +107,7 @@ autheod q bank balances <cosmos-address> -o json | jq
 Token conversion:
 
 | THEO | aauth |
-|---|---|
+| --- | --- |
 | 1 | 1,000,000,000,000,000,000 |
 | 10 | 10,000,000,000,000,000,000 |
 | 1,000 | 1,000,000,000,000,000,000,000 |
@@ -118,6 +129,6 @@ autheod status | jq '.SyncInfo.catching_up'
 - [ ] File descriptor limit increased to 65535
 - [ ] Firewall configured
 - [ ] SSH hardened (root login disabled, password auth disabled, fail2ban running)
-- [ ] Sovereign NFT license acquired on Arbitrum
-- [ ] Operator account funded with `aauth`
+- [ ] Sovereign NFT license acquired, bridged to Autheo Chain, and in `BOUND` status
+- [ ] Operator account funded with sufficient `aauth` for validator transactions and network fees
 - [ ] Node fully synchronized (`catching_up: false`)

@@ -1,10 +1,22 @@
 ---
 title: "Register validator"
-description: "How to submit MsgCreateValidator on Autheo Chain, from pre-flight checks through post-creation verification."
+description: "Register a Sovereign validator on Autheo Chain after completing the required node setup, license binding, and infrastructure configuration."
 keywords: ["create validator", "MsgCreateValidator", "register", "sovereign license", "self-delegation", "bonded", "active"]
 ---
 
-This guide walks through submitting `MsgCreateValidator` on Autheo Chain. Complete [Prerequisites](/nodes/node-setup/node-setup), [Installation](/nodes/node-setup/installation), [Key management](/developers/guides/key-management), [License setup](/nodes/node-setup/license-setup), and [Production deployment](/nodes/node-setup/configuration) before starting.
+This guide walks through submitting `MsgCreateValidator` on Autheo Chain.
+
+## Prerequisites
+
+Before registering a validator, make sure you have completed:
+
+1. **Acquired a Sovereign license.**
+2. **Transferred the license to your Autheo Chain address** using the bridge.
+3. **Bound the Sovereign license** and confirmed that its status is `BOUND`.
+4. **Completed the required node and infrastructure setup.**
+5. **Prepared your validator/operator key** according to the node setup instructions.
+
+> **Important:** Prime and Core licenses are not used to register validators. They are delegation licenses and are handled through the delegation flow.
 
 ## Pre-flight checklist
 
@@ -12,6 +24,17 @@ This guide walks through submitting `MsgCreateValidator` on Autheo Chain. Comple
 - [ ] Sovereign NFT license is in `LICENSE_STATUS_BOUND`
 - [ ] Node is fully synchronized (`catching_up: false`)
 - [ ] Operator account has sufficient `aauth` balance
+
+## Registration flow
+
+The validator registration process is:
+
+1. Prepare the validator node and infrastructure.
+2. Confirm that your Sovereign license is bound.
+3. Generate or load the required validator keys.
+4. Submit the validator registration transaction.
+5. Verify that the validator appears in the Validator Portal.
+6. Confirm that the validator is bonded and active.
 
 ## Step 1: Confirm your Sovereign license is BOUND
 
@@ -29,7 +52,7 @@ autheod tx license bind <license-id> \
 ```
 
 <Note>
-If binding fails with `ErrCooldownNotElapsed`, query the cooldown: `autheod query license category-policy 1`
+  If binding fails with `ErrCooldownNotElapsed`, query the cooldown: `autheod query license category-policy 1`
 </Note>
 
 ## Step 2: Get your consensus public key
@@ -40,7 +63,11 @@ autheod tendermint show-validator --home /path/to/node-home
 
 Copy the full JSON output — you need it in the next step.
 
+> **Sovereign license requirement:** A Sovereign license authorizes the wallet to operate a validator. Registering a validator does not apply to Prime or Core licenses.
+
 ## Step 3: Submit MsgCreateValidator
+
+> **Important:** `MsgCreateValidator` is only for Sovereign validators. Prime and Core licenses are used for delegation and cannot be used to create a validator.
 
 ```bash
 autheod tx staking create-validator \
@@ -64,10 +91,12 @@ autheod tx staking create-validator \
 `--amount 1000000000000000000aauth` = 1 THEO. Adjust to your desired self-delegation.
 
 <Note>
-THEO uses 18 decimal places. **1 THEO = 10¹⁸ aauth**. See [Token overview](/token/overview) for the full denomination table. Consider your self-delegation amount carefully — validators with higher stake are more competitive for the active set and more attractive to delegators. See [Validator economics](/validator-program/economics) for guidance.
+  THEO uses 18 decimal places. **1 THEO = 10¹⁸ aauth**. See [Token overview](https://docs.autheo.com/token/overview) for the denomination details.
 </Note>
 
 ## Step 4: Verify activation
+
+After the transaction succeeds, verify that the validator is bonded and that the Sovereign license has transitioned to `ACTIVE`.
 
 ```bash
 # Check bonded status
@@ -106,7 +135,7 @@ autheod tx slashing unjail \
 ```
 
 <Warning>
-If your validator was tombstoned from double-signing, unjail is not possible. You must create a new validator with a new consensus key.
+  If your validator was tombstoned from double-signing, unjail is not possible. You must create a new validator with a new consensus key.
 </Warning>
 
 ### Day-to-day commands
