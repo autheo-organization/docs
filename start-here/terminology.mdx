@@ -9,7 +9,7 @@ This page defines terms used throughout the Autheo documentation. For a complete
 ## Chain identifiers
 
 | Term | Mainnet | Testnet |
-|---|---|---|
+| --- | --- | --- |
 | **Chain ID (EVM)** | `2127` | `785` |
 | **Chain ID (Cosmos)** | `autheo_2127-1` | `autheo_785-1` |
 | **`autheod`** | The Autheo Chain node binary (current version: 1.0.8) | ← same binary |
@@ -19,7 +19,7 @@ Use the Cosmos chain ID in all CLI `--chain-id` flags. Use the EVM chain ID when
 ## Token and denomination
 
 | Term | Definition |
-|---|---|
+| --- | --- |
 | **THEO** | The native token of Autheo Chain |
 | **`aauth`** | The base denomination of THEO (10⁻¹⁸ THEO). All on-chain amounts are expressed in `aauth`. |
 | **1 THEO** | Equal to 1,000,000,000,000,000,000 `aauth` (10¹⁸ `aauth`) |
@@ -27,7 +27,7 @@ Use the Cosmos chain ID in all CLI `--chain-id` flags. Use the EVM chain ID when
 ## Addresses
 
 | Term | Definition |
-|---|---|
+| --- | --- |
 | **Cosmos address** | Bech32-encoded account address, prefix `autheo1...` |
 | **Validator operator address** | Bech32-encoded address with prefix `autheovaloper1...` |
 | **Ethereum address** | EIP-55 hex address (`0x...`), derived from the same keypair as the Cosmos address |
@@ -36,7 +36,7 @@ Use the Cosmos chain ID in all CLI `--chain-id` flags. Use the EVM chain ID when
 ## NFT licenses
 
 | Term | Definition |
-|---|---|
+| --- | --- |
 | **Sovereign license** | NFT license granting the right to create and operate a validator; earns ~187,969 THEO/year |
 | **Prime license** | NFT license granting the right to delegate to external validators (higher emission tier); earns ~18,797 THEO/year |
 | **Core license** | NFT license granting the right to delegate to external validators (standard emission tier); earns ~1,880 THEO/year |
@@ -49,18 +49,19 @@ Use the Cosmos chain ID in all CLI `--chain-id` flags. Use the EVM chain ID when
 ## Staking
 
 | Term | Definition |
-|---|---|
+| --- | --- |
 | **Validator** | A node operator participating in CometBFT consensus; requires a Sovereign NFT license |
 | **Delegator** | An account that stakes THEO to a validator; requires a Prime or Core NFT license |
 | **Bonded** | THEO that is actively staked to a validator |
-| **Unbonding period** | The period (~21 days) during which unbonding THEO cannot be transferred |
+| **Unbonding period** | The approximately 21-day period after unstaking during which THEO remains locked, cannot be transferred, and does not earn staking rewards. |
 | **Self-delegation** | The validator's own stake in their node, submitted via `MsgCreateValidator` |
-| **Redelegate** | Disabled on Autheo Chain. Use undelegate + delegate instead. |
+| **Redelegate** | Disabled on Autheo Chain. Use undelegate \+ delegate instead. |
+| Commission rate | The percentage of staking rewards charged by a validator to its delegators. |
 
 ## Rewards
 
 | Term | Definition |
-|---|---|
+| --- | --- |
 | **Staking rewards** | Proportional rewards from `x/mint` and `x/distribution` — auto-accrued, manually withdrawn |
 | **NFT emission rewards** | Fixed per-block rewards from `x/emissions` based on license tier — manually claimed via `claim-nft-rewards` |
 | **ASCF** | Autheo Storage & Compute Fund — fee revenue pool that funds validator and developer rewards |
@@ -68,10 +69,12 @@ Use the Cosmos chain ID in all CLI `--chain-id` flags. Use the EVM chain ID when
 ## Validator operations
 
 | Term | Definition |
-|---|---|
+| --- | --- |
 | **Jailed** | A validator temporarily excluded from consensus for missing blocks or governance revocation |
 | **Tombstoned** | A validator permanently banned for double-signing; cannot be unjailed |
 | **Double-signing** | Signing two different blocks at the same height — results in tombstoning |
 | **MemIAVL** | RAM-based state tree used by Autheo Chain, requiring 8–16 GB of extra RAM above process baseline |
 | **Sentry node** | A public-facing node that relays traffic to a private validator, protecting the validator's IP |
 | **tmkms** | Tendermint Key Management System — a remote signer that keeps the consensus key off the validator host |
+| Unbind | Releases a bound license from its current validator or delegation. The license must complete the applicable cooldown before it can be bound again. |
+| Unstaking | Removes delegated THEO from a validator and starts the approximately 21-day unbonding period. |
