@@ -7,131 +7,111 @@ keywords: ["glossary", "definitions", "terms", "reference"]
 For terms grouped by concept (chain identifiers, license tiers, staking, rewards, validator operations), see [Terminology](/start-here/terminology).
 
 <AccordionGroup>
-
   <Accordion title="A">
+    **`aauth`** — The base denomination of the THEO token. 1 THEO = 10¹⁸ `aauth`. All on-chain amounts are expressed in `aauth`.
 
-**`aauth`** — The base denomination of the THEO token. 1 THEO = 10¹⁸ `aauth`. All on-chain amounts are expressed in `aauth`.
+    **ASCF** — Autheo Storage & Compute Fund. A fee reinvestment pool that redistributes network revenue to validators, developers, and ecosystem participants.
 
-**ASCF** — Autheo Storage & Compute Fund. A fee reinvestment pool that redistributes network revenue to validators, developers, and ecosystem participants.
+    **`autheod`** — The Autheo Chain node daemon binary. Current version: 1.0.8.
 
-**`autheod`** — The Autheo Chain node daemon binary. Current version: 1.0.8.
+    **`autheo1...`** — The Bech32 prefix for Autheo Chain account addresses.
 
-**`autheo1...`** — The Bech32 prefix for Autheo Chain account addresses.
+    **`autheovaloper1...`** — The Bech32 prefix for validator operator addresses.
 
-**`autheovaloper1...`** — The Bech32 prefix for validator operator addresses.
-
-**ACTIVE (license status)** — A license that is committed to a validator with a live delegation. Earns per-block NFT emission rewards.
-
+    **ACTIVE (license status)** — A license that is committed to a validator with a live delegation. Earns per-block NFT emission rewards.
   </Accordion>
 
   <Accordion title="B">
+    **Base denomination** — The smallest indivisible unit of a token. For THEO, this is `aauth`.
 
-**Base denomination** — The smallest indivisible unit of a token. For THEO, this is `aauth`.
+    **BeginBlocker** — A Cosmos SDK hook called at the start of every block. Autheo's `x/emissions` module uses `BeginBlocker` to calculate and distribute per-block NFT rewards.
 
-**BeginBlocker** — A Cosmos SDK hook called at the start of every block. Autheo's `x/emissions` module uses `BeginBlocker` to calculate and distribute per-block NFT rewards.
+    **Bech32** — A human-readable encoding format for addresses. Autheo uses `autheo1...` for accounts and `autheovaloper1...` for validator operators.
 
-**Bech32** — A human-readable encoding format for addresses. Autheo uses `autheo1...` for accounts and `autheovaloper1...` for validator operators.
+    **Bonded** — THEO that is actively staked to a validator and contributing to consensus security.
 
-**Bonded** — THEO that is actively staked to a validator and contributing to consensus security.
-
-**BOUND (license status)** — A license that is committed to a validator address but has no active delegation. Does not earn NFT rewards.
-
+    **BOUND (license status)** — A license that is committed to a validator address but has no active delegation. Does not earn NFT rewards.
   </Accordion>
 
   <Accordion title="C">
+    **Chain ID** — A unique identifier for a blockchain. Autheo Mainnet uses `autheo_2127-1` (Cosmos format) and `2127` (EVM integer format). Autheo Testnet uses `autheo_785-1` (Cosmos) and `785` (EVM).
 
-**Chain ID** — A unique identifier for a blockchain. Autheo Mainnet uses `autheo_2127-1` (Cosmos format) and `2127` (EVM integer format). Autheo Testnet uses `autheo_785-1` (Cosmos) and `785` (EVM).
+    **CometBFT** — The consensus engine used by Autheo Chain (v0.38.17), providing Byzantine fault–tolerant block production.
 
-**CometBFT** — The consensus engine used by Autheo Chain (v0.38.17), providing Byzantine fault–tolerant block production.
+    **Consensus key** — An Ed25519 key used to sign block proposals. Stored in `config/priv_validator_key.json`. Distinct from the operator key.
 
-**Consensus key** — An Ed25519 key used to sign block proposals. Stored in `config/priv_validator_key.json`. Distinct from the operator key.
-
-**Core license** — An NFT license tier granting the right to delegate to external validators. Earns ~1,880 THEO per year.
-
+    **Core license** — An NFT license tier granting the right to delegate to external validators. Earns ~1,880 THEO per year.
   </Accordion>
 
   <Accordion title="D">
+    **Delegator** — An account that stakes THEO to a validator without running a node. Requires a Prime or Core NFT license.
 
-**Delegator** — An account that stakes THEO to a validator without running a node. Requires a Prime or Core NFT license.
-
-**Double-signing** — Signing two different blocks at the same height. Results in permanent tombstoning.
-
+    **Double-signing** — Signing two different blocks at the same height. Results in permanent tombstoning.
   </Accordion>
 
   <Accordion title="E">
+    **`eth_secp256k1`** — The elliptic curve key algorithm used by Autheo Chain, identical to Ethereum. A single keypair controls both the Cosmos address and the Ethereum address.
 
-**`eth_secp256k1`** — The elliptic curve key algorithm used by Autheo Chain, identical to Ethereum. A single keypair controls both the Cosmos address and the Ethereum address.
+    **Ethermint** — The Cosmos SDK–based EVM layer used by Autheo Chain, enabling full Ethereum JSON-RPC compatibility.
 
-**Ethermint** — The Cosmos SDK–based EVM layer used by Autheo Chain, enabling full Ethereum JSON-RPC compatibility.
-
-**EVM** — Ethereum Virtual Machine. Autheo Chain runs a full EVM layer via Ethermint, compatible with Solidity contracts and Ethereum tooling.
-
+    **EVM** — Ethereum Virtual Machine. Autheo Chain runs a full EVM layer via Ethermint, compatible with Solidity contracts and Ethereum tooling.
   </Accordion>
 
   <Accordion title="G–I">
+    **Gas** — A unit measuring the computational work required by a transaction. Fees on Autheo Chain are paid in `aauth`.
 
-**Gas** — A unit measuring the computational work required by a transaction. Fees on Autheo Chain are paid in `aauth`.
+    **IBC** — Inter-Blockchain Communication protocol. Autheo Chain supports IBC via `ibc-go v10.1.1` for cross-chain transfers.
 
-**IBC** — Inter-Blockchain Communication protocol. Autheo Chain supports IBC via `ibc-go v10.1.1` for cross-chain transfers.
-
-**ISSUED (license status)** — A license that has been minted but not yet bound to a validator. Can be transferred or bound.
-
+    **ISSUED (license status)** — A license that has been minted but not yet bound to a validator. Can be transferred or bound.
   </Accordion>
 
   <Accordion title="J–L">
+    **Jailed** — A validator temporarily excluded from the active set. Can be resolved by submitting `MsgUnjail`.
 
-**Jailed** — A validator temporarily excluded from the active set. Can be resolved by submitting `MsgUnjail`.
-
-**`LicenseRecord`** — The Cosmos-side on-chain object representing a bridged NFT license.
-
+    **`LicenseRecord`** — The Cosmos-side on-chain object representing a bridged NFT license.
   </Accordion>
 
   <Accordion title="M–O">
+    **MemIAVL** — A RAM-based state tree used by Autheo Chain, requiring 8–16 GB of additional RAM above the process baseline.
 
-**MemIAVL** — A RAM-based state tree used by Autheo Chain, requiring 8–16 GB of additional RAM above the process baseline.
+    **Moniker** — A human-readable name assigned to a validator during `MsgCreateValidator`.
 
-**Moniker** — A human-readable name assigned to a validator during `MsgCreateValidator`.
+    **NFT emission rewards** — Per-block rewards minted by `x/emissions` based on license tier. Must be manually claimed via `claim-nft-rewards`.
 
-**NFT emission rewards** — Per-block rewards minted by `x/emissions` based on license tier. Must be manually claimed via `claim-nft-rewards`.
-
-**Operator key** — The `eth_secp256k1` key used to sign all staking, governance, and transaction messages. Stored in the keyring.
-
+    **Operator key** — The `eth_secp256k1` key used to sign all staking, governance, and transaction messages. Stored in the keyring.
   </Accordion>
 
   <Accordion title="P–R">
+    **Prime license** — An NFT license tier granting the right to delegate to external validators at a higher emission rate. Earns ~18,797 THEO per year.
 
-**Prime license** — An NFT license tier granting the right to delegate to external validators at a higher emission rate. Earns ~18,797 THEO per year.
+    **Productive deflation** — Autheo's economic model where network activity fees are reinvested into ecosystem pools, reducing effective supply while sustaining rewards.
 
-**Productive deflation** — Autheo's economic model where network activity fees are reinvested into ecosystem pools, reducing effective supply while sustaining rewards.
-
-**REVOKED (license status)** — A license suspended by governance via `MsgRevokeLicense`. No operations are permitted while revoked.
-
+    **REVOKED (license status)** — A license suspended by governance via `MsgRevokeLicense`. No operations are permitted while revoked.
   </Accordion>
 
   <Accordion title="S–T">
+    **Sentry node** — A public-facing relay node that shields the validator's IP address from direct exposure.
 
-**Sentry node** — A public-facing relay node that shields the validator's IP address from direct exposure.
+    **Slashing** — A penalty applied to a validator's bonded stake for liveness failures or double-signing.
 
-**Slashing** — A penalty applied to a validator's bonded stake for liveness failures or double-signing.
+    **Sovereign license** — The highest NFT license tier, required to create and operate a validator. Earns ~187,969 THEO per year.
 
-**Sovereign license** — The highest NFT license tier, required to create and operate a validator. Earns ~187,969 THEO per year.
+    **Staking rewards** — Proportional rewards from `x/mint` and `x/distribution`, based on delegated stake. Auto-accrued and manually withdrawn.
 
-**Staking rewards** — Proportional rewards from `x/mint` and `x/distribution`, based on delegated stake. Auto-accrued and manually withdrawn.
+    **THEO** — The native token of Autheo Chain. Total supply: 7,000,000,000 THEO. Base denom: `aauth`.
 
-**THEO** — The native token of Autheo Chain. Total supply: 7,000,000,000 THEO. Base denom: `aauth`.
+    **tmkms** — Tendermint Key Management System. A remote signer that keeps the consensus key off the validator host.
 
-**tmkms** — Tendermint Key Management System. A remote signer that keeps the consensus key off the validator host.
-
-**Tombstoned** — Permanent validator ban resulting from double-signing. Cannot be undone; requires a new validator with a new consensus key.
-
+    **Tombstoned** — Permanent validator ban resulting from double-signing. Cannot be undone; requires a new validator with a new consensus key.
   </Accordion>
 
   <Accordion title="U–Z">
+    **Unbind — Releases a bound license from its current validator or delegation. The license must complete the applicable cooldown before it can be bound again.**
 
-**Unbonding period** — The duration (~21 days) during which unstaked THEO cannot be transferred. Slashing can still be applied during this window.
+    **Unbonding period — The duration (~21 days) after unstaking during which THEO cannot be transferred.**
 
-**Validator** — A node operator that participates in CometBFT consensus. Requires a Sovereign NFT license.
+    **Unstaking — Removing delegated THEO from a validator and beginning the unbonding period.**
 
+    **Validator — A node operator that participates in CometBFT consensus. Requires a Sovereign NFT license.**
   </Accordion>
-
 </AccordionGroup>
