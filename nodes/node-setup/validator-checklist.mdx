@@ -1,13 +1,13 @@
 ---
 title: "Validator setup checklist"
-description: "A complete ordered checklist for setting up an Autheo Chain validator — from license acquisition to first reward claim."
+description: "A complete ordered checklist for setting up and activating a Sovereign validator on Autheo Chain, from license acquisition through validator operation and reward management."
 keywords: ["validator setup", "checklist", "sovereign license", "node setup", "register validator", "rewards"]
 ---
 
 Use this page as your navigator. Complete the steps in order — each links to the full guide for that step.
 
 <Warning>
-`MsgBeginRedelegate` is permanently disabled on Autheo Chain. Once you delegate stake, you must unbond and wait the ~21-day unbonding period before moving it to a different validator. Choose your validator configuration carefully from the start.
+  **Choose your validator carefully:** Autheo does not support redelegation. After delegating THEO, you must unstake and wait approximately **21 days** for the tokens to unbond before you can delegate them to a different validator. Review the validator's commission and other relevant details before delegating.
 </Warning>
 
 ## Setup checklist
@@ -24,9 +24,9 @@ Use this page as your navigator. Complete the steps in order — each links to t
     Full guide → [Making a transfer](/web-apps/bridge/making-a-transfer)
   </Step>
   <Step title="Verify prerequisites">
-    Confirm your server meets the hardware requirements (minimum 16 vCPU, 32 GB RAM + 8–16 GB for MemIAVL, 2 TB NVMe SSD) and that your OS and firewall are configured correctly.
+    Confirm your server meets the hardware requirements: minimum **16 vCPU, 32 GB RAM, and 1 TB NVMe SSD**, with an additional 8–16 GB of RAM recommended for MemIAVL. Confirm that Ubuntu 22.04 LTS and the required firewall configuration are in place.
 
-    Full guide → [Node setup](/nodes/node-setup/node-setup)
+    Full guide → [Prerequisites](/nodes/node-setup/node-setup)
   </Step>
   <Step title="Install autheod">
     Download the pre-built binary or build from source. Bootstrap with a snapshot to reduce sync time from ~24 hours to ~1 hour.
@@ -51,7 +51,12 @@ Use this page as your navigator. Complete the steps in order — each links to t
     Full guide → [Register validator](/nodes/validator-lifecycle/register-validator)
   </Step>
   <Step title="Claim rewards">
-    Once your validator is `ACTIVE`, two reward streams accrue: staking rewards (via `x/distribution`) and NFT emission rewards (via `x/licensedistribution`). Both must be claimed manually.
+    Once your validator is `ACTIVE`, two reward streams can accrue:
+
+    - **Staking rewards** — associated with delegated THEO.
+    - **NFT emission rewards** — associated with the active Sovereign license.
+
+    The two reward streams are separate and use different reward mechanisms.
 
     Full guide → [Staking and rewards](/token/staking-and-rewards)
   </Step>
@@ -75,16 +80,14 @@ autheod keys show <key-name> --keyring-backend file
 autheod query bank balances <cosmos-address>
 ```
 
-<Note>
-Self-delegation amount (the `--amount` flag in `MsgCreateValidator`) affects your position in the active validator set. A higher self-delegation signals commitment and can attract external delegators. See [Validator program economics](/validator-program/economics) for guidance on competitive amounts and commission rates.
-</Note>
+> **Sovereign license required:** `MsgCreateValidator` can only be submitted when the validator operator's Sovereign license is in `BOUND` status. Prime and Core licenses are used for delegation and cannot be used to create a validator.
 
 ## Ongoing operations
 
 After your validator is live:
 
 | Task | Frequency | Command |
-|---|---|---|
+| --- | --- | --- |
 | Check node health | Daily | `autheod status` |
 | Claim staking rewards | As needed | `autheod tx distribution withdraw-all-rewards` |
 | Claim NFT emission rewards | As needed | `autheod tx licensedistribution claim-nft-rewards <license-id>` |
