@@ -38,7 +38,7 @@ Purchase the appropriate ERC-721 license NFT on the [Node Sale Platform](/web-ap
 
 The license NFT is purchased on **Arbitrum One**. Before starting the purchase, make sure MetaMask is connected to Arbitrum One and that your wallet contains the required ETH on Arbitrum for the purchase and a small amount of ARB for transaction fees.
 
- View contract addresses:
+View contract addresses:
 
 ```bash
 autheod query license params
@@ -100,6 +100,8 @@ You should see `status: ISSUED`.
     The target validator must be bonded and not jailed.
   </Tab>
 </Tabs>
+
+> **Why do you need to select a validator?** Prime and Core licenses are used for delegation rather than operating a validator. When you bind one, you must associate it with an existing eligible validator. The validator must be bonded and not jailed.
 
 ## Step 5: Verify BOUND status
 
