@@ -313,15 +313,15 @@ After completing the join and configure steps for your chosen method, select one
 
 ### Option A: State sync (recommended)
 
-Downloads a recent snapshot from a live sentry and syncs only the remaining blocks.
+Downloads a recent snapshot from a live rpc and syncs only the remaining blocks.
 
 ```bash
-TRUST_HEIGHT=$(curl -s https://sentry1.autheo.com/block | jq -r '(.result.block.header.height | tonumber / 1000 | floor * 1000)')
-TRUST_HASH=$(curl -s "https://sentry1.autheo.com/block?height=$TRUST_HEIGHT" | jq -r '.result.block_id.hash')
+TRUST_HEIGHT=$(curl -s https://cosmos-rpc1.autheo.com/block | jq -r '(.result.block.header.height | tonumber / 1000 | floor * 1000)')
+TRUST_HASH=$(curl -s "https://cosmos-rpc1.autheo.com/block?height=$TRUST_HEIGHT" | jq -r '.result.block_id.hash')
 
 CONFIG=$HOME/.autheo/config/config.toml
 sed -i '/^\[statesync\]/,/^\[/{s/^enable = false/enable = true/}' $CONFIG
-sed -i "s|^rpc_servers = .*|rpc_servers = \"https://sentry1.autheo.com,https://sentry2.autheo.com,https://sentry3.autheo.com\"|" $CONFIG
+sed -i "s|^rpc_servers = .*|rpc_servers = \"https://cosmos-rpc1.autheo.com,https://cosmos-rpc2.autheo.com,https://cosmos-rpc3.autheo.com\"|" $CONFIG
 sed -i "s|^trust_height = .*|trust_height = $TRUST_HEIGHT|" $CONFIG
 sed -i "s|^trust_hash = .*|trust_hash = \"$TRUST_HASH\"|" $CONFIG
 sed -i 's|^trust_period = .*|trust_period = "336h"|' $CONFIG
