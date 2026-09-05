@@ -374,6 +374,16 @@
       "source": "/litepaper/litepaper-v1-0",
       "destination": "/papers/litepaper/v1-5",
       "permanent": true
+    },
+    {
+      "source": "/technical-descriptions/layer-1-blockchain-v1-0",
+      "destination": "/start-here/architecture-at-a-glance",
+      "permanent": true
+    },
+    {
+      "source": "/tokenomics/token-allocations-emissions",
+      "destination": "/token/allocations-and-emissions",
+      "permanent": true
     }
   ]
 }
