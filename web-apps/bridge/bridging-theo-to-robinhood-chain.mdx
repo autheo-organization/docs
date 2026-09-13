@@ -1,0 +1,116 @@
+---
+title: "Bridging THEO from Autheo Mainnet to Robinhood Chain"
+description: "Step-by-step guide to bridging THEO tokens from Autheo Mainnet to Robinhood Chain using the Autheo Bridge, so they can be traded on Uniswap."
+keywords: ["bridge", "theo", "robinhood chain", "autheo mainnet", "hyper.autheo.com", "uniswap", "validator rewards"]
+---
+
+This guide covers the specific flow for moving THEO tokens from Autheo Mainnet to Robinhood Chain. This is the step you need before selling or trading THEO earned from validator rewards, staking, or the Node Sale on [Uniswap](https://app.uniswap.org/) — Uniswap's THEO/USDG pair runs on Robinhood Chain, not Autheo Mainnet, so tokens have to arrive on Robinhood Chain first.
+
+<Note>
+If you already hold THEO on Robinhood Chain (for example, tokens you bought directly on Uniswap), you can skip this guide and go straight to [app.uniswap.org](https://app.uniswap.org/swap?chain=robinhood&outputCurrency=0x3dc751e0da01812e6d9143cc696e7f07ea94da48&inputCurrency=0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168) to trade.
+</Note>
+
+## Requirements
+
+| Requirement | Details |
+|---|---|
+| Wallet | An EVM-compatible wallet where your THEO tokens are stored (e.g. MetaMask, Keplr) |
+| Gas | THEO on Autheo Mainnet, to pay the source-chain gas fee |
+
+## 1. Add THEO as a custom token on Robinhood Chain
+
+The first time you interact with THEO on Robinhood Chain, your wallet won't recognize it automatically — you need to add it as a custom token. The steps below use MetaMask; the process is similar for other EVM wallets.
+
+<Steps>
+  <Step title="Select Robinhood Chain">
+    In your wallet, go to **Tokens** and select **Robinhood Chain** (chain ID 4663). If it isn't in your wallet's network list yet, add it manually using the RPC endpoint `rpc.mainnet.chain.robinhood.com`.
+  </Step>
+  <Step title="Open Manage tokens">
+    Click the three-dot menu and choose **Manage tokens**.
+
+    <img src="/images/bridge-theo-base-manage-tokens.png" alt="Manage tokens menu option" />
+  </Step>
+  <Step title="Add a custom token">
+    Click **Add a custom token**.
+
+    <img src="/images/bridge-theo-base-add-custom-token.png" alt="Add a custom token option" />
+  </Step>
+  <Step title="Enter the THEO contract address">
+    Make sure the **Network** is set to **Robinhood Chain**, then enter the token contract address:
+
+    ```
+    0x3dc751e0da01812e6d9143cc696e7f07ea94da48
+    ```
+
+    Click **Add token**.
+
+    <Warning>
+    Always verify this contract address against this page or [docs.autheo.com](https://docs.autheo.com) directly before adding it or entering it into a swap. Never trust a contract address sent to you in a message or DM.
+    </Warning>
+  </Step>
+  <Step title="Confirm THEO is visible">
+    THEO now appears in your wallet's token list for Robinhood Chain.
+  </Step>
+</Steps>
+
+## 2. Bridge THEO using the Autheo Bridge
+
+The Autheo Bridge at [hyper.autheo.com](https://hyper.autheo.com/) is the same platform used to bridge THEO to Base — Robinhood Chain is just another destination option on the same Token Transfer form. See the [Bridge overview](/web-apps/bridge/overview) for more on how the Bridge works generally.
+
+<Steps>
+  <Step title="Go to the Autheo Bridge">
+    Navigate to [https://hyper.autheo.com/](https://hyper.autheo.com/).
+
+    <img src="/images/bridge-theo-hyper-autheo-home.png" alt="Autheo Bridge homepage" />
+  </Step>
+  <Step title="Connect your wallet">
+    Click **Connect Wallet**.
+
+    <img src="/images/bridge-theo-connect-wallet.png" alt="Connect Wallet button" />
+
+    Choose the wallet you want to connect.
+
+    <img src="/images/bridge-theo-choose-wallet.png" alt="Wallet selection modal" />
+
+    After choosing the desired wallet (e.g. MetaMask), click **Connect**.
+
+    <img src="/images/bridge-theo-wallet-connect-confirm.png" alt="Confirming wallet connection" />
+
+    Your wallet address is displayed once the connection succeeds.
+
+    <img src="/images/bridge-theo-wallet-connected.png" alt="Wallet connected and address displayed" />
+  </Step>
+  <Step title="Open the Token Transfer tab">
+    Click the **Token Transfer** tab. Set the source network (**From**) to **Autheo Mainnet**, then click the destination network (**To**) and select **Robinhood** from the chain list.
+
+    <img src="/images/bridge-theo-robinhood-token-transfer-tab.png" alt="Token Transfer tab with Autheo Mainnet to Robinhood selected" />
+  </Step>
+  <Step title="Enter the amount">
+    Enter the amount of THEO you want to bridge.
+
+    <img src="/images/bridge-theo-input-amount.png" alt="Entering the amount of THEO to bridge" />
+  </Step>
+  <Step title="Enter the recipient address">
+    Enter the recipient address, or click **Self** if you're bridging to the same wallet, then click **Continue**.
+
+    <img src="/images/bridge-theo-recipient-address.png" alt="Entering the recipient address" />
+  </Step>
+  <Step title="Double-check the recipient address">
+    Verify the recipient address is correct, then click **Continue**.
+
+    <img src="/images/bridge-theo-confirm-recipient.png" alt="Confirming recipient address" />
+  </Step>
+  <Step title="Double-check the remote token address">
+    Verify the **Remote Token** address matches `0x3dc751e0da01812e6d9143cc696e7f07ea94da48`, then click **Send to Robinhood**.
+  </Step>
+  <Step title="Sign the transaction">
+    A transaction request pop-up appears in your wallet. Click **Confirm** to sign it.
+  </Step>
+  <Step title="Bridging complete">
+    Once the bridge completes, you'll see success confirmations. Your THEO is now on Robinhood Chain and ready to sell or trade on Uniswap at [app.uniswap.org](https://app.uniswap.org/swap?chain=robinhood&outputCurrency=0x3dc751e0da01812e6d9143cc696e7f07ea94da48&inputCurrency=0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168).
+  </Step>
+</Steps>
+
+<Warning>
+The Bridge enforces geographic compliance restrictions. Users in certain jurisdictions may be unable to access the service.
+</Warning>
