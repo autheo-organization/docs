@@ -67,12 +67,13 @@ Contract ABIs, deployed addresses, and historical block data don't change. Cache
 
 **Load balance across endpoints**
 
-Distribute requests between the two public endpoints:
+Distribute requests across the public mainnet endpoints. Never mix networks in the same pool, since each endpoint serves a different chain ID:
 
 ```javascript
 const endpoints = [
   "https://rpc1.autheo.com",
-  "https://testnet-rpc2.autheo.com"
+  "https://rpc2.autheo.com",
+  "https://rpc3.autheo.com"
 ];
 
 let index = 0;

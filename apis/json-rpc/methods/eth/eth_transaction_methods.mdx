@@ -169,7 +169,7 @@ Returns the information about a transaction requested by transaction hash.
 // Request
 curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_getTransactionByHash","params":["0x150dfcd895b2856f2418564aae294c1e37346734e29617b3a29b15f7facb50d6"],"id":1}'
 // Response
-{"jsonrpc":"2.0","id":1,"result":{"blockHash":"0x6f9ccc098b4f2f56154d3ad12df650a253d9c8bb5e6e28c5d92ae51a935af5bd","blockNumber":"0xaa19b","from":"0xeecc2fa50180e7c929c814a8bd65e45f81994327","gas":"0x5208","gasPrice":"0x7","hash":"0x150dfcd895b2856f2418564aae294c1e37346734e29617b3a29b15f7facb50d6","input":"0x","nonce":"0x1a5b","to":"0x65925ceb2e33bb7fde5f1c7488bbe8cca6c4e177","transactionIndex":"0x0","value":"0x5497acb9bd0b","type":"0x0","chainId":"0x311","v":"0x646","r":"0xa8c2b5d2d2c95eb58274e1a1c90626964e6ea3ae9ee8103769f34f2d83f83e26","s":"0x5ebebaf19ade625611bf30575e4503e9611ff561d0d88bb5872eb1cf457e411d"}}
+{"jsonrpc":"2.0","id":1,"result":{"blockHash":"0x6f9ccc098b4f2f56154d3ad12df650a253d9c8bb5e6e28c5d92ae51a935af5bd","blockNumber":"0xaa19b","from":"0xeecc2fa50180e7c929c814a8bd65e45f81994327","gas":"0x5208","gasPrice":"0x7","hash":"0x150dfcd895b2856f2418564aae294c1e37346734e29617b3a29b15f7facb50d6","input":"0x","nonce":"0x1a5b","to":"0x65925ceb2e33bb7fde5f1c7488bbe8cca6c4e177","transactionIndex":"0x0","value":"0x5497acb9bd0b","type":"0x0","chainId":"0x5316","v":"0x646","r":"0xa8c2b5d2d2c95eb58274e1a1c90626964e6ea3ae9ee8103769f34f2d83f83e26","s":"0x5ebebaf19ade625611bf30575e4503e9611ff561d0d88bb5872eb1cf457e411d"}}
 ```
 
 ## `eth_getTransactionByBlockHashAndIndex`
@@ -191,7 +191,7 @@ See `eth_getTransactionByHash`.
 // Request
 curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_getTransactionByBlockHashAndIndex","params":["0x1d59ff54b1eb26b013ce3cb5fc9dab3705b415a67127a003c3e61eb445bb8df2", "0x0"],"id":1}'
 // Response
-{"jsonrpc":"2.0","id":1,"result":{"blockHash":"0x6f9ccc098b4f2f56154d3ad12df650a253d9c8bb5e6e28c5d92ae51a935af5bd","blockNumber":"0xaa19b","from":"0xeecc2fa50180e7c929c814a8bd65e45f81994327","gas":"0x5208","gasPrice":"0x7","hash":"0x150dfcd895b2856f2418564aae294c1e37346734e29617b3a29b15f7facb50d6","input":"0x","nonce":"0x1a5b","to":"0x65925ceb2e33bb7fde5f1c7488bbe8cca6c4e177","transactionIndex":"0x0","value":"0x5497acb9bd0b","type":"0x0","chainId":"0x311","v":"0x646","r":"0xa8c2b5d2d2c95eb58274e1a1c90626964e6ea3ae9ee8103769f34f2d83f83e26","s":"0x5ebebaf19ade625611bf30575e4503e9611ff561d0d88bb5872eb1cf457e411d"}}
+{"jsonrpc":"2.0","id":1,"result":{"blockHash":"0x6f9ccc098b4f2f56154d3ad12df650a253d9c8bb5e6e28c5d92ae51a935af5bd","blockNumber":"0xaa19b","from":"0xeecc2fa50180e7c929c814a8bd65e45f81994327","gas":"0x5208","gasPrice":"0x7","hash":"0x150dfcd895b2856f2418564aae294c1e37346734e29617b3a29b15f7facb50d6","input":"0x","nonce":"0x1a5b","to":"0x65925ceb2e33bb7fde5f1c7488bbe8cca6c4e177","transactionIndex":"0x0","value":"0x5497acb9bd0b","type":"0x0","chainId":"0x5316","v":"0x646","r":"0xa8c2b5d2d2c95eb58274e1a1c90626964e6ea3ae9ee8103769f34f2d83f83e26","s":"0x5ebebaf19ade625611bf30575e4503e9611ff561d0d88bb5872eb1cf457e411d"}}
 ```
 
 ## `eth_getTransactionByBlockNumberAndIndex`
@@ -213,7 +213,7 @@ See `eth_getTransactionByHash`.
 // Request
  curl -X POST https://rpc1.autheo.com -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_getTransactionByBlockNumberAndIndex","params":["0x1d59ff54b1eb26b013ce3cb5fc9dab3705b415a67127a003c3e61eb445bb8df2", "0x0"],"id":1}'
 // Response
-{"jsonrpc":"2.0","id":1,"result":{"blockHash":"0x6f9ccc098b4f2f56154d3ad12df650a253d9c8bb5e6e28c5d92ae51a935af5bd","blockNumber":"0xaa19b","from":"0xeecc2fa50180e7c929c814a8bd65e45f81994327","gas":"0x5208","gasPrice":"0x7","hash":"0x150dfcd895b2856f2418564aae294c1e37346734e29617b3a29b15f7facb50d6","input":"0x","nonce":"0x1a5b","to":"0x65925ceb2e33bb7fde5f1c7488bbe8cca6c4e177","transactionIndex":"0x0","value":"0x5497acb9bd0b","type":"0x0","chainId":"0x311","v":"0x646","r":"0xa8c2b5d2d2c95eb58274e1a1c90626964e6ea3ae9ee8103769f34f2d83f83e26","s":"0x5ebebaf19ade625611bf30575e4503e9611ff561d0d88bb5872eb1cf457e411d"}}
+{"jsonrpc":"2.0","id":1,"result":{"blockHash":"0x6f9ccc098b4f2f56154d3ad12df650a253d9c8bb5e6e28c5d92ae51a935af5bd","blockNumber":"0xaa19b","from":"0xeecc2fa50180e7c929c814a8bd65e45f81994327","gas":"0x5208","gasPrice":"0x7","hash":"0x150dfcd895b2856f2418564aae294c1e37346734e29617b3a29b15f7facb50d6","input":"0x","nonce":"0x1a5b","to":"0x65925ceb2e33bb7fde5f1c7488bbe8cca6c4e177","transactionIndex":"0x0","value":"0x5497acb9bd0b","type":"0x0","chainId":"0x5316","v":"0x646","r":"0xa8c2b5d2d2c95eb58274e1a1c90626964e6ea3ae9ee8103769f34f2d83f83e26","s":"0x5ebebaf19ade625611bf30575e4503e9611ff561d0d88bb5872eb1cf457e411d"}}
 ```
 
 ## `eth_getTransactionReceipt`

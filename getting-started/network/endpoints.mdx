@@ -19,9 +19,12 @@ keywords: ["endpoints", "rpc", "json-rpc", "websocket", "rest", "mainnet", "test
 
 | Service | URL |
 |---|---|
-| JSON-RPC HTTP (primary) | `https://testnet-rpc1.autheo.com` |
-| JSON-RPC HTTP (secondary) | `https://testnet-rpc2.autheo.com` |
-| Testnet faucet | `https://testnet-faucet.autheo.com/` |
+| JSON-RPC HTTP | `https://rpc.testnet.autheo.com` |
+| Cosmos RPC (Tendermint) | `https://cosmos-rpc.testnet.autheo.com` |
+| Cosmos REST | `https://rest.testnet.autheo.com` |
+| EVM explorer | `https://evm-explorer.testnet.autheo.com/` |
+| Cosmos explorer | `https://cosmos.testnet.autheo.com/` |
+| Testnet faucet | `https://faucet.testnet.autheo.com/` |
 
 ## Network parameters
 
@@ -40,12 +43,12 @@ keywords: ["endpoints", "rpc", "json-rpc", "websocket", "rest", "mainnet", "test
   <Tab title="Testnet">
     | Parameter | Value |
     |---|---|
-    | Chain ID (Cosmos) | `autheo_785-1` |
-    | Chain ID (EVM) | `785` |
+    | Chain ID (Cosmos) | `autheo_21270-1` |
+    | Chain ID (EVM) | `21270` |
     | Currency symbol | `THEO` |
     | Native token denom | `aauth` (18 decimals) |
     | Block time | ~5 seconds |
-    | Faucet | `https://testnet-faucet.autheo.com/` |
+    | Faucet | `https://faucet.testnet.autheo.com/` |
   </Tab>
 </Tabs>
 
@@ -69,10 +72,10 @@ keywords: ["endpoints", "rpc", "json-rpc", "websocket", "rest", "mainnet", "test
     | Field | Value |
     |---|---|
     | Network name | Autheo Testnet |
-    | Default RPC URL | `https://testnet-rpc1.autheo.com` |
-    | Chain ID | `785` |
+    | Default RPC URL | `https://rpc.testnet.autheo.com` |
+    | Chain ID | `21270` |
     | Currency symbol | `THEO` |
-    | Block explorer URL | `https://evm-explorer.autheo.com/` |
+    | Block explorer URL | `https://evm-explorer.testnet.autheo.com/` |
 
     See [Connect to testnet](/getting-started/wallets/connect-to-testnet) for step-by-step instructions.
   </Tab>
@@ -94,9 +97,9 @@ keywords: ["endpoints", "rpc", "json-rpc", "websocket", "rest", "mainnet", "test
     ```javascript
     import { ethers } from "ethers";
 
-    const provider = new ethers.JsonRpcProvider("https://testnet-rpc1.autheo.com");
+    const provider = new ethers.JsonRpcProvider("https://rpc.testnet.autheo.com");
     const network = await provider.getNetwork();
-    console.log(network.chainId); // 785n
+    console.log(network.chainId); // 21270n
     ```
   </Tab>
 </Tabs>
@@ -119,12 +122,12 @@ keywords: ["endpoints", "rpc", "json-rpc", "websocket", "rest", "mainnet", "test
   <Tab title="Testnet">
     ```bash
     # Query a node's sync status
-    autheod status --node https://testnet-rpc1.autheo.com:443
+    autheod status --node https://rpc.testnet.autheo.com:443
 
     # Send a transaction
     autheod tx bank send <from-key> <to-address> 1000000000000000000aauth \
-      --chain-id autheo_785-1 \
-      --node https://testnet-rpc1.autheo.com:443 \
+      --chain-id autheo_21270-1 \
+      --node https://rpc.testnet.autheo.com:443 \
       --keyring-backend file
     ```
   </Tab>
@@ -139,7 +142,7 @@ Use the `wss://` scheme on port 8546 when connecting via WebSocket:
 const wsProvider = new ethers.WebSocketProvider("wss://rpc1.autheo.com:8546");
 
 // Testnet
-const wsProvider = new ethers.WebSocketProvider("wss://testnet-rpc1.autheo.com:8546");
+const wsProvider = new ethers.WebSocketProvider("wss://rpc.testnet.autheo.com:8546");
 ```
 
 <Note>

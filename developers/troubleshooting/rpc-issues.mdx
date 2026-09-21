@@ -9,7 +9,7 @@ keywords: ["rpc", "json-rpc", "errors", "troubleshooting", "connection", "rate l
 **Cause**: The RPC endpoint is unreachable or the node is not running.
 
 **Fix**:
-1. Try the secondary endpoint: `https://testnet-rpc2.autheo.com`
+1. On mainnet, try an alternate endpoint: `https://rpc2.autheo.com` or `https://rpc3.autheo.com`. On testnet, `https://rpc.testnet.autheo.com` is the only public endpoint.
 2. Check node status: `autheod status --node <rpc-url>`
 3. Verify that port 8545 (HTTP) or 8546 (WebSocket) is open in your firewall
 
