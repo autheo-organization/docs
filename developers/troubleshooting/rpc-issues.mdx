@@ -72,6 +72,10 @@ curl -X POST https://rpc1.autheo.com \
 
 ## WebSocket connection drops
 
+<Note>
+This applies to a node you run yourself. **Public WebSocket access is not yet available** on Mainnet or Testnet (see [Network endpoints](/getting-started/network/endpoints)).
+</Note>
+
 **Cause**: WebSocket connections have a default idle timeout.
 
 **Fix**: Implement reconnection logic with a backoff strategy:

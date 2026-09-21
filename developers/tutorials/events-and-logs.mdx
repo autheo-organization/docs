@@ -114,7 +114,9 @@ contract.off("Deposited");
 ```
 
 <Note>
-WebSocket connections are required for real-time subscriptions. Use `wss://rpc1.autheo.com:8546` instead of the HTTP endpoint.
+Real-time subscriptions require a WebSocket connection, and **public WebSocket access is not yet available** on Mainnet or Testnet (see [Network endpoints](/getting-started/network/endpoints)).
+
+Until it is enabled, query past events over HTTP with `queryFilter`, or point the provider at the local WebSocket port on a node you run yourself.
 </Note>
 
 ## Decoding raw log data
