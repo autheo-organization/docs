@@ -63,10 +63,10 @@ When connecting tools to a **local node** (e.g., during development), use port `
 
 | Tool | Local node | Mainnet (public) | Testnet (public) |
 |---|---|---|---|
-| MetaMask | `http://localhost:8545`, Chain ID: `2127` | `https://rpc1.autheo.com`, Chain ID: `2127` | `https://testnet-rpc1.autheo.com`, Chain ID: `785` |
-| ethers.js | `new ethers.JsonRpcProvider("http://localhost:8545")` | `new ethers.JsonRpcProvider("https://rpc1.autheo.com")` | `new ethers.JsonRpcProvider("https://testnet-rpc1.autheo.com")` |
-| Hardhat | `chainId: 2127` | `chainId: 2127` | `chainId: 785` |
-| Foundry | `--rpc-url http://localhost:8545` | `--rpc-url https://rpc1.autheo.com` | `--rpc-url https://testnet-rpc1.autheo.com` |
+| MetaMask | `http://localhost:8545`, Chain ID: `2127` | `https://rpc1.autheo.com`, Chain ID: `2127` | `https://rpc.testnet.autheo.com`, Chain ID: `21270` |
+| ethers.js | `new ethers.JsonRpcProvider("http://localhost:8545")` | `new ethers.JsonRpcProvider("https://rpc1.autheo.com")` | `new ethers.JsonRpcProvider("https://rpc.testnet.autheo.com")` |
+| Hardhat | `chainId: 2127` | `chainId: 2127` | `chainId: 21270` |
+| Foundry | `--rpc-url http://localhost:8545` | `--rpc-url https://rpc1.autheo.com` | `--rpc-url https://rpc.testnet.autheo.com` |
 
 ## Deploying contracts
 
@@ -89,8 +89,8 @@ When connecting tools to a **local node** (e.g., during development), use port `
         accounts: [privateKey]
       },
       autheoTestnet: {
-        url: "https://testnet-rpc1.autheo.com",
-        chainId: 785,
+        url: "https://rpc.testnet.autheo.com",
+        chainId: 21270,
         accounts: [privateKey]
       }
     }

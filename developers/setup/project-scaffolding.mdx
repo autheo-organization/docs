@@ -4,7 +4,7 @@ description: "Set up a new smart contract or dApp project for Autheo Chain using
 keywords: ["scaffolding", "hardhat", "foundry", "project setup", "smart contract", "boilerplate"]
 ---
 
-Autheo Chain is EVM-compatible — Mainnet chain ID `2127`, Testnet chain ID `785` — which means any Hardhat, Foundry, or ethers.js project can target it with minimal configuration. This page shows the minimum setup for each major toolchain.
+Autheo Chain is EVM-compatible — Mainnet chain ID `2127`, Testnet chain ID `21270` — which means any Hardhat, Foundry, or ethers.js project can target it with minimal configuration. This page shows the minimum setup for each major toolchain.
 
 ## Hardhat
 
@@ -40,8 +40,8 @@ Autheo Chain is EVM-compatible — Mainnet chain ID `2127`, Testnet chain ID `78
           accounts: [process.env.PRIVATE_KEY]
         },
         autheoTestnet: {
-          url: "https://testnet-rpc1.autheo.com",
-          chainId: 785,
+          url: "https://rpc.testnet.autheo.com",
+          chainId: 21270,
           accounts: [process.env.PRIVATE_KEY]
         }
       }
@@ -89,7 +89,7 @@ Autheo Chain is EVM-compatible — Mainnet chain ID `2127`, Testnet chain ID `78
 
     [rpc_endpoints]
     autheo_mainnet = "https://rpc1.autheo.com"
-    autheo_testnet = "https://testnet-rpc1.autheo.com"
+    autheo_testnet = "https://rpc.testnet.autheo.com"
     ```
   </Step>
   <Step title="Deploy">

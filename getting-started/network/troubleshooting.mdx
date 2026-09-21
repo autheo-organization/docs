@@ -15,8 +15,8 @@ keywords: ["troubleshooting", "network", "rpc", "connection", "metamask", "error
 
    | Field | Mainnet | Testnet |
    |---|---|---|
-   | Chain ID | `2127` | `785` |
-   | RPC URL | `https://rpc1.autheo.com` | `https://testnet-rpc1.autheo.com` |
+   | Chain ID | `2127` | `21270` |
+   | RPC URL | `https://rpc1.autheo.com` | `https://rpc.testnet.autheo.com` |
 
 ---
 
@@ -35,7 +35,7 @@ keywords: ["troubleshooting", "network", "rpc", "connection", "metamask", "error
 
 **Cause**: The RPC endpoint and MetaMask network configuration are pointing to different chains.
 
-**Fix**: Verify that your RPC URL and MetaMask Chain ID match the same network — `2127` + `https://rpc1.autheo.com` for mainnet, or `785` + `https://testnet-rpc1.autheo.com` for testnet. Do not mix endpoints from different networks.
+**Fix**: Verify that your RPC URL and MetaMask Chain ID match the same network — `2127` + `https://rpc1.autheo.com` for mainnet, or `21270` + `https://rpc.testnet.autheo.com` for testnet. Do not mix endpoints from different networks.
 
 ---
 
@@ -44,8 +44,8 @@ keywords: ["troubleshooting", "network", "rpc", "connection", "metamask", "error
 **Cause**: The public RPC endpoints enforce rate limits.
 
 **Fix**:
-- Switch to the secondary endpoint: `https://testnet-rpc2.autheo.com`
-- Reduce request frequency in your application
+- On mainnet, spread requests across `https://rpc1.autheo.com`, `https://rpc2.autheo.com`, and `https://rpc3.autheo.com`
+- On testnet there is a single public endpoint (`https://rpc.testnet.autheo.com`), so reduce request frequency in your application instead
 - For high-volume workloads, use a [managed node provider](/validator-program/hosting-options)
 
 ---
@@ -61,7 +61,7 @@ keywords: ["troubleshooting", "network", "rpc", "connection", "metamask", "error
 autheod tx bank send ... --chain-id autheo_2127-1
 
 # Testnet
-autheod tx bank send ... --chain-id autheo_785-1
+autheod tx bank send ... --chain-id autheo_21270-1
 ```
 
 Using the wrong chain ID causes signature mismatch errors even if the transaction is otherwise valid.
