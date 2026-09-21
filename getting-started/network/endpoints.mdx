@@ -135,13 +135,19 @@ keywords: ["endpoints", "rpc", "json-rpc", "websocket", "rest", "mainnet", "test
 
 ## WebSocket connections
 
-Use the `wss://` scheme on port 8546 when connecting via WebSocket:
+<Warning>
+**Public WebSocket access is not yet available.** Port 8546 is not currently exposed on the public RPC hosts for either Mainnet or Testnet, so the `wss://` addresses below are planned rather than reachable today.
+
+For real-time updates in the meantime, poll the standard HTTP RPC endpoints above, or run your own node, where the EVM WebSocket port is available locally (see the [self-hosting guide](/validator-program/self-hosting-guide)).
+</Warning>
+
+Once public WebSocket access is enabled, connect using the `wss://` scheme on port 8546:
 
 ```javascript
-// Mainnet
+// Mainnet (planned, not yet reachable)
 const wsProvider = new ethers.WebSocketProvider("wss://rpc1.autheo.com:8546");
 
-// Testnet
+// Testnet (planned, not yet reachable)
 const wsProvider = new ethers.WebSocketProvider("wss://rpc.testnet.autheo.com:8546");
 ```
 

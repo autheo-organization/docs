@@ -39,6 +39,10 @@ async function rpcWithRetry(provider, method, params, maxRetries = 5) {
 
 **Use WebSocket subscriptions instead of polling**
 
+<Note>
+**Public WebSocket access is not yet available** on Mainnet or Testnet (see [Network endpoints](/getting-started/network/endpoints)). This pattern applies to a node you run yourself today, and to the public endpoints once WebSocket access is enabled. Until then, poll at a modest interval and cache what you can.
+</Note>
+
 Instead of calling `eth_getBlockNumber` every few seconds, subscribe to new blocks:
 
 ```javascript
