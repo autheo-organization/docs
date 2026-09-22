@@ -81,7 +81,8 @@
               "web-apps/validator-portal/deploying-a-node",
               "web-apps/validator-portal/delegation",
               "web-apps/validator-portal/rewards-and-unstaking",
-              "web-apps/validator-portal/activity-history"
+              "web-apps/validator-portal/activity-history",
+              "re-add-autheo-mainnet-on-keplr"
             ]
           }
         ]
