@@ -136,6 +136,6 @@ curl https://evm-explorer.autheo.com/api/v2/addresses/0x<address>/token-transfer
 
 - **Checkpoint your progress**: Store the last indexed block in the database to resume after restarts
 - **Handle reorgs**: On Autheo Chain, CometBFT finality means there are no reorgs — one confirmation is sufficient
-- **Use WebSocket subscriptions** for real-time indexing, with HTTP fallback for historical backfills. Public WebSocket access is not yet available (see [Network endpoints](/getting-started/network/endpoints)), so index over HTTP for now or subscribe against your own node.
+- **Use WebSocket subscriptions** for real-time indexing, with HTTP fallback for historical backfills. Public WebSocket endpoints are not currently offered (see [Network endpoints](/getting-started/network/endpoints)), so index over HTTP for now or subscribe against your own node.
 - **Rate limit awareness**: Public endpoints have rate limits; implement retry with backoff
 - **Deduplicate events**: Use `(tx_hash, log_index)` as a unique key to prevent duplicates from re-indexing

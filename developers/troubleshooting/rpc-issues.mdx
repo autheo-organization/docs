@@ -73,7 +73,7 @@ curl -X POST https://rpc1.autheo.com \
 ## WebSocket connection drops
 
 <Note>
-This applies to a node you run yourself. **Public WebSocket access is not yet available** on Mainnet or Testnet (see [Network endpoints](/getting-started/network/endpoints)).
+This applies to a node you run yourself. **Public WebSocket endpoints are not currently offered** on Mainnet or Testnet (see [Network endpoints](/getting-started/network/endpoints)).
 </Note>
 
 **Cause**: WebSocket connections have a default idle timeout.
@@ -82,7 +82,7 @@ This applies to a node you run yourself. **Public WebSocket access is not yet av
 
 ```javascript
 function connect() {
-  const ws = new ethers.WebSocketProvider("wss://rpc1.autheo.com:8546");
+  const ws = new ethers.WebSocketProvider("ws://127.0.0.1:8546");
   
   ws.on("error", (err) => {
     console.error("WebSocket error:", err);

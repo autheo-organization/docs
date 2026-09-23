@@ -40,13 +40,13 @@ async function rpcWithRetry(provider, method, params, maxRetries = 5) {
 **Use WebSocket subscriptions instead of polling**
 
 <Note>
-**Public WebSocket access is not yet available** on Mainnet or Testnet (see [Network endpoints](/getting-started/network/endpoints)). This pattern applies to a node you run yourself today, and to the public endpoints once WebSocket access is enabled. Until then, poll at a modest interval and cache what you can.
+**Public WebSocket endpoints are not currently offered** on Mainnet or Testnet (see [Network endpoints](/getting-started/network/endpoints)). This pattern applies to a node you run yourself. Against the public endpoints, poll at a modest interval and cache what you can.
 </Note>
 
 Instead of calling `eth_getBlockNumber` every few seconds, subscribe to new blocks:
 
 ```javascript
-const wsProvider = new ethers.WebSocketProvider("wss://rpc1.autheo.com:8546");
+const wsProvider = new ethers.WebSocketProvider("ws://127.0.0.1:8546");
 wsProvider.on("block", (blockNumber) => {
   console.log("New block:", blockNumber);
 });
