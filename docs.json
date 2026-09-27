@@ -69,7 +69,8 @@
               "web-apps/bridge/connecting-wallets",
               "web-apps/bridge/making-a-transfer",
               "web-apps/bridge/transfer-history",
-              "web-apps/bridge/bridging-theo-to-base"
+              "web-apps/bridge/bridging-theo-to-base",
+              "web-apps/bridge/bridging-theo-to-robinhood-chain"
             ]
           },
           {
