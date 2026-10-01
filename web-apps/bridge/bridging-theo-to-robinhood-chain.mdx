@@ -1,0 +1,86 @@
+---
+title: "Bridging THEO from Autheo Mainnet to Robinhood Chain"
+description: "Step-by-step guide to bridging THEO from Autheo Mainnet to Robinhood Chain using the Autheo Bridge, so it can be traded on Uniswap."
+keywords: ["bridge", "theo", "robinhood chain", "autheo mainnet", "hyper.autheo.com", "uniswap", "validator rewards"]
+---
+
+This guide covers moving THEO from Autheo Mainnet to Robinhood Chain. You need this step before selling or trading THEO earned from validator rewards, staking, or the Node Sale on [Uniswap](https://app.uniswap.org/), where THEO trades in the THEO/USDG and THEO/NVDA pools on Robinhood Chain. Uniswap on Robinhood Chain cannot see THEO that is still on Autheo Mainnet, so it has to arrive on Robinhood Chain first.
+
+<Note>
+If you already hold THEO on Robinhood Chain (for example, THEO you bought on Uniswap), you can skip this guide. To trade on MEXC instead, no bridging is needed: MEXC accepts THEO deposits on Autheo Mainnet directly.
+</Note>
+
+## Requirements
+
+| Requirement | Details |
+|---|---|
+| Wallet | An EVM-compatible wallet where your THEO is stored (e.g. MetaMask) |
+| Gas (source) | THEO on Autheo Mainnet, to pay the source-chain gas fee |
+| Gas (destination) | ETH on Robinhood Chain, to pay gas when you later trade on Uniswap |
+
+## 1. Add Robinhood Chain and THEO to your wallet
+
+<Steps>
+  <Step title="Add Robinhood Chain">
+    If Robinhood Chain is not already in your wallet, add it as a network. Use these details, or add it through Uniswap or your wallet's network list:
+
+    | Field | Value |
+    |---|---|
+    | Network name | Robinhood Chain |
+    | Chain ID | 4663 |
+    | RPC URL | `https://rpc.mainnet.chain.robinhood.com` |
+    | Currency symbol | ETH |
+  </Step>
+  <Step title="Add THEO as a custom token">
+    With **Robinhood Chain** selected, open **Manage tokens**, choose **Add a custom token**, and enter the THEO contract address:
+
+    ```
+    0x3dc751e0da01812e6d9143cc696e7f07ea94da48
+    ```
+
+    Click **Add token**.
+
+    <Warning>
+    Always verify this contract address against this page or [docs.autheo.com](https://docs.autheo.com) directly before adding it. Never trust a contract address sent to you in a message or DM.
+    </Warning>
+  </Step>
+  <Step title="Confirm THEO is visible">
+    THEO now appears in your wallet's token list for Robinhood Chain.
+  </Step>
+</Steps>
+
+## 2. Bridge THEO using the Autheo Bridge
+
+The flow is the same as [bridging to Base](/web-apps/bridge/bridging-theo-to-base); only the destination network changes.
+
+<Steps>
+  <Step title="Go to the Autheo Bridge">
+    Navigate to [https://hyper.autheo.com/](https://hyper.autheo.com/) and click **Connect Wallet** to connect the wallet holding your THEO.
+  </Step>
+  <Step title="Open the Token Transfer tab">
+    Click the **Token Transfer** tab. Keep the source network (**From**) as **Autheo Mainnet**.
+  </Step>
+  <Step title="Set the destination to Robinhood">
+    The destination (**To**) defaults to **Base Mainnet**. Click it and select **Robinhood** (Robinhood Chain).
+  </Step>
+  <Step title="Enter the amount and recipient">
+    Enter the amount of THEO to bridge. Enter the recipient address, or click **Self** if you are bridging to the same wallet, then click **Continue**.
+  </Step>
+  <Step title="Double-check the recipient and remote token">
+    Verify the recipient address is correct. Then verify the **Remote Token** address matches `0x3dc751e0da01812e6d9143cc696e7f07ea94da48` before you send.
+  </Step>
+  <Step title="Sign the transaction">
+    Confirm the transaction request in your wallet.
+  </Step>
+  <Step title="Bridging complete">
+    Once the bridge completes, your THEO is on Robinhood Chain and ready to trade on Uniswap. Most transfers complete within a few minutes. You can follow progress in [Transfer history](/web-apps/bridge/transfer-history).
+  </Step>
+</Steps>
+
+<Tip>
+The route also works in reverse. To move THEO from Robinhood Chain back to Autheo Mainnet (for example, to deposit it on MEXC), set **From** to **Robinhood** and **To** to **Autheo Mainnet**.
+</Tip>
+
+<Warning>
+The Bridge enforces geographic compliance restrictions. Users in certain jurisdictions may be unable to access the service.
+</Warning>
